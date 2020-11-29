@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ActivityX</string>
+    <string name="home_title_text">Activity X</string>
+    <string name="home_go_button">GO!</string>
 </resources>
