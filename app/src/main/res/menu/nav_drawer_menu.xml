@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/miHome"
+        android:title="@string/menu_item_home" />
+
+    <item
+        android:id="@+id/miAbout"
+        android:title="@string/menu_item_about" />
+
+    <item
+        android:id="@+id/miBlocked"
+        android:title="@string/manu_item_blocked" />
+</menu>
