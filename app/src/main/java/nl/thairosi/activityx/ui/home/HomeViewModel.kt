@@ -1,8 +1,8 @@
-package nl.thairosi.activityx.ui.main
+package nl.thairosi.activityx.ui.home
 
 import androidx.lifecycle.ViewModel
 
-class MainViewModel : ViewModel() {
+class HomeViewModel : ViewModel() {
 
     // TODO: Implement the ViewModel
 }

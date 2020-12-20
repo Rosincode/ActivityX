@@ -8,10 +8,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import nl.thairosi.activityx.databinding.ActivityMainBinding
 import nl.thairosi.activityx.ui.about.AboutFragment
-import nl.thairosi.activityx.ui.main.MainFragment
-
-
-
+import nl.thairosi.activityx.ui.home.HomeFragment
+import nl.thairosi.activityx.ui.navigation.CriteriaFragment
+import nl.thairosi.activityx.ui.navigation.VisitedPlacesFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,8 +24,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //// Fragments container
-        val homeFragment = MainFragment()
+        val homeFragment = HomeFragment()
         val aboutFragment = AboutFragment()
+        val visitedPlacesFragment = VisitedPlacesFragment()
+        val criteriaFragment = CriteriaFragment()
 
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.flFragment, homeFragment)
@@ -47,31 +48,33 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().apply {
                         replace(R.id.flFragment, homeFragment)
                         commit()
-
                     }
                 }
                 R.id.miAbout -> {
                     supportFragmentManager.beginTransaction().apply {
                         replace(R.id.flFragment, aboutFragment)
                         commit()
-
                     }
                 }
-                R.id.miBlocked -> Toast.makeText(
-                        applicationContext,
-                        "Clicked menu 3",
-                        Toast.LENGTH_SHORT
-                ).show()
+                R.id.miVisitedPlaces -> {
+                    supportFragmentManager.beginTransaction().apply {
+                        replace(R.id.flFragment, visitedPlacesFragment)
+                        commit()
+                    }
+                }
+                R.id.miCriteria -> {
+                    supportFragmentManager.beginTransaction().apply {
+                        replace(R.id.flFragment, criteriaFragment)
+                        commit()
+                    }
+                }
             }
             // Close drawer
             binding.drawerLayout.closeDrawer(GravityCompat.START)
 
             true
         }
-
-
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {

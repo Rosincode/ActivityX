@@ -1,20 +1,17 @@
-package nl.thairosi.activityx.ui.main
+package nl.thairosi.activityx.ui.home
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import nl.thairosi.activityx.R
 
-class MainFragment : Fragment(R.layout.fragment_main) {
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
 //    companion object {
 //        fun newInstance() = MainFragment()
 //    }
 //
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: HomeViewModel
 //
 //    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
 //                              savedInstanceState: Bundle?): View {
@@ -23,7 +20,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 //
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

@@ -9,6 +9,9 @@
         android:title="@string/menu_item_about" />
 
     <item
-        android:id="@+id/miBlocked"
-        android:title="@string/manu_item_blocked" />
+        android:id="@+id/miVisitedPlaces"
+        android:title="@string/menu_item_visited_places" />
+    <item
+        android:id="@+id/miCriteria"
+        android:title="@string/menu_item_criteria" />
 </menu>

@@ -1,10 +1,12 @@
 <resources>
-    <string name="app_name">ActivityX</string>
+    <string name="app_name">Activity X</string>
     <string name="home_title_text">Activity X</string>
     <string name="home_go_button">GO!</string>
     <string name="open">open</string>
     <string name="close">close</string>
     <string name="menu_item_home">Home</string>
     <string name="menu_item_about">About</string>
-    <string name="manu_item_blocked">Blocked</string>
+    <string name="menu_item_visited_places">Visited places</string>
+    <string name="Activity_X_icon">Activity X icon</string>
+    <string name="menu_item_criteria">Criteria</string>
 </resources>
