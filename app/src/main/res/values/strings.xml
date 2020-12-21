@@ -1,12 +1,24 @@
 <resources>
+    <!--APP-->
     <string name="app_name">Activity X</string>
-    <string name="home_title_text">Activity X</string>
-    <string name="home_go_button">GO!</string>
-    <string name="open">open</string>
-    <string name="close">close</string>
-    <string name="menu_item_home">Home</string>
+    <string name="Activity_X_icon">Activity X icon</string>
+    <!--MENU-->
+    <string name="menu_open">open</string>
+    <string name="menu_close">close</string>
+    <!--MENU ITEMS-->
+    <string name="menu_item_criteria">Search criteria</string>
     <string name="menu_item_about">About</string>
     <string name="menu_item_visited_places">Visited places</string>
-    <string name="Activity_X_icon">Activity X icon</string>
-    <string name="menu_item_criteria">Criteria</string>
+    <!--HOME FRAGMENT-->
+    <string name="home_go_button">GO!</string>
+    <!--NAVIGATION FRAGMENT-->
+    <string name="navigation_title">Navigate!</string>
+    <!--HOME FRAGMENT-->
+    <string name="place_title">Enjoy!</string>
+    <!--ABOUT FRAGMENT-->
+    <string name="about_title">About Activity X</string>
+    <!--CRITERIA FRAGMENT-->
+    <string name="criteria_title">Your search criteria</string>
+    <!--VISITED PLACES FRAGMENT-->
+    <string name="visited_places_title">Your visited places</string>
 </resources>

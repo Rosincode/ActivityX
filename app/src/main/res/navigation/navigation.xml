@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    android:label="@string/app_name"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        tools:layout="@layout/fragment_home"
+        android:id="@+id/homeFragment"
+        android:name="nl.thairosi.activityx.ui.home.HomeFragment"
+        android:label="@string/app_name">
+        <action
+            android:id="@+id/action_homeFragment_to_navigationFragment"
+            app:destination="@id/navigationFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_navigation"
+        android:id="@+id/navigationFragment"
+        android:name="nl.thairosi.activityx.ui.navigation.NavigationFragment"
+        android:label="@string/app_name">
+        <action
+            android:id="@+id/action_navigationFragment_to_placeFragment"
+            app:destination="@id/placeFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_place"
+        android:id="@+id/placeFragment"
+        android:name="nl.thairosi.activityx.ui.place.PlaceFragment"
+        android:label="@string/place_title">
+        <action
+            android:id="@+id/action_placeFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_about"
+        android:id="@+id/aboutFragment"
+        android:name="nl.thairosi.activityx.ui.about.AboutFragment"
+        android:label="@string/about_title" />
+    <fragment
+        tools:layout="@layout/fragment_visited_places"
+        android:id="@+id/visitedPlacesFragment"
+        android:name="nl.thairosi.activityx.ui.navigation.VisitedPlacesFragment"
+        android:label="@string/visited_places_title"/>
+    <fragment
+        tools:layout="@layout/fragment_criteria"
+        android:id="@+id/criteriaFragment"
+        android:name="nl.thairosi.activityx.ui.navigation.CriteriaFragment"
+        android:label="@string/criteria_title" />
+</navigation>
