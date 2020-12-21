@@ -17,8 +17,30 @@
     <string name="place_title">Enjoy!</string>
     <!--ABOUT FRAGMENT-->
     <string name="about_title">About Activity X</string>
-    <!--CRITERIA FRAGMENT-->
-    <string name="criteria_title">Your search criteria</string>
     <!--VISITED PLACES FRAGMENT-->
     <string name="visited_places_title">Your visited places</string>
+    <!--CRITERIA FRAGMENT-->
+    <string name="criteria_title">Your search criteria</string>
+    <string name="criteria_amusement_parks">Amusement parks</string>
+    <string name="criteria_aquariums">Aquariums</string>
+    <string name="criteria_art_galeries">Art galeries</string>
+    <string name="criteria_bars">Bars</string>
+    <string name="criteria_beauty_salons">Beauty salons</string>
+    <string name="criteria_bowling_alleys">Bowling alleys</string>
+    <string name="criteria_cafes">Cafes</string>
+    <string name="criteria_casinos">Casinos</string>
+    <string name="criteria_churches">Churches</string>
+    <string name="criteria_hindu_temples">Hindu temples</string>
+    <string name="criteria_mosques">Mosques</string>
+    <string name="criteria_movie_theaters">Movie theaters</string>
+    <string name="criteria_museums">Museums</string>
+    <string name="criteria_night_clubs">Night clubs</string>
+    <string name="criteria_parks">Parks</string>
+    <string name="criteria_restaurants">Restaurants</string>
+    <string name="criteria_shopping_malls">Shopping malls</string>
+    <string name="criteria_spas">Spas</string>
+    <string name="criteria_stadiums">Stadiums</string>
+    <string name="criteria_synagogues">Synagogues</string>
+    <string name="criteria_tourist_attractions">Tourist attractions</string>
+    <string name="criteria_zoos">Zoos</string>
 </resources>
