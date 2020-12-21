@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/miAbout"
+        android:id="@+id/aboutFragment"
         android:title="@string/menu_item_about" />
     <item
-        android:id="@+id/miVisitedPlaces"
+        android:id="@+id/visitedPlacesFragment"
         android:title="@string/menu_item_visited_places" />
     <item
-        android:id="@+id/miCriteria"
+        android:id="@+id/criteriaFragment"
         android:title="@string/menu_item_criteria" />
 </menu>
