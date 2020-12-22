@@ -41,8 +41,13 @@
     <fragment
         tools:layout="@layout/fragment_visited_places"
         android:id="@+id/visitedPlacesFragment"
-        android:name="nl.thairosi.activityx.ui.navigation.VisitedPlacesFragment"
-        android:label="@string/visited_places_title"/>
+        android:name="nl.thairosi.activityx.ui.visitedPlaces.VisitedPlacesFragment"
+        android:label="@string/visited_places_title">
+        <action
+            android:id="@+id/action_visitedPlacesFragment_to_placeFragment"
+            app:destination="@id/placeFragment"
+            app:popUpTo="@id/visitedPlacesFragment" />
+    </fragment>
     <fragment
         tools:layout="@layout/fragment_criteria"
         android:id="@+id/criteriaFragment"

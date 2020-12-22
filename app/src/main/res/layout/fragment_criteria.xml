@@ -38,7 +38,7 @@
                     android:id="@+id/switch_art_galeries"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/criteria_art_galeries" />
+                    android:text="@string/criteria_art_galleries" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/switch_bars"
