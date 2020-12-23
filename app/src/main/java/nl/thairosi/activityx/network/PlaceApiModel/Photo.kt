@@ -1,4 +1,4 @@
-package nl.thairosi.activityx.network.data
+package nl.thairosi.activityx.network.PlaceApiModel
 
 data class Photo(
     val height: Int,

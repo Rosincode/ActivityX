@@ -18,27 +18,126 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/place"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{PlaceViewModel.response}"
-            android:textSize="28sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <ImageView
+            android:id="@+id/placeImage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/place_imageHeight"
+            android:contentDescription="@string/place_image_content_description"
+            android:src="@android:drawable/ic_menu_gallery"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.315" />
+            app:layout_constraintTop_toBottomOf="@+id/placePhoto" />
 
-        <Button
-            android:id="@+id/next_button"
+        <TextView
+            android:id="@+id/placePhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Next fragment"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="@dimen/placePadding"
+            android:text="@{PlaceViewModel.photo}"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/placeNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/placePadding"
+            android:text="@{PlaceViewModel.name}"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/placeImage" />
+
+        <TextView
+            android:id="@+id/placeAddressLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/placePadding"
+            android:paddingLeft="@dimen/placePadding"
+            android:paddingRight="@dimen/placePadding"
+            android:text="@string/place_address_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/placeNameText" />
+
+        <TextView
+            android:id="@+id/placeAddressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/placePadding"
+            android:paddingRight="@dimen/placePadding"
+            android:paddingBottom="@dimen/placePadding"
+            android:text="@{PlaceViewModel.address}"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/placeAddressLabel" />
+
+        <TextView
+            android:id="@+id/placeTypesLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/placePadding"
+            android:paddingLeft="@dimen/placePadding"
+            android:paddingRight="@dimen/placePadding"
+            android:text="@string/place_types_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/placeAddressText" />
+
+        <TextView
+            android:id="@+id/placeTypesText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/placePadding"
+            android:paddingRight="@dimen/placePadding"
+            android:paddingBottom="@dimen/placePadding"
+            android:text="@{PlaceViewModel.types}"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/placeTypesLabel" />
+
+        <TextView
+            android:id="@+id/placeUrlLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/placePadding"
+            android:paddingLeft="@dimen/placePadding"
+            android:paddingRight="@dimen/placePadding"
+            android:text="@string/place_url_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/placeTypesText" />
+
+        <TextView
+            android:id="@+id/placeUrlText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:linksClickable="true"
+            android:paddingLeft="@dimen/placePadding"
+            android:paddingRight="@dimen/placePadding"
+            android:paddingBottom="@dimen/placePadding"
+            android:text="@{PlaceViewModel.url}"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/placeUrlLabel" />
+
+        <Button
+            android:id="@+id/placeReturnButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/place_return_button"
+            android:padding="@dimen/placePadding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <CheckBox
+            android:id="@+id/placeBlockActivityCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/placePadding"
+            android:text="@string/place_block_activity_checkbox"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,5 +1,7 @@
 package nl.thairosi.activityx.ui.place
 
+import android.icu.number.NumberFormatter.with
+import android.icu.number.NumberRangeFormatter.with
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +13,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
 import androidx.navigation.findNavController
+import com.squareup.picasso.Picasso
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.databinding.FragmentPlaceBinding
-
-
 
 class PlaceFragment : Fragment() {
 
@@ -35,12 +36,11 @@ class PlaceFragment : Fragment() {
         // Giving the binding access to the OverviewViewModel
         binding.placeViewModel = viewModel
 
-        binding.nextButton.setOnClickListener { v: View ->
-            v.findNavController().navigate(PlaceFragmentDirections.actionPlaceFragmentToHomeFragment())
-        }
+//        binding.nextButton.setOnClickListener { v: View ->
+//            v.findNavController().navigate(PlaceFragmentDirections.actionPlaceFragmentToHomeFragment())
+//        }
 
         return binding.root
     }
-
 
 }

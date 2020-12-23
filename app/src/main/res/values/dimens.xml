@@ -2,4 +2,6 @@
 <resources>
     <dimen name="notification_textSize">16sp</dimen>
     <dimen name="title_textSize">50sp</dimen>
+    <dimen name="place_imageHeight">240dp</dimen>
+    <dimen name="placePadding">8dp</dimen>
 </resources>

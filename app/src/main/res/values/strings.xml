@@ -13,6 +13,13 @@
     <string name="home_go_button">GO!</string>
     <!--NAVIGATION FRAGMENT-->
     <string name="navigation_title">Navigate</string>
+    <!--PLACE FRAGMENT-->
+    <string name="place_url_label">Link to google maps</string>
+    <string name="place_types_label">Types</string>
+    <string name="place_address_label">Address</string>
+    <string name="place_image_content_description">An image of @{PlaceViewModel.name}</string>
+    <string name="place_return_button">Return</string>
+    <string name="place_block_activity_checkbox">Block activity in the future</string>
     <!--HOME FRAGMENT-->
     <string name="place_title">Place details</string>
     <!--ABOUT FRAGMENT-->

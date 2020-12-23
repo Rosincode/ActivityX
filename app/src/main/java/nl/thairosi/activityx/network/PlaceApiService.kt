@@ -2,11 +2,10 @@ package nl.thairosi.activityx.network
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import nl.thairosi.activityx.network.data.PlaceResponse
+import nl.thairosi.activityx.network.PlaceApiModel.PlaceResponse
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -21,8 +20,11 @@ private val retrofit by lazy {
                 .build()
         }
 
-
-
+/**
+ *SEARCH: https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&fields=place_id&key=AIzaSyCofXZEndG5WokT6i6n5fdMabW3IWkGiRc
+ * PLACE: https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJN1t_tDeuEmsRUsoyG83frY4&fields=url,types,place_id,opening_hours,geometry,name,formatted_address,photos&key=AIzaSyCofXZEndG5WokT6i6n5fdMabW3IWkGiRc
+ * PHOTO: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=PHOTO_REFERENCE
+ */
 
     interface PlaceAPIService {
 
