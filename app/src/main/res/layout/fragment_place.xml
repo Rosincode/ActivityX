@@ -6,6 +6,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="nl.thairosi.activityx.ui.place.PlaceFragment">
 
+    <data>
+        <variable
+            name="PlaceViewModel"
+            type="nl.thairosi.activityx.ui.place.PlaceViewModel" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/placeConstraintLayout"
         android:layout_width="match_parent"
@@ -15,11 +22,13 @@
             android:id="@+id/place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Place"
+            android:text="@{PlaceViewModel.response}"
+            android:textSize="28sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.315" />
 
         <Button
             android:id="@+id/next_button"
