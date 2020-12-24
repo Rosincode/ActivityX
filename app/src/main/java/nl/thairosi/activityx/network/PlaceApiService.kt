@@ -14,29 +14,30 @@ private val moshi = Moshi.Builder()
     .build()
 
 private val retrofit by lazy {
-            Retrofit.Builder()
-                .baseUrl("https://maps.googleapis.com/maps/api/place/details/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-        }
+    Retrofit.Builder()
+        .baseUrl("https://maps.googleapis.com/maps/api/place/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+}
 
 /**
  *SEARCH: https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&fields=place_id&key=AIzaSyCofXZEndG5WokT6i6n5fdMabW3IWkGiRc
  * PLACE: https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJN1t_tDeuEmsRUsoyG83frY4&fields=url,types,place_id,opening_hours,geometry,name,formatted_address,photos&key=AIzaSyCofXZEndG5WokT6i6n5fdMabW3IWkGiRc
- * PHOTO: https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=PHOTO_REFERENCE
+ * PHOTO: https://maps.googleapis.com/maps/api/place/photo?key=AIzaSyCofXZEndG5WokT6i6n5fdMabW3IWkGiRc&maxwidth=400&photoreference=PHOTO_REFERENCE
+ * ATtYBwI1YTZy72VQzYU4I8HgBQC9Ht46iy6FTtrwq4mhLWv_zbfqr9fv3Rlvygc5raPHQCaE7ee
  */
 
-    interface PlaceAPIService {
+interface PlaceAPIService {
 
-        @GET("json?")
-        fun getPlace(
-            @Query("place_id") place_id: String = "ChIJW5MOkVpvxkcRDYqgo2pLGBY",
-            @Query("key") key: String = "AIzaSyCofXZEndG5WokT6i6n5fdMabW3IWkGiRc"
-        ): Call<PlaceResponse>
+    @GET("details/json?")
+    fun getPlace(
+        @Query("key") key: String = "AIzaSyCofXZEndG5WokT6i6n5fdMabW3IWkGiRc",
+        @Query("place_id") place_id: String = "ChIJW5MOkVpvxkcRDYqgo2pLGBY"
+    ): Call<PlaceResponse>
 
-    }
+}
 
-object placeApi {
+object PlaceApi {
     val RETROFIT_SERVICE: PlaceAPIService by lazy {
         retrofit.create(PlaceAPIService::class.java)
     }

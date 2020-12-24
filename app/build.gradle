@@ -42,6 +42,9 @@ android {
 }
 
 dependencies {
+    // Images
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
     // Retrofit
     def version_retrofit = "2.9.0"
     implementation "com.squareup.retrofit2:retrofit: $version_retrofit"
