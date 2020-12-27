@@ -10,7 +10,6 @@
         <variable
             name="PlaceViewModel"
             type="nl.thairosi.activityx.ui.place.PlaceViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +23,6 @@
             android:layout_height="@dimen/place_imageHeight"
             android:contentDescription="@string/place_image_content_description"
             android:scaleType="centerCrop"
-            android:src="@android:drawable/ic_menu_gallery"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/placePadding"
-            android:text="@{PlaceViewModel.name}"
+            android:text="@{PlaceViewModel.place.name}"
             android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

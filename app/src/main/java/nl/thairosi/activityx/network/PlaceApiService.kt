@@ -42,4 +42,3 @@ object PlaceApi {
         retrofit.create(PlaceAPIService::class.java)
     }
 }
-
