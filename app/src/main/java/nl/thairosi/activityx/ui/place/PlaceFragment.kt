@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.squareup.picasso.Picasso
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.databinding.FragmentPlaceBinding
@@ -19,7 +20,7 @@ class PlaceFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
 
         val binding: FragmentPlaceBinding = DataBindingUtil.inflate(
@@ -31,9 +32,15 @@ class PlaceFragment : Fragment() {
         // Giving the binding access to the ViewModel
         binding.placeViewModel = viewModel
 
-        viewModel.photo.observe(viewLifecycleOwner, { newUrl ->
-            Picasso.get().load(newUrl).into(binding.placeImage)
+        // Load the place photo into the fragment with Picasso
+        viewModel.place.observe(viewLifecycleOwner, { place ->
+            Picasso.get().load(place.photo).into(binding.placeImage)
         })
+
+        // Let the return button navigate to homeFragment
+        binding.placeReturnButton.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.action_placeFragment_to_homeFragment)
+        )
 
         return binding.root
     }

@@ -12,10 +12,6 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
     val ownLocation: OwnLocationLiveData
         get() = _ownLocation
 
-    private val _destinationLocation = MutableLiveData<Location>()
-    val destinationLocation: LiveData<Location>
-        get() = _destinationLocation
-
     private val _rotationDegrees = MutableLiveData<Float>()
     val rotationDegrees: LiveData<Float>
         get() = _rotationDegrees
@@ -38,6 +34,7 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
 
     private fun setDestinationLocation() : Location {
         TODO("Not yet implemented")
+
     }
 
     private fun setDistance() : Int {
