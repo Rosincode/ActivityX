@@ -1,15 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="nl.thairosi.activityx.ui.visitedPlaces.VisitedPlacesFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+        <variable
+            name="VisitedPlacesViewModel"
+            type="nl.thairosi.activityx.ui.visitedPlaces.VisitedPlacesViewModel" />
+    </data>
+
+    <RelativeLayout
         android:id="@+id/visitedPlacesConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/fragment_visited_place" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/text_view_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="There are no visited places found"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_centerInParent="true" />
 
         <Button
             android:id="@+id/next_button"
@@ -21,6 +50,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
 </layout>

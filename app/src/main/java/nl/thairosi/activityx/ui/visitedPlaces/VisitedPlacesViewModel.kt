@@ -1,8 +1,11 @@
-package nl.thairosi.activityx.ui.navigation
+package nl.thairosi.activityx.ui.visitedPlaces
 
 import androidx.lifecycle.ViewModel
+import nl.thairosi.activityx.repository.PlaceRepository
 
-class VisitedPlacesViewModel : ViewModel() {
+class VisitedPlacesViewModel(
+    val placeRepository: PlaceRepository
+    ) : ViewModel() {
 
     // TODO: Implement the ViewModel
 }

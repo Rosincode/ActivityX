@@ -11,16 +11,19 @@ import androidx.navigation.Navigation
 import com.squareup.picasso.Picasso
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.databinding.FragmentPlaceBinding
+import nl.thairosi.activityx.repository.PlaceRepository
 
 class PlaceFragment : Fragment() {
 
-    private val viewModel: PlaceViewModel by lazy {
-        ViewModelProvider(this).get(PlaceViewModel::class.java)
-    }
+    lateinit var viewModel: PlaceViewModel
+
+//    private val viewModel: PlaceViewModel by lazy {
+//        ViewModelProvider(this).get(PlaceViewModel::class.java)
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
 
         val binding: FragmentPlaceBinding = DataBindingUtil.inflate(
@@ -28,6 +31,10 @@ class PlaceFragment : Fragment() {
         )
 
         binding.lifecycleOwner = this
+
+        val placeRepository = PlaceRepository()
+        val viewModelProviderFactory = PlaceViewModelProviderFactory(placeRepository)
+        viewModel = ViewModelProvider(this, viewModelProviderFactory).get(PlaceViewModel::class.java)
 
         // Giving the binding access to the ViewModel
         binding.placeViewModel = viewModel

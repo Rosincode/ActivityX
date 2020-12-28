@@ -9,11 +9,14 @@ import nl.thairosi.activityx.Keys
 import nl.thairosi.activityx.models.Place
 import nl.thairosi.activityx.network.PlaceApi
 import nl.thairosi.activityx.network.PlaceApiModel.PlaceResponse
+import nl.thairosi.activityx.repository.PlaceRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PlaceViewModel : ViewModel() {
+class PlaceViewModel(
+    val placeRepository: PlaceRepository
+) : ViewModel() {
 
     private var _place = MutableLiveData<Place>()
     val place: LiveData<Place>
