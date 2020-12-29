@@ -8,14 +8,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.squareup.picasso.Picasso
 import nl.thairosi.activityx.R
+import nl.thairosi.activityx.database.PlaceDatabase
 import nl.thairosi.activityx.databinding.FragmentPlaceBinding
 import nl.thairosi.activityx.repository.PlaceRepository
 
 class PlaceFragment : Fragment() {
 
     lateinit var viewModel: PlaceViewModel
+    val args: PlaceFragmentArgs by navArgs()
 
 //    private val viewModel: PlaceViewModel by lazy {
 //        ViewModelProvider(this).get(PlaceViewModel::class.java)
@@ -32,7 +35,7 @@ class PlaceFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
-        val placeRepository = PlaceRepository()
+        val placeRepository = PlaceRepository(PlaceDatabase(requireContext()))
         val viewModelProviderFactory = PlaceViewModelProviderFactory(placeRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(PlaceViewModel::class.java)
 
@@ -48,6 +51,10 @@ class PlaceFragment : Fragment() {
         binding.placeReturnButton.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.action_placeFragment_to_homeFragment)
         )
+
+        // Safeargs
+        val place = args.place
+        viewModel.getPlace(place.placeId)
 
         return binding.root
     }

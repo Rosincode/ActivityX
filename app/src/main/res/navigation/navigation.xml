@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_placeFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <argument
+            android:name="place"
+            app:argType="nl.thairosi.activityx.models.Place" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_about"

@@ -16,6 +16,7 @@ import nl.thairosi.activityx.repository.PlaceRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class PlaceViewModel(
     val placeRepository: PlaceRepository
@@ -26,10 +27,17 @@ class PlaceViewModel(
         get() = _place
 
     init {
-        getPlace("ChIJW5MOkVpvxkcRDYqgo2pLGBY")
+//        getPlace("ChIJW5MOkVpvxkcRDYqgo2pLGBY")
+
     }
 
-    private fun getPlace(placeId: String) {
+    private fun updateOrInsert(place: Place) {
+        viewModelScope.launch {
+            placeRepository.updateOrInsert(place)
+        }
+    }
+
+    fun getPlace(placeId: String) {
         viewModelScope.launch {
             val call = PlaceApi.RETROFIT_SERVICE.getPlace(place_id = placeId)
             call.enqueue(object : Callback<PlaceResponse> {
@@ -38,7 +46,7 @@ class PlaceViewModel(
                     response: Response<PlaceResponse>,
                 ) {
                     if (response.body()?.status.equals("OK")) {
-                        _place.value = Place(
+                        val place = Place(
                             placeId = response.body()?.result?.place_id.toString(),
                             photo = photoAdapter(response.body()?.result?.photos?.first()?.photo_reference.toString()),
                             name = response.body()?.result?.name.toString(),
@@ -47,8 +55,16 @@ class PlaceViewModel(
                             url = response.body()?.result?.url.toString(),
                             location = response.body()?.result?.geometry?.location?.let {
                                 locationAdapter(it)
-                            }
+                            },
+                            date = Date(2020,12,20)
                         )
+
+                        // Update live data
+                        _place.value = place
+
+                        // Insert into database
+                        updateOrInsert(place)
+
                     } else {
                         _place.value = Place(name = "Place not found")
                     }
@@ -80,4 +96,6 @@ class PlaceViewModel(
         androidLocation.longitude = apiLocation.lng
         return androidLocation
     }
+
+
 }
