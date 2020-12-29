@@ -1,5 +1,8 @@
 package nl.thairosi.activityx.ui.place
 
+import android.location.Location
+import android.location.LocationManager
+import android.location.LocationManager.GPS_PROVIDER
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -41,7 +44,10 @@ class PlaceViewModel(
                             name = response.body()?.result?.name.toString(),
                             address = response.body()?.result?.formatted_address.toString(),
                             types = typesAdapter(response.body()?.result?.types.toString()),
-                            url = response.body()?.result?.url.toString()
+                            url = response.body()?.result?.url.toString(),
+                            location = response.body()?.result?.geometry?.location?.let {
+                                locationAdapter(it)
+                            }
                         )
                     } else {
                         _place.value = Place(name = "Place not found")
@@ -66,5 +72,12 @@ class PlaceViewModel(
             .replace("[", "")
             .replace("]", "")
             .replace("_", " ")
+    }
+
+    private fun locationAdapter(apiLocation: nl.thairosi.activityx.network.PlaceApiModel.Location): Location {
+        var androidLocation = Location(GPS_PROVIDER)
+        androidLocation.latitude = apiLocation.lat
+        androidLocation.longitude = apiLocation.lng
+        return androidLocation
     }
 }

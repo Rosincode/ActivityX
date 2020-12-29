@@ -3,7 +3,6 @@ package nl.thairosi.activityx.network
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import nl.thairosi.activityx.Keys
-import nl.thairosi.activityx.models.Place
 import nl.thairosi.activityx.network.PlaceApiModel.PlaceResponse
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -39,7 +38,7 @@ interface PlaceAPIService {
     @GET("details/json?")
     fun getPlace(
         @Query("key") key: String = Keys.apiKey(),
-        @Query("place_id") place_id: String
+        @Query("place_id") place_id: String?
     ): Call<PlaceResponse>
 
 }

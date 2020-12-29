@@ -40,10 +40,18 @@ class NavigationFragment : Fragment() {
                 .navigate(NavigationFragmentDirections.actionNavigationFragmentToPlaceFragment())
         }
 
-        viewModel.rotationDegrees.observe(viewLifecycleOwner, { rotateValue ->
-            binding.navigationArrow.rotation = rotateValue
+        viewModel.navigation.observe(viewLifecycleOwner, { navigation ->
+            binding.navigationArrow.rotation = navigation.rotation
+            binding.NavigationDistanceText.text = navigation.distance.toString()
         })
 
         return binding.root
     }
+
+
+
+    private fun calculateDistance(): String {
+        return 100.toString()
+    }
+
 }
