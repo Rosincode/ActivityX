@@ -9,19 +9,15 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
-import nl.thairosi.activityx.models.Navigation
 
 /**
  * This class extends the location LiveData in the navigationViewModel
  */
-class NavigationLiveData(context: Context, destination: Location?) : LiveData<Navigation>() {
+class LocationLiveData(context: Context) : LiveData<Location>() {
 
     private var fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-    private var accelerometer: Int = Sensor.TYPE_ACCELEROMETER
-    private var magnetometer: Int = Sensor.TYPE_MAGNETIC_FIELD
 
-
-    // Called when the lifecycle owner(LocationActivity) is either paused, stopped or destroyed
+    // Called when the lifecycle owner(Activity) is either paused, stopped or destroyed
     override fun onInactive() {
         super.onInactive()
         fusedLocationClient.removeLocationUpdates(locationCallback)
@@ -45,23 +41,14 @@ class NavigationLiveData(context: Context, destination: Location?) : LiveData<Na
     }
 
     // Will be invoked when we have a location update from FusedLocationProviderClient
+    // Maps navigation data to the Location model. Value is a property inherited from LiveData
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult?) {
             locationResult ?: return
             for (location in locationResult.locations) {
-                if (destination != null) {
-                    setNavigationData(location, destination)
-                }
+                value = location
             }
         }
-    }
-
-    // Map navigation data to the Navigation model. Value is a property inherited from LiveData
-    private fun setNavigationData(location: Location, destination: Location) {
-        val distance = location.distanceTo(destination)
-        val rotation = location.bearingTo(destination)
-//        Log.i("Navigation", Sensor.TYPE_ORIENTATION.absoluteValue.toString())
-        value = Navigation(rotation, distance)
     }
 
     // The interval and accuracy of the location update

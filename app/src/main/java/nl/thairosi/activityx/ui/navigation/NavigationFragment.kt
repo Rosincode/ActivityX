@@ -11,7 +11,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.google.android.gms.location.FusedLocationProviderClient
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.databinding.FragmentNavigationBinding
 import nl.thairosi.activityx.models.Place
@@ -20,8 +19,6 @@ import java.sql.Date
 
 class NavigationFragment : Fragment() {
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-
     private val viewModel: NavigationViewModel by lazy {
         ViewModelProvider(this).get(NavigationViewModel::class.java)
     }
@@ -29,7 +26,7 @@ class NavigationFragment : Fragment() {
     @SuppressLint("MissingPermission")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val binding: FragmentNavigationBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_navigation, container, false
@@ -51,13 +48,18 @@ class NavigationFragment : Fragment() {
                         "cafe, bar, restaurant, food, point of interest, establishment",
                         "https://maps.google.com/?cid=1592105389659294221",
                         locationConverter(),
-                        Date(2020,12,20),
+                        Date(2020, 12, 20),
                         true)))
         }
 
-        viewModel.navigation.observe(viewLifecycleOwner, { navigation ->
-            binding.navigationArrow.rotation = navigation.rotation
-            binding.NavigationDistanceText.text = navigation.distance.toString()
+        // Observes the NavigationViewModel and binds the navigation fragment values to the calculations
+        viewModel.location.observe(viewLifecycleOwner, { location ->
+            viewModel.orientation.observe(viewLifecycleOwner, { orientation ->
+                binding.NavigationDistanceText.text =
+                    location.distanceTo(viewModel.destination).toString()
+                binding.navigationArrow.rotation =
+                    location.bearingTo(viewModel.destination) - orientation
+            })
         })
 
         return binding.root
@@ -69,14 +71,7 @@ class NavigationFragment : Fragment() {
         androidLocation.latitude = 52.08915712791165
         androidLocation.longitude = 5.12157871534323
         //
-
         return androidLocation
-    }
-
-
-
-    private fun calculateDistance(): String {
-        return 100.toString()
     }
 
 }
