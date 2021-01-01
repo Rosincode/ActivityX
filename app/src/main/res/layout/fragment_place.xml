@@ -38,7 +38,7 @@
                     android:id="@+id/placeNameText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/placePadding"
+                    android:padding="@dimen/application_margin_small"
                     android:text="@{PlaceViewModel.place.name}"
                     android:textSize="25sp" />
 
@@ -46,18 +46,18 @@
                     android:id="@+id/placeAddressLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/placePadding"
-                    android:paddingTop="@dimen/placePadding"
-                    android:paddingRight="@dimen/placePadding"
+                    android:paddingLeft="@dimen/application_margin_small"
+                    android:paddingTop="@dimen/application_margin_small"
+                    android:paddingRight="@dimen/application_margin_small"
                     android:text="@string/place_address_label" />
 
                 <TextView
                     android:id="@+id/placeAddressText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/placePadding"
-                    android:paddingRight="@dimen/placePadding"
-                    android:paddingBottom="@dimen/placePadding"
+                    android:paddingLeft="@dimen/application_margin_small"
+                    android:paddingRight="@dimen/application_margin_small"
+                    android:paddingBottom="@dimen/application_margin_small"
                     android:text="@{PlaceViewModel.place.address}"
                     android:textSize="20sp" />
 
@@ -65,18 +65,18 @@
                     android:id="@+id/placeTypesLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/placePadding"
-                    android:paddingTop="@dimen/placePadding"
-                    android:paddingRight="@dimen/placePadding"
+                    android:paddingLeft="@dimen/application_margin_small"
+                    android:paddingTop="@dimen/application_margin_small"
+                    android:paddingRight="@dimen/application_margin_small"
                     android:text="@string/place_types_label" />
 
                 <TextView
                     android:id="@+id/placeTypesText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/placePadding"
-                    android:paddingRight="@dimen/placePadding"
-                    android:paddingBottom="@dimen/placePadding"
+                    android:paddingLeft="@dimen/application_margin_small"
+                    android:paddingRight="@dimen/application_margin_small"
+                    android:paddingBottom="@dimen/application_margin_small"
                     android:text="@{PlaceViewModel.place.types}"
                     android:textSize="20sp" />
 
@@ -84,9 +84,9 @@
                     android:id="@+id/placeUrlLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/placePadding"
-                    android:paddingTop="@dimen/placePadding"
-                    android:paddingRight="@dimen/placePadding"
+                    android:paddingLeft="@dimen/application_margin_small"
+                    android:paddingTop="@dimen/application_margin_small"
+                    android:paddingRight="@dimen/application_margin_small"
                     android:text="@string/place_url_label" />
 
                 <TextView
@@ -95,9 +95,9 @@
                     android:layout_height="wrap_content"
                     android:autoLink="web"
                     android:linksClickable="true"
-                    android:paddingLeft="@dimen/placePadding"
-                    android:paddingRight="@dimen/placePadding"
-                    android:paddingBottom="@dimen/placePadding"
+                    android:paddingLeft="@dimen/application_margin_small"
+                    android:paddingRight="@dimen/application_margin_small"
+                    android:paddingBottom="@dimen/application_margin_small"
                     android:text="@{PlaceViewModel.place.url}"
                     android:textSize="20sp" />
 
@@ -105,7 +105,7 @@
                     android:id="@+id/placeBlockActivityCheckbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/placePadding"
+                    android:padding="@dimen/application_margin_small"
                     android:text="@string/place_block_activity_checkbox" />
 
             </LinearLayout>
@@ -116,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/place_return_button"
-            android:padding="@dimen/placePadding"
+            android:padding="@dimen/application_margin_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

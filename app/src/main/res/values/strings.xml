@@ -50,4 +50,9 @@
     <string name="criteria_synagogues">Synagogues</string>
     <string name="criteria_tourist_attractions">Tourist attractions</string>
     <string name="criteria_zoos">Zoos</string>
+    <string name="navigation_distance_image">Small icon that moves down when the distance decreases</string>
+    <string name="navigation_compass_image">Orientated compass that rotates when rotating the device</string>
+    <string name="navigation_arrow_image">Navigation arrow that points towards the activity</string>
+    <string name="navigation_distance_label_text">Distance: </string>
+    <string name="navigation_distance_unit">meters</string>
 </resources>

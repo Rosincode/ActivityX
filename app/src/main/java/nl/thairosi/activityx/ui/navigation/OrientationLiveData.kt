@@ -11,7 +11,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 
 /**
- * This class extends the location LiveData in the navigationViewModel
+ * This class extends the orientation LiveData in the navigationViewModel
  */
 class OrientationLiveData(application: Application) : LiveData<Float>(), SensorEventListener {
 
@@ -31,7 +31,6 @@ class OrientationLiveData(application: Application) : LiveData<Float>(), SensorE
         super.onInactive()
         sensorManager.unregisterListener(this, accelerometer)
         sensorManager.unregisterListener(this, magnetometer)
-//        fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
     // Called when the lifecycle owner(LocationActivity) is either started or resumed
@@ -68,10 +67,6 @@ class OrientationLiveData(application: Application) : LiveData<Float>(), SensorE
         for (i in input.indices) {
             output[i] = output[i] + alpha * (input[i] - output[i])
         }
-    }
-
-    override fun toString(): String {
-        return "testorientation"
     }
 
 }

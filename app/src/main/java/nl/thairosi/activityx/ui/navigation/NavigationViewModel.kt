@@ -12,10 +12,7 @@ import nl.thairosi.activityx.models.Place
  * Preparing data for the navigation UI.
  * Responsible of acquiring and keeping the necessary data.
  * Automatically retained during configuration changes.
- *
- *  If the ViewModel needs the Application context, for example to find a system service,
- *  it can extend the AndroidViewModel class and have a constructor that receives the Application in the constructor,
- *  since Application class extends Context.
+ * Extends AndroidViewModel and has a application constructor for live data system services
  */
 class NavigationViewModel(application: Application) : AndroidViewModel(application) {
 

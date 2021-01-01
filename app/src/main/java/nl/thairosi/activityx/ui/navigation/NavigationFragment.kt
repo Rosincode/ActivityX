@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.marginBottom
+import androidx.core.view.updatePadding
+import androidx.core.view.updatePaddingRelative
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -55,10 +58,24 @@ class NavigationFragment : Fragment() {
         // Observes the NavigationViewModel and binds the navigation fragment values to the calculations
         viewModel.location.observe(viewLifecycleOwner, { location ->
             viewModel.orientation.observe(viewLifecycleOwner, { orientation ->
-                binding.NavigationDistanceText.text =
-                    location.distanceTo(viewModel.destination).toString()
-                binding.navigationArrow.rotation =
-                    location.bearingTo(viewModel.destination) - orientation
+                val distance = location.distanceTo(viewModel.destination)
+                val bearing = location.bearingTo(viewModel.destination)
+                val arrowRotation = bearing.minus(orientation)
+                val compassRotation = 360F.minus(orientation)
+                var distancePaddingBottom = 250
+
+//                if (distance < 50) { distancePaddingBottom = -300 }
+
+                if (distance < 2000) {
+                    val percentage = 0.05 * distance
+                    distancePaddingBottom = (5.5 * percentage).toInt() - 300
+                }
+
+                binding.navigationDistanceText.text = distance.toInt().toString()
+                binding.navigationDestinationImage.updatePaddingRelative(0, 0, 0,
+                    distancePaddingBottom)
+                binding.navigationArrowImage.rotation = arrowRotation
+                binding.navigationCompassImage.rotation = compassRotation
             })
         })
 
