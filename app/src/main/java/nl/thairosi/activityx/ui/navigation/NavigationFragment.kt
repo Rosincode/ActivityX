@@ -6,9 +6,8 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.core.view.marginBottom
-import androidx.core.view.updatePadding
 import androidx.core.view.updatePaddingRelative
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -58,24 +57,24 @@ class NavigationFragment : Fragment() {
         // Observes the NavigationViewModel and binds the navigation fragment values to the calculations
         viewModel.location.observe(viewLifecycleOwner, { location ->
             viewModel.orientation.observe(viewLifecycleOwner, { orientation ->
+                //Calculates the distance to the destination in meters
                 val distance = location.distanceTo(viewModel.destination)
-                val bearing = location.bearingTo(viewModel.destination)
-                val arrowRotation = bearing.minus(orientation)
-                val compassRotation = 360F.minus(orientation)
+                //Sets the initial padding for the destinationImage to 250 (used above 2000m)
                 var distancePaddingBottom = 250
-
-//                if (distance < 50) { distancePaddingBottom = -300 }
-
+                //Calculates the necessary paddingBottom for the destinationImage within 2000m
                 if (distance < 2000) {
+                    //Calculates the percentage of the distance (2000m is 100%)
                     val percentage = 0.05 * distance
+                    //Multiplying 1% of the total padding with the percentage
                     distancePaddingBottom = (5.5 * percentage).toInt() - 300
                 }
-
                 binding.navigationDistanceText.text = distance.toInt().toString()
+                binding.navigationDistanceUnitText.visibility = VISIBLE
+                binding.navigationCompassImage.rotation = 360F.minus(orientation)
+                binding.navigationArrowImage.rotation =
+                    location.bearingTo(viewModel.destination).minus(orientation)
                 binding.navigationDestinationImage.updatePaddingRelative(0, 0, 0,
                     distancePaddingBottom)
-                binding.navigationArrowImage.rotation = arrowRotation
-                binding.navigationCompassImage.rotation = compassRotation
             })
         })
 

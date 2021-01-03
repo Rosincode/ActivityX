@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Activity X</string>
+    <string name="activity_x_icon">Activity X icoon</string>
+    <string name="menu_open">openen</string>
+    <string name="menu_close">sluiten</string>
+    <string name="menu_item_criteria">Zoek criteria</string>
+    <string name="menu_item_about">Over Activity X</string>
+    <string name="menu_item_visited_places">Bezochte activiteiten</string>
+    <string name="home_go_button">GO!</string>
+    <string name="navigation_title">Navigeer</string>
+    <string name="navigation_distance_image">Klein icoon dat de afstand aanduidt</string>
+    <string name="navigation_compass_image">Magnetisch kompas</string>
+    <string name="navigation_arrow_image">Pijl die naar de activiteit wijst</string>
+    <string name="navigation_distance_unit">m</string>
+    <string name="place_url_label">Link naar google maps</string>
+    <string name="place_types_label">Activiteit types</string>
+    <string name="place_address_label">Adres</string>
+    <string name="place_image_content_description">Een foto van de activiteit</string>
+    <string name="place_return_button">Terug</string>
+    <string name="place_block_activity_checkbox">Blokkeer activiteit in de toekomst</string>
+    <string name="place_title">Activiteit details</string>
+    <string name="about_title">Over Activity X</string>
+    <string name="visited_places_title">Bezochte plaatsen</string>
+    <string name="criteria_title">"Zoek criteria "</string>
+</resources>

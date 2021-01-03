@@ -7,7 +7,6 @@ import android.hardware.Sensor.TYPE_ACCELEROMETER
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.util.Log
 import androidx.lifecycle.LiveData
 
 /**
@@ -15,12 +14,12 @@ import androidx.lifecycle.LiveData
  */
 class OrientationLiveData(application: Application) : LiveData<Float>(), SensorEventListener {
 
-    private val sensorManager: SensorManager = application.getSystemService(SENSOR_SERVICE) as SensorManager
+    private val sensorManager: SensorManager =
+        application.getSystemService(SENSOR_SERVICE) as SensorManager
 
     private var accelerometer: Sensor = sensorManager.getDefaultSensor(TYPE_ACCELEROMETER)
     private var magnetometer: Sensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
 
-    var currentDegree = 0.0f
     var lastAccelerometer = FloatArray(3)
     var lastMagnetometer = FloatArray(3)
     var lastAccelerometerSet = false

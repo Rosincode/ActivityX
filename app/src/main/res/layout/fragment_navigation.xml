@@ -36,6 +36,7 @@
             android:layout_marginStart="2dp"
 
             android:contentDescription="@string/navigation_distance_image"
+            android:paddingBottom="100dp"
             android:src="@drawable/ic_activity_x_direction"
             app:layout_constraintBottom_toTopOf="@+id/navigationCompassImage"
             app:layout_constraintEnd_toEndOf="parent"
@@ -76,17 +77,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/navigationDistanceLabelText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/application_margin_small"
-            android:text="@string/navigation_distance_label_text"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/navigationArrowImage"
-            app:layout_constraintEnd_toStartOf="@+id/navigationDistanceText"
-            app:layout_constraintTop_toBottomOf="@+id/navigationCompassImage" />
-
-        <TextView
             android:id="@+id/navigationDistanceText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -98,12 +88,13 @@
             app:layout_constraintTop_toBottomOf="@+id/navigationCompassImage" />
 
         <TextView
-            android:id="@+id/navigationDistanceText3"
+            android:id="@+id/navigationDistanceUnitText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/application_margin_small"
             android:text="@string/navigation_distance_unit"
             android:textSize="24sp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/navigationArrowImage"
             app:layout_constraintStart_toEndOf="@+id/navigationDistanceText"
             app:layout_constraintTop_toBottomOf="@+id/navigationCompassImage" />
