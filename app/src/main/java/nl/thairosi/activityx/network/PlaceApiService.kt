@@ -3,6 +3,7 @@ package nl.thairosi.activityx.network
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import nl.thairosi.activityx.Keys
+import nl.thairosi.activityx.network.NearbySearchApiModel.NearbySearchResponse
 import nl.thairosi.activityx.network.PlaceApiModel.PlaceResponse
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -30,17 +31,27 @@ import retrofit2.http.Query
 
 interface PlaceAPIService {
 
-    companion object {
-        const val BASE_URL = "https://maps.googleapis.com/maps/api/place/"
-        val API_KEY = Keys.apiKey()
-    }
+//    companion object {
+//        const val BASE_URL = "https://maps.googleapis.com/maps/api/place/"
+//        val API_KEY = Keys.apiKey()
+//    }
 
+    //Google API call to get one place by its place_id
     @GET("details/json?")
     fun getPlace(
         @Query("key") key: String = Keys.apiKey(),
         @Query("place_id") place_id: String?
     ): Call<PlaceResponse>
 
+    //Google API call to get multiple places of a chosen type within a chosen radius
+    @GET("nearbysearch/json?")
+    fun getPlaces(
+        @Query("key") key: String = Keys.apiKey(),
+        @Query("fields") fields: String = "place_id",
+        @Query("location") location: String?,
+        @Query("radius") radius: String?,
+        @Query("type") type: String?
+    ): Call<NearbySearchResponse>
 }
 
 object PlaceApi {
