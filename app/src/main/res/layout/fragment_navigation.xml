@@ -34,7 +34,6 @@
             android:layout_width="40dp"
             android:layout_height="0dp"
             android:layout_marginStart="2dp"
-
             android:contentDescription="@string/navigation_distance_image"
             android:paddingBottom="100dp"
             android:src="@drawable/ic_activity_x_direction"
@@ -49,24 +48,24 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="150dp"
-            android:layout_marginBottom="150dp"
+            android:contentDescription="@string/navigation_compass_image"
             android:src="@drawable/ic_compass"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/navigationDistanceText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/navigation_compass_image" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/navigationArrowImage"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="150dp"
+            android:contentDescription="@string/navigation_arrow_image"
             android:src="@drawable/ic_compass_direction"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/navigationDistanceText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/navigation_arrow_image" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/nextButton"
@@ -82,10 +81,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/navigationArrowImage"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/navigationCompassImage" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/navigationDistanceUnitText"
@@ -95,9 +93,8 @@
             android:text="@string/navigation_distance_unit"
             android:textSize="24sp"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/navigationArrowImage"
-            app:layout_constraintStart_toEndOf="@+id/navigationDistanceText"
-            app:layout_constraintTop_toBottomOf="@+id/navigationCompassImage" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/navigationDistanceText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
