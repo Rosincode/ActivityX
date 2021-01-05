@@ -16,6 +16,7 @@ import nl.thairosi.activityx.repository.PlaceRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDateTime
 import java.util.*
 
 class PlaceViewModel(
@@ -56,7 +57,8 @@ class PlaceViewModel(
                             location = response.body()?.result?.geometry?.location?.let {
                                 locationAdapter(it)
                             },
-                            date = Date(2020,12,20)
+                            date = LocalDateTime.parse("2021-01-04T18:50:53"),
+                            blocked = true
                         )
 
                         // Update live data

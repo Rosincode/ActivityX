@@ -2,20 +2,24 @@ package nl.thairosi.activityx.database
 
 import android.location.Location
 import android.location.LocationManager
+
 import androidx.room.TypeConverter
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 
 import java.util.*
+
 
 class Converters {
 
     @TypeConverter
-    fun toDate(dateLong:Long):Date {
-        return Date(dateLong)
+    fun fromLocalDateTime(localDateTime: LocalDateTime): String? {
+        return localDateTime.toString()
     }
 
     @TypeConverter
-    fun fromDate(date: Date):Long{
-        return date.time
+    fun ToLocalDateTime(date: String?): LocalDateTime? {
+        return LocalDateTime.parse(date)
     }
 
     @TypeConverter

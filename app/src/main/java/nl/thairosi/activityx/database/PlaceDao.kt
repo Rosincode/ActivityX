@@ -16,4 +16,7 @@ interface PlaceDao {
     @Query("SELECT * FROM visited_places")
     fun getVisitedPlaces(): LiveData<List<Place>>
 
+//    @Query("SELECT *, strftime('%d-%m-%Y', date) as dateSimple FROM visited_places WHERE dateSimple = '04-01-2021' AND dateSimple > '03-01-2021'")
+//    fun getVisitedPlaces(): LiveData<List<Place>>
+
 }

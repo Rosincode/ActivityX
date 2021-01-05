@@ -17,6 +17,7 @@ import nl.thairosi.activityx.R
 import nl.thairosi.activityx.databinding.FragmentNavigationBinding
 import nl.thairosi.activityx.models.Place
 import java.sql.Date
+import java.time.LocalDateTime
 
 
 class NavigationFragment : Fragment() {
@@ -50,7 +51,7 @@ class NavigationFragment : Fragment() {
                         "cafe, bar, restaurant, food, point of interest, establishment",
                         "https://maps.google.com/?cid=1592105389659294221",
                         locationConverter(),
-                        Date(2020, 12, 20),
+                        date = LocalDateTime.parse("2021-01-04T18:50:53"),
                         true)))
         }
 

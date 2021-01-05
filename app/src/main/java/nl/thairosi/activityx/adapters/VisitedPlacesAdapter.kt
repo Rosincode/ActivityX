@@ -48,7 +48,7 @@ class VisitedPlacesAdapter : RecyclerView.Adapter<VisitedPlacesAdapter.PlaceView
         holder.itemView.apply {
             Glide.with(this).load(place.photo).into(image_view_visited_place)
             text_view_name_visited_place.text = place.name
-            text_view_date_place_visited.text = place.date?.toLocaleString()
+            text_view_date_place_visited.text = place.getDateToView()
             switch_block_visited_place.isChecked = place.blocked
 
             setOnClickListener {
