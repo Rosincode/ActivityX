@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import androidx.core.view.updatePaddingRelative
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import nl.thairosi.activityx.R
@@ -55,40 +57,56 @@ class NavigationFragment : Fragment() {
                         true)))
         }
 
-        // Observes the NavigationViewModel and binds the navigation fragment values to the calculations
+        var getLocation = true
+        var printLatLng = true
         viewModel.location.observe(viewLifecycleOwner, { location ->
-            viewModel.orientation.observe(viewLifecycleOwner, { orientation ->
-                //Calculates the distance to the destination in meters
-                val distance = location.distanceTo(viewModel.destination)
-                //Sets the initial padding for the destinationImage to 250 (used above 2000m)
-                var distancePaddingBottom = 250
-                //Calculates the necessary paddingBottom for the destinationImage within 2000m
-                if (distance < 2000) {
-                    //Calculates the percentage of the distance (2000m is 100%)
-                    val percentage = 0.05 * distance
-                    //Multiplying 1% of the total padding with the percentage
-                    distancePaddingBottom = (5.5 * percentage).toInt() - 300
+            if(location.hasAccuracy()) {
+                if (getLocation) {
+                    val latLng = location.latitude.toString() + "," + location.longitude.toString()
+                    viewModel.getRandomPlace(latLng, "2000", "cafe", "4")
+                    getLocation = false
                 }
-                binding.navigationDistanceText.text = distance.toInt().toString()
-                binding.navigationDistanceUnitText.visibility = VISIBLE
-                binding.navigationCompassImage.rotation = 360F.minus(orientation)
-                binding.navigationArrowImage.rotation =
-                    location.bearingTo(viewModel.destination).minus(orientation)
-                binding.navigationDestinationImage.updatePaddingRelative(0, 0, 0,
-                    distancePaddingBottom)
-            })
+                if (!getLocation) {
+                    viewModel.place.observe(viewLifecycleOwner, { place ->
+                        if (place.location != null) {
+                            if (printLatLng) {
+                                Log.i("randomPlace", place.name)
+                                printLatLng = false
+                            }
+                            //Calculates the distance to the destination in meters
+                            val distance = location.distanceTo(place.location)
+                            //Sets the initial padding for the destinationImage to 250 (used above 2000m)
+                            var distancePaddingBottom = 250
+                            //Calculates the necessary paddingBottom for the destinationImage within 2000m
+                            if (distance < 2000) {
+                                //Calculates the percentage of the distance (2000m is 100%)
+                                val percentage = 0.05 * distance
+                                //Multiplying 1% of the total padding with the percentage
+                                distancePaddingBottom = (5.5 * percentage).toInt() - 300
+                            }
+                            viewModel.orientation.observe(viewLifecycleOwner, { orientation ->
+                                binding.navigationCompassImage.rotation = 360F.minus(orientation)
+                                binding.navigationArrowImage.rotation =
+                                    location.bearingTo(place.location).minus(orientation)
+                                binding.navigationDestinationImage.updatePaddingRelative(0, 0, 0,
+                                    distancePaddingBottom)
+                            })
+                        }
+                    })
+                }
+            }
         })
 
         return binding.root
-    }
 
-    // To test
-    private fun locationConverter(): Location {
-        val androidLocation = Location(LocationManager.GPS_PROVIDER)
-        androidLocation.latitude = 52.08915712791165
-        androidLocation.longitude = 5.12157871534323
-        //
-        return androidLocation
     }
+        // To test
+        private fun locationConverter(): Location {
+            val androidLocation = Location(LocationManager.GPS_PROVIDER)
+            androidLocation.latitude = 52.08915712791165
+            androidLocation.longitude = 5.12157871534323
+            //
+            return androidLocation
+        }
 
-}
+    }

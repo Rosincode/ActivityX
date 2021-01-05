@@ -20,7 +20,7 @@ import java.util.*
 @Parcelize
 data class Place(
     @PrimaryKey
-    val placeId: String = "",
+    var placeId: String = "",
     var photo: String = "",
     var name: String = "",
     var address: String = "",

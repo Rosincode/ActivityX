@@ -47,10 +47,11 @@ interface PlaceAPIService {
     @GET("nearbysearch/json?")
     fun getPlaces(
         @Query("key") key: String = Keys.apiKey(),
-        @Query("fields") fields: String = "place_id",
-        @Query("location") location: String?,
-        @Query("radius") radius: String?,
-        @Query("type") type: String?
+//        @Query("opennow") opennow: String = "true",
+        @Query("location") location: String,
+        @Query("radius") radius: String,
+        @Query("type") type: String,
+        @Query("maxprice") maxprice: String
     ): Call<NearbySearchResponse>
 }
 
