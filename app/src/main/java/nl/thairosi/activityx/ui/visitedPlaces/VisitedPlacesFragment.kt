@@ -8,11 +8,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_visited_places.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.adapters.VisitedPlacesAdapter
 import nl.thairosi.activityx.database.PlaceDatabase
@@ -86,6 +89,14 @@ class VisitedPlacesFragment : Fragment() {
             findNavController().navigate(
                 R.id.action_visitedPlacesFragment_to_placeFragment,
                 bundle)
+        }
+        visitedPlacesAdapter.setOnToggleClickListener {
+                // TO DO
+                println(it.blocked)
+            lifecycleScope.launch(Dispatchers.IO) {
+                viewModel.updateOrInsert(it)
+            }
+
         }
 
     }

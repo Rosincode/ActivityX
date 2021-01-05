@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_place.*
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.database.PlaceDatabase
 import nl.thairosi.activityx.databinding.FragmentPlaceBinding
@@ -52,9 +53,16 @@ class PlaceFragment : Fragment() {
             Navigation.createNavigateOnClickListener(R.id.action_placeFragment_to_homeFragment)
         )
 
+
+
         // Safeargs
         val place = args.place
-        viewModel.getPlace(place.placeId)
+        viewModel.getPlace(place)
+
+        binding.placeBlockActivityCheckbox.setOnClickListener {
+            place.blocked = placeBlockActivityCheckbox.isChecked
+            viewModel.updateOrInsert(place)
+        }
 
         return binding.root
     }

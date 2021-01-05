@@ -32,35 +32,34 @@ class PlaceViewModel(
 
     }
 
-    private fun updateOrInsert(place: Place) {
+    fun updateOrInsert(place: Place) {
         viewModelScope.launch {
             placeRepository.updateOrInsert(place)
         }
     }
 
-    fun getPlace(placeId: String) {
+    fun getPlace(place: Place) {
         viewModelScope.launch {
-            val call = PlaceApi.RETROFIT_SERVICE.getPlace(place_id = placeId)
+            val call = PlaceApi.RETROFIT_SERVICE.getPlace(place_id = place.placeId)
             call.enqueue(object : Callback<PlaceResponse> {
                 override fun onResponse(
                     call: Call<PlaceResponse>,
                     response: Response<PlaceResponse>,
                 ) {
                     if (response.body()?.status.equals("OK")) {
-                        val place = Place(
-                            placeId = response.body()?.result?.place_id.toString(),
-                            photo = photoAdapter(response.body()?.result?.photos?.first()?.photo_reference.toString()),
-                            name = response.body()?.result?.name.toString(),
-                            address = response.body()?.result?.formatted_address.toString(),
-                            types = typesAdapter(response.body()?.result?.types.toString()),
-                            url = response.body()?.result?.url.toString(),
-                            location = response.body()?.result?.geometry?.location?.let {
-                                locationAdapter(it)
-                            },
-                            date = LocalDateTime.parse("2021-01-04T18:50:53"),
-                            blocked = true
-                        )
 
+//                        activityx.placeId = response.body()?.result?.place_id.toString(),
+                        place.photo = photoAdapter(response.body()?.result?.photos?.first()?.photo_reference.toString())
+                        place.name = response.body()?.result?.name.toString()
+                        place.address = response.body()?.result?.formatted_address.toString()
+                        place.address = "test"
+                        place.types = typesAdapter(response.body()?.result?.types.toString())
+                        place.url = response.body()?.result?.url.toString()
+                        place.location = response.body()?.result?.geometry?.location?.let {
+                                locationAdapter(it)
+                            }
+//                            date = LocalDateTime.parse("2021-01-04T18:50:53"),
+//                            blocked = true
                         // Update live data
                         _place.value = place
 

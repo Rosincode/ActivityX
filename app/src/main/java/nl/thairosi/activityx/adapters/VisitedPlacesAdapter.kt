@@ -42,6 +42,7 @@ class VisitedPlacesAdapter : RecyclerView.Adapter<VisitedPlacesAdapter.PlaceView
     }
 
     private var onItemClickListener: ((Place) -> Unit)? = null
+    private var onToggleClickListener: ((Place) -> Unit)? = null
 
     override fun onBindViewHolder(holder: PlaceViewHolder, position: Int) {
         val place = differ.currentList[position]
@@ -55,6 +56,12 @@ class VisitedPlacesAdapter : RecyclerView.Adapter<VisitedPlacesAdapter.PlaceView
                 onItemClickListener?.let { it(place) }
             }
 
+            switch_block_visited_place.setOnClickListener {
+                place.blocked = switch_block_visited_place.isChecked
+//                println(place.blocked)
+                onToggleClickListener?.let { it(place) }
+            }
+
         }
     }
 
@@ -62,6 +69,9 @@ class VisitedPlacesAdapter : RecyclerView.Adapter<VisitedPlacesAdapter.PlaceView
 
     fun setOnItemClickListener(listener: (Place) -> Unit) {
         onItemClickListener = listener
+    }
+    fun setOnToggleClickListener(listener: (Place) -> Unit) {
+        onToggleClickListener = listener
     }
 
 }

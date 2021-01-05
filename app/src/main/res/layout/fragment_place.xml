@@ -106,6 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/application_margin_small"
+                    android:checked="@{PlaceViewModel.place.blocked}"
                     android:text="@string/place_block_activity_checkbox" />
 
             </LinearLayout>

@@ -21,14 +21,14 @@ import java.util.*
 data class Place(
     @PrimaryKey
     val placeId: String = "",
-    val photo: String = "",
-    val name: String = "",
-    val address: String = "",
-    val types: String = "",
-    val url: String = "",
-    val location: Location? = null,
+    var photo: String = "",
+    var name: String = "",
+    var address: String = "",
+    var types: String = "",
+    var url: String = "",
+    var location: Location? = null,
     val date: LocalDateTime? = null,
-    val blocked: Boolean = true
+    var blocked: Boolean = true
 ) : Parcelable {
 
     fun getDateToView() : String {
