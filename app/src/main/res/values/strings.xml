@@ -54,5 +54,6 @@
     <string name="criteria_synagogues">Synagogues</string>
     <string name="criteria_tourist_attractions">Tourist attractions</string>
     <string name="criteria_zoos">Zoos</string>
+    <string name="navigation_reveal_button">Reveal</string>
 
 </resources>

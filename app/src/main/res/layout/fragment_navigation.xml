@@ -18,30 +18,37 @@
         android:layout_height="match_parent">
 
 
+        <Button
+            android:id="@+id/navigationRevealButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/navigation_reveal_button"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <View
             android:id="@+id/navigationDistanceLineView"
             android:layout_width="2dp"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
             android:background="@color/gold_700"
             app:layout_constraintBottom_toTopOf="@+id/navigationCompassImage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/navigationRevealButton" />
 
         <ImageView
             android:id="@+id/navigationDestinationImage"
             android:layout_width="40dp"
             android:layout_height="0dp"
-            android:layout_marginStart="2dp"
             android:contentDescription="@string/navigation_distance_image"
             android:paddingBottom="100dp"
             android:src="@drawable/ic_activity_x_direction"
             app:layout_constraintBottom_toTopOf="@+id/navigationCompassImage"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/navigationDistanceLineView" />
 
         <ImageView
             android:id="@+id/navigationCompassImage"
@@ -53,7 +60,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/navigationRevealButton" />
 
         <ImageView
             android:id="@+id/navigationArrowImage"
@@ -65,15 +72,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/nextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Next"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/navigationRevealButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
