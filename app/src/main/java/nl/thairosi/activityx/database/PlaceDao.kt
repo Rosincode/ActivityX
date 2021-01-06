@@ -13,7 +13,7 @@ interface PlaceDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateOrInsert(place: Place): Long
 
-    @Query("SELECT * FROM visited_places")
+    @Query("SELECT *, strftime('%d-%m-%Y', date) as dateSimple FROM visited_places WHERE dateSimple IS NOT '01-01-2001'")
     fun getVisitedPlaces(): LiveData<List<Place>>
 
 //    @Query("SELECT *, strftime('%d-%m-%Y', date) as dateSimple FROM visited_places WHERE dateSimple = '04-01-2021' AND dateSimple > '03-01-2021'")

@@ -12,7 +12,6 @@
     <string name="navigation_distance_image">Klein icoon dat de afstand aanduidt</string>
     <string name="navigation_compass_image">Magnetisch kompas</string>
     <string name="navigation_arrow_image">Pijl die naar de activiteit wijst</string>
-    <string name="navigation_distance_unit">m</string>
     <string name="place_url_label">Link naar google maps</string>
     <string name="place_types_label">Activiteit types</string>
     <string name="place_address_label">Adres</string>
@@ -23,4 +22,10 @@
     <string name="about_title">Over Activity X</string>
     <string name="visited_places_title">Bezochte plaatsen</string>
     <string name="criteria_title">"Zoek criteria "</string>
+    <string name="navigation_reveal_button">Onthullen</string>
+    <string name="navigation_wrong_direction_toast">Je gaat de verkeerde kant op</string>
+    <string name="navigation_nearby_activity_toast">Je bent dichtbij de bestemming!</string>
+    <string name="navigation_no_accuracy_toast">Locatie wordt bepaald</string>
+    <string name="navigation_no_activity_found_toast">Geen activiteit gevonden, pas de zoek criteria aan</string>
+    <string name="navigation_searching_activity_toast">Activiteit aan het zoeken</string>
 </resources>

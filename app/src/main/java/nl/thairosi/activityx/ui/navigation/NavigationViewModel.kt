@@ -3,13 +3,18 @@ package nl.thairosi.activityx.ui.navigation
 import android.app.Application
 import android.location.Location
 import android.location.LocationManager
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+import nl.thairosi.activityx.database.PlaceDatabase
 import nl.thairosi.activityx.models.Place
 import nl.thairosi.activityx.network.NearbySearchApiModel.NearbySearchResponse
 import nl.thairosi.activityx.network.NearbySearchApiModel.Result
 import nl.thairosi.activityx.network.PlaceApi
+import nl.thairosi.activityx.repository.PlaceRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,6 +27,8 @@ import retrofit2.Response
  * Extends AndroidViewModel and has a application constructor for live data system services
  */
 class NavigationViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val repository: PlaceRepository = PlaceRepository(PlaceDatabase(application))
 
     //LocationLiveData provides a live current GPS location of the phone for this location value
     private val _location = LocationLiveData(application)
@@ -69,6 +76,12 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
                 //TODO (report failure)
             }
         })
+    }
+
+    fun addToDatabase(place: Place) {
+        viewModelScope.launch {
+            repository.updateOrInsert(place)
+        }
     }
 
     private fun locationConverter(lat: Double, lng: Double): Location {

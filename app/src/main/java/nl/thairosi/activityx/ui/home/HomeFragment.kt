@@ -18,7 +18,12 @@ class HomeFragment : Fragment() {
                 R.layout.fragment_home,
                 container,
                 false)
-            binding.goButton.setOnClickListener { v: View ->
+
+
+
+
+
+            binding.homeGoButton.setOnClickListener { v: View ->
             v.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNavigationFragment())
         }
         return binding.root

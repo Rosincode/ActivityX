@@ -10,6 +10,9 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_visited_place.view.*
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.models.Place
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 class VisitedPlacesAdapter : RecyclerView.Adapter<VisitedPlacesAdapter.PlaceViewHolder>() {
 
@@ -73,5 +76,13 @@ class VisitedPlacesAdapter : RecyclerView.Adapter<VisitedPlacesAdapter.PlaceView
     fun setOnToggleClickListener(listener: (Place) -> Unit) {
         onToggleClickListener = listener
     }
+
+//    fun getDateToView(date: LocalDateTime) : String {
+//        return if (date != null) {
+//            date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL))
+//        } else {
+//            ""
+//        }
+//    }
 
 }

@@ -16,7 +16,12 @@
     <string name="navigation_distance_image">Small icon that indicates the distance</string>
     <string name="navigation_compass_image">Magnetic compass</string>
     <string name="navigation_arrow_image">Arrow that points towards the activity</string>
-    <string name="navigation_distance_unit">m</string>
+    <string name="navigation_reveal_button">Reveal</string>
+    <string name="navigation_wrong_direction_toast">You are moving away from the activity</string>
+    <string name="navigation_nearby_activity_toast">You are now nearby your activity!</string>
+    <string name="navigation_no_accuracy_toast">Location is being determined</string>
+    <string name="navigation_no_activity_found_toast">No activity found, please adjust your search criteria</string>
+    <string name="navigation_searching_activity_toast">Searching activity</string>
     <!--PLACE FRAGMENT-->
     <string name="place_url_label">Link to google maps</string>
     <string name="place_types_label">Activity types</string>
@@ -54,6 +59,9 @@
     <string name="criteria_synagogues">Synagogues</string>
     <string name="criteria_tourist_attractions">Tourist attractions</string>
     <string name="criteria_zoos">Zoos</string>
-    <string name="navigation_reveal_button">Reveal</string>
+    <string name="home_continue_yes_button">Yes</string>
+    <string name="home_continue_no_button">No</string>
+    <string name="home_continue_text">Continue to last activity?</string>
+
 
 </resources>

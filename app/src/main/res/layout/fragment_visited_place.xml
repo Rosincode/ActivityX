@@ -17,14 +17,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.52"
         tools:srcCompat="@android:drawable/ic_menu_report_image"
+        android:scaleType="centerCrop"
         />
 
     <TextView
         android:id="@+id/text_view_name_visited_place"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/image_view_visited_place"
+        android:maxLines="2"
+        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/text_view_date_place_visited"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_view_visited_place"

@@ -1,6 +1,5 @@
 package nl.thairosi.activityx.ui.navigation
 
-import android.annotation.SuppressLint
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -9,19 +8,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.compose.ui.window.Popup
 import androidx.core.view.updatePaddingRelative
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_navigation.*
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.databinding.FragmentNavigationBinding
-import nl.thairosi.activityx.models.Place
-import java.time.LocalDateTime
+import java.text.SimpleDateFormat
+import java.util.*
+import java.time.LocalDateTime as LocalDateTime
 
 
 class NavigationFragment : Fragment() {
@@ -30,7 +28,6 @@ class NavigationFragment : Fragment() {
         ViewModelProvider(this).get(NavigationViewModel::class.java)
     }
 
-    @SuppressLint("MissingPermission")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -44,20 +41,20 @@ class NavigationFragment : Fragment() {
         // Giving the binding access to the ViewModel
         binding.navigationViewModel = viewModel
 
-        binding.navigationRevealButton.setOnClickListener { v: View ->
-            v.findNavController()
-                .navigate(NavigationFragmentDirections.actionNavigationFragmentToPlaceFragment(
-                    Place(
-                        "ChIJW5MOkVpvxkcRDYqgo2pLGBY",
-                        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=ATtYBwK4_gAWP97d78u_JjiTe6TimhiICXvYF0Ww2NlM--JD3CagpFHv2s13vRAkjKSvXG4hg2Tum4ecFPUrB1BDaOQZJX8eT2fUP3inYE6kqKwItZM0qJ6Hgm9QfX2VSzPRbFozclkwvh1kFFPPU_FwEmbd-ibzotmAntN936IXa6DxCP_n&key=AIzaSyCofXZEndG5WokT6i6n5fdMabW3IWkGiRc",
-                        "Kafé België",
-                        "Oudegracht 196, 3511 NR Utrecht, Netherlands",
-                        "cafe, bar, restaurant, food, point of interest, establishment",
-                        "https://maps.google.com/?cid=1592105389659294221",
-                        locationConverter(),
-                        date = LocalDateTime.parse("2021-01-04T18:50:53"),
-                        true)))
-        }
+//        binding.navigationRevealButton.setOnClickListener { v: View ->
+//            v.findNavController()
+//                .navigate(NavigationFragmentDirections.actionNavigationFragmentToPlaceFragment(
+//                    Place(
+//                        "ChIJW5MOkVpvxkcRDYqgo2pLGBY",
+//                        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=ATtYBwK4_gAWP97d78u_JjiTe6TimhiICXvYF0Ww2NlM--JD3CagpFHv2s13vRAkjKSvXG4hg2Tum4ecFPUrB1BDaOQZJX8eT2fUP3inYE6kqKwItZM0qJ6Hgm9QfX2VSzPRbFozclkwvh1kFFPPU_FwEmbd-ibzotmAntN936IXa6DxCP_n&key=AIzaSyCofXZEndG5WokT6i6n5fdMabW3IWkGiRc",
+//                        "Kafé België",
+//                        "Oudegracht 196, 3511 NR Utrecht, Netherlands",
+//                        "cafe, bar, restaurant, food, point of interest, establishment",
+//                        "https://maps.google.com/?cid=1592105389659294221",
+//                        locationConverter(),
+//                        date = LocalDateTime.parse("2021-01-04T18:50:53"),
+//                        true)))
+//        }
 
         //Flags to determine what functionality is to be executed within the observers
         var findRandomPlace = true
@@ -65,6 +62,7 @@ class NavigationFragment : Fragment() {
         var logAddress = true
         var setInitialDistance = true
         var initialDistance = 0.0F
+        var addedToDatabase = false
 
         //LOCATION OBSERVATION
         viewModel.location.observe(viewLifecycleOwner, { location ->
@@ -79,6 +77,11 @@ class NavigationFragment : Fragment() {
                     //PLACE OBSERVATION
                     viewModel.place.observe(viewLifecycleOwner, { place ->
                         if (place.location != null) {
+                            if (!addedToDatabase) {
+                                viewModel.addToDatabase(place)
+                                addedToDatabase = true
+                            }
+
                             val distance = location.distanceTo(place.location)
 
                             //Set the initial distance for percentage calculations
@@ -104,6 +107,13 @@ class NavigationFragment : Fragment() {
                             //Informs the user he is nearby the activity shows the reveal button
                             if (distance < 50) {
                                 nearbyActivity()
+                                binding.navigationRevealButton.setOnClickListener { v: View ->
+                                    place.date = getDateTime()
+                                    place.revealed = true
+                                    viewModel.addToDatabase(place)
+                                    v.findNavController().navigate(NavigationFragmentDirections
+                                        .actionNavigationFragmentToPlaceFragment(place))
+                                }
                             }
 
                             //ORIENTATION OBSERVATION
@@ -126,6 +136,15 @@ class NavigationFragment : Fragment() {
             }
         })
         return binding.root
+    }
+
+    fun getDateTime() : LocalDateTime {
+        val dateFormat = SimpleDateFormat(
+            "yyyy-MM-dd", Locale.getDefault());
+        val dateFormat2 = SimpleDateFormat(
+            "HH:mm:ss", Locale.getDefault());
+        val date = Date();
+        return LocalDateTime.parse(dateFormat.format(date) + "T" + dateFormat2.format(date));
     }
 
     //Calculates the necessary padding for the distance image in the fragment ui
@@ -151,15 +170,17 @@ class NavigationFragment : Fragment() {
         //
         return androidLocation
     }
+
+    //Actions on started activity search (Toast)
     private fun searchingActivity() {
-        val text = "Searching activity"
+        val text = getString(R.string.navigation_searching_activity_toast)
         Toast.makeText(context, text, Toast.LENGTH_LONG).show()
     }
 
-    //Actions on no activity found
+    //Toast & navigateUp: Actions on no activity found
     private fun noActivityFound(noActivityFoundCount: Int) {
         if (noActivityFoundCount > 1) {
-            val text = "No activity found, please adjust your search criteria"
+            val text = getString(R.string.navigation_no_activity_found_toast)
             Toast.makeText(context, text, Toast.LENGTH_LONG).show()
             findNavController().navigateUp()
         }
@@ -167,20 +188,20 @@ class NavigationFragment : Fragment() {
 
     //Actions on no accuracy found
     private fun noAccuracy() {
-        val text = "Waiting for location accuracy"
+        val text = getString(R.string.navigation_no_accuracy_toast)
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 
     //Actions on wrong direction
     private fun wrongDirection() {
-        val text = "You are moving away from the activity"
+        val text = getString(R.string.navigation_wrong_direction_toast)
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 
     //Actions on within 50 meters of the activity
     private fun nearbyActivity() {
-        val text = "You are now nearby your activity!"
-        Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+        val text = getString(R.string.navigation_nearby_activity_toast)
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
         navigationRevealButton.visibility = View.VISIBLE
     }
 }

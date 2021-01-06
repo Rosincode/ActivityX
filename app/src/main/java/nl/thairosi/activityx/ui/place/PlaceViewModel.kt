@@ -52,7 +52,6 @@ class PlaceViewModel(
                         place.photo = photoAdapter(response.body()?.result?.photos?.first()?.photo_reference.toString())
                         place.name = response.body()?.result?.name.toString()
                         place.address = response.body()?.result?.formatted_address.toString()
-                        place.address = "test"
                         place.types = typesAdapter(response.body()?.result?.types.toString())
                         place.url = response.body()?.result?.url.toString()
                         place.location = response.body()?.result?.geometry?.location?.let {

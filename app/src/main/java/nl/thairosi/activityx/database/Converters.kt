@@ -13,7 +13,7 @@ import java.util.*
 class Converters {
 
     @TypeConverter
-    fun fromLocalDateTime(localDateTime: LocalDateTime): String? {
+    fun fromLocalDateTime(localDateTime: LocalDateTime?): String? {
         return localDateTime.toString()
     }
 
