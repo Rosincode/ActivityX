@@ -60,7 +60,10 @@ class HomeFragment : Fragment() {
             binding.homeContinueText.visibility = View.INVISIBLE
             binding.homeContinueYesButton.visibility = View.INVISIBLE
             binding.homeContinueNoButton.visibility = View.INVISIBLE
+        }
 
+        binding.homeContinueYesButton.setOnClickListener { v: View ->
+            v.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNavigationFragment())
         }
 
 

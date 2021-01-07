@@ -15,6 +15,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_navigation.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.databinding.FragmentNavigationBinding
 import java.text.SimpleDateFormat
@@ -69,10 +71,16 @@ class NavigationFragment : Fragment() {
             if (location.hasAccuracy()) {
                 //Uses the phones location and the search criteria to get a random place or not
                 if (findRandomPlace) {
-                    searchingActivity()
-                    val latLng = location.latitude.toString() + "," + location.longitude.toString()
-                    viewModel.getRandomPlace(latLng, "1500", "cafe", "4")
-                    findRandomPlace = false
+                    GlobalScope.launch {
+                        if(viewModel.notFinishedActivity() != null) {
+                            findRandomPlace = false
+                        } else {
+                            searchingActivity()
+                            val latLng = location.latitude.toString() + "," + location.longitude.toString()
+                            viewModel.getRandomPlace(latLng, "1500", "cafe", "4")
+                            findRandomPlace = false
+                        }
+                    }
                 } else {
                     //PLACE OBSERVATION
                     viewModel.place.observe(viewLifecycleOwner, { place ->

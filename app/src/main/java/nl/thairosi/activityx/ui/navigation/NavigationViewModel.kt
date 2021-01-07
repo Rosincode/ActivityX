@@ -84,6 +84,16 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
         }
     }
 
+    fun notFinishedActivity() : Place? {
+        val notFinishedActivity = repository.getNotFinishedPlace()
+        viewModelScope.launch {
+            if (notFinishedActivity != null) {
+                _place.value = notFinishedActivity
+            }
+        }
+        return notFinishedActivity
+    }
+
     private fun locationConverter(lat: Double, lng: Double): Location {
         val androidLocation = Location(LocationManager.GPS_PROVIDER)
         androidLocation.latitude = lat

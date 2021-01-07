@@ -10,7 +10,7 @@ class PlaceRepository(
     val db: PlaceDatabase
 ) {
     // API
-    suspend fun getPlace(place: Place) : Call<PlaceResponse> {
+    fun getPlace(place: Place) : Call<PlaceResponse> {
         return PlaceApi.RETROFIT_SERVICE.getPlace(place_id = place.placeId)
     }
 
