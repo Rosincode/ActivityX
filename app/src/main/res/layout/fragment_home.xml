@@ -6,6 +6,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="nl.thairosi.activityx.ui.home.HomeFragment">
 
+    <data>
+        <variable
+            name="HomeViewModel"
+            type="nl.thairosi.activityx.ui.home.HomeViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/homeConstraintLayout"
         android:layout_width="match_parent"
