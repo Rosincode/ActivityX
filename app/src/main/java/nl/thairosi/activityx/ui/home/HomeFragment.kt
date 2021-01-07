@@ -40,23 +40,29 @@ class HomeFragment : Fragment() {
         // Giving the binding access to the ViewModel
         binding.homeViewModel = viewModel
 
-        viewModel.place.observe(viewLifecycleOwner, { place ->
-            if (place.placeId != "") {
+
+        GlobalScope.launch {
+            if (viewModel.notFinishedActivity() != null) {
                 binding.homeGoButton.visibility = View.INVISIBLE
                 binding.homeContinueText.visibility = View.VISIBLE
                 binding.homeContinueYesButton.visibility = View.VISIBLE
                 binding.homeContinueNoButton.visibility = View.VISIBLE
 
-                binding.homeContinueNoButton.setOnClickListener { v: View ->
-                    viewModel.deleteNotFinishedActivity()
-                    binding.homeGoButton.visibility = View.VISIBLE
-                    binding.homeContinueText.visibility = View.INVISIBLE
-                    binding.homeContinueYesButton.visibility = View.INVISIBLE
-                    binding.homeContinueNoButton.visibility = View.INVISIBLE
-
-                }
             }
-        })
+        }
+
+        binding.homeContinueNoButton.setOnClickListener { v: View ->
+            GlobalScope.launch {
+                viewModel.deleteNotFinishedActivity()
+            }
+
+            binding.homeGoButton.visibility = View.VISIBLE
+            binding.homeContinueText.visibility = View.INVISIBLE
+            binding.homeContinueYesButton.visibility = View.INVISIBLE
+            binding.homeContinueNoButton.visibility = View.INVISIBLE
+
+        }
+
 
         binding.homeGoButton.setOnClickListener { v: View ->
             v.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNavigationFragment())

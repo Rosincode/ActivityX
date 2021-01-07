@@ -10,24 +10,12 @@ import nl.thairosi.activityx.repository.PlaceRepository
 
 class HomeViewModel(val placeRepository: PlaceRepository) : ViewModel() {
 
-    private var _place = MutableLiveData(Place())
-    val place: LiveData<Place>
-        get() = _place
-
-    init {
-        notFinishedActivity()
+    fun notFinishedActivity() : Place? {
+            return placeRepository.getNotFinishedPlace()
     }
 
-    fun notFinishedActivity() {
-        viewModelScope.launch {
-            _place.value = placeRepository.getNotFinishedPlace()
-        }
-    }
-
-    fun deleteNotFinishedActivity() {
-        viewModelScope.launch {
+    suspend fun deleteNotFinishedActivity() {
             placeRepository.deleteNotFinishedActivity()
-        }
     }
 
 }
