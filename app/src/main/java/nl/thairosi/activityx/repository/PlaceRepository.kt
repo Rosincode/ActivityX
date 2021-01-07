@@ -18,5 +18,7 @@ class PlaceRepository(
     // Database
     suspend fun updateOrInsert(place: Place) = db.getPlaceDao().updateOrInsert(place)
     fun getVisitedPlaces() = db.getPlaceDao().getVisitedPlaces()
+    fun getNotFinishedPlace() = db.getPlaceDao().getNotFinishedPlace()
+    fun deleteNotFinishedActivity() = db.getPlaceDao().deleteNotFinishedPlace()
 
 }

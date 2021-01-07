@@ -16,7 +16,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingStart="4dp">
 
             <Switch
                 android:id="@+id/switch_block_visited_place"
@@ -27,7 +28,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/image_view_visited_place"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_date_place_visited"
-                tools:checked="true" />
+                tools:checked="true"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
 
             <TextView
                 android:id="@+id/text_view_date_place_visited"
@@ -36,12 +38,12 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_toEndOf="@+id/image_view_visited_place"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/image_view_visited_place"
                 app:layout_constraintTop_toTopOf="parent"
-                android:textColor="@color/black"
                 tools:text="Date" />
 
             <TextView
@@ -52,11 +54,11 @@
                 android:layout_toEndOf="@+id/image_view_visited_place"
                 android:maxLines="2"
                 android:textAlignment="center"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toTopOf="@+id/text_view_date_place_visited"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/image_view_visited_place"
                 app:layout_constraintTop_toTopOf="parent"
-                android:textColor="@color/black"
                 tools:text="Place name" />
 
             <ImageView

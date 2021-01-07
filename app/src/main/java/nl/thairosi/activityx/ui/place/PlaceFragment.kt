@@ -50,9 +50,9 @@ class PlaceFragment : Fragment() {
         })
 
         // Let the return button navigate to homeFragment
-//        binding.placeReturnButton.setOnClickListener(
-//            Navigation.createNavigateOnClickListener(R.id.action_placeFragment_to_homeFragment)
-//        )
+////        binding.placeReturnButton.setOnClickListener(
+////            Navigation.createNavigateOnClickListener(R.id.action_placeFragment_to_homeFragment)
+////        )
         // Return button navigates up
         binding.placeReturnButton.setOnClickListener {
             findNavController().navigateUp()
