@@ -15,6 +15,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_visited_places.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.adapters.VisitedPlacesAdapter
@@ -29,11 +31,12 @@ class VisitedPlacesFragment : Fragment() {
 
     lateinit var viewModel: VisitedPlacesViewModel
     lateinit var visitedPlacesAdapter: VisitedPlacesAdapter
+    lateinit var binding: FragmentVisitedPlacesBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val binding: FragmentVisitedPlacesBinding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_visited_places, container, false)
 
 
@@ -76,9 +79,13 @@ class VisitedPlacesFragment : Fragment() {
         setupRecyclerView()
 
 
-
+        binding.progressBar.visibility = View.VISIBLE
         viewModel.getVisitedPlaces().observe(viewLifecycleOwner, Observer {
+            if (it.isEmpty()) {
+                binding.textViewEmpty.visibility = View.VISIBLE
+            }
             visitedPlacesAdapter.differ.submitList(it)
+            binding.progressBar.visibility = View.INVISIBLE
         })
 
 
