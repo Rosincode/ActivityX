@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_place.*
@@ -49,10 +50,13 @@ class PlaceFragment : Fragment() {
         })
 
         // Let the return button navigate to homeFragment
-        binding.placeReturnButton.setOnClickListener(
-            Navigation.createNavigateOnClickListener(R.id.action_placeFragment_to_homeFragment)
-        )
-
+//        binding.placeReturnButton.setOnClickListener(
+//            Navigation.createNavigateOnClickListener(R.id.action_placeFragment_to_homeFragment)
+//        )
+        // Return button navigates up
+        binding.placeReturnButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
 
         // Safeargs
