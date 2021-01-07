@@ -71,16 +71,17 @@ class NavigationFragment : Fragment() {
             if (location.hasAccuracy()) {
                 //Uses the phones location and the search criteria to get a random place or not
                 if (findRandomPlace) {
+                    searchingActivity()
                     GlobalScope.launch {
-                        if(viewModel.notFinishedActivity() != null) {
+                        if (viewModel.notFinishedActivity() != null) {
                             findRandomPlace = false
                         } else {
-                            searchingActivity()
                             val latLng = location.latitude.toString() + "," + location.longitude.toString()
                             viewModel.getRandomPlace(latLng, "1500", "cafe", "4")
                             findRandomPlace = false
                         }
                     }
+
                 } else {
                     //PLACE OBSERVATION
                     viewModel.place.observe(viewLifecycleOwner, { place ->
@@ -119,6 +120,7 @@ class NavigationFragment : Fragment() {
                                     place.date = getDateTime()
                                     place.revealed = true
                                     viewModel.addToDatabase(place)
+                                    findRandomPlace = true
                                     v.findNavController().navigate(NavigationFragmentDirections
                                         .actionNavigationFragmentToPlaceFragment(place))
                                 }
