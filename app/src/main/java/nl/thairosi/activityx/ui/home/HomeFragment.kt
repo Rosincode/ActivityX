@@ -1,13 +1,19 @@
 package nl.thairosi.activityx.ui.home
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.*
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.*
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.database.PlaceDatabase
@@ -68,8 +74,47 @@ class HomeFragment : Fragment() {
 
 
         binding.homeGoButton.setOnClickListener { v: View ->
+            var requestPermissionsList = mutableListOf<String>()
+            requestPermissionsList.clear()
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissionsList.add(Manifest.permission.ACCESS_FINE_LOCATION)
+            }
+            if(ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissionsList.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+            }
+            if(requestPermissionsList.isNotEmpty()) {
+                requestPermissions(requestPermissionsList.toTypedArray(), 0)
+
+            } else {
             v.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNavigationFragment())
+            }
         }
         return binding.root
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == 0 && grantResults.isNotEmpty()) {
+            var permissionGranted = true
+            for(i in grantResults.indices) {
+                if(grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                    permissionGranted = false
+                }
+            }
+            if(permissionGranted) {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNavigationFragment())
+            } else {
+                Toast.makeText(context, "In order to get an activity, the app needs your permission to use your location.", Toast.LENGTH_LONG).show()
+            }
+
+        }
     }
 }
