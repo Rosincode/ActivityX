@@ -5,12 +5,14 @@
     <!--MENU-->
     <string name="menu_open">open</string>
     <string name="menu_close">close</string>
-    <!--MENU ITEMS-->
     <string name="menu_item_criteria">Search criteria</string>
     <string name="menu_item_about">About</string>
     <string name="menu_item_visited_places">Visited activities</string>
     <!--HOME FRAGMENT-->
     <string name="home_go_button">GO!</string>
+    <string name="home_continue_yes_button">Yes</string>
+    <string name="home_continue_no_button">No</string>
+    <string name="home_continue_text">Continue to last activity?</string>
     <!--NAVIGATION FRAGMENT-->
     <string name="navigation_title">Navigate</string>
     <string name="navigation_distance_image">Small icon that indicates the distance</string>
@@ -23,45 +25,51 @@
     <string name="navigation_no_activity_found_toast">No activity found, please adjust your search criteria</string>
     <string name="navigation_searching_activity_toast">Searching activity</string>
     <!--PLACE FRAGMENT-->
+    <string name="place_title">Activity details</string>
     <string name="place_url_label">Link to google maps</string>
     <string name="place_types_label">Activity types</string>
     <string name="place_address_label">Address</string>
     <string name="place_image_content_description">An image of the activity</string>
     <string name="place_return_button">Return</string>
     <string name="place_block_activity_checkbox">Block activity in the future</string>
-    <!--HOME FRAGMENT-->
-    <string name="place_title">Activity details</string>
-    <!--ABOUT FRAGMENT-->
-    <string name="about_title">About Activity X</string>
     <!--VISITED PLACES FRAGMENT-->
     <string name="visited_places_title">Visited activities</string>
     <!--CRITERIA FRAGMENT-->
+    <string name="criteria_title_text">Criteria</string>
     <string name="criteria_title">Search criteria</string>
-    <string name="criteria_amusement_parks">Amusement parks</string>
-    <string name="criteria_aquariums">Aquariums</string>
-    <string name="criteria_art_galleries">Art galleries</string>
-    <string name="criteria_bars">Bars</string>
-    <string name="criteria_beauty_salons">Beauty salons</string>
-    <string name="criteria_bowling_alleys">Bowling alleys</string>
-    <string name="criteria_cafes">Cafes</string>
-    <string name="criteria_casinos">Casinos</string>
-    <string name="criteria_churches">Churches</string>
-    <string name="criteria_hindu_temples">Hindu temples</string>
-    <string name="criteria_mosques">Mosques</string>
+    <string name="criteria_category_text">Search criteria</string>
+    <string name="criteria_distance_label">Maximum distance (km)</string>
+    <string name="criteria_price_label">Maximum price level</string>
+    <string name="criteria_price_free">Free</string>
+    <string name="criteria_price_inexpensive">Inexpensive</string>
+    <string name="criteria_price_moderate">Moderate</string>
+    <string name="criteria_price_expensive">Expensive</string>
+    <string name="criteria_price_very_expensive">Very expensive</string>
+    <string name="criteria_types_label">Types</string>
+    <string name="criteria_bars">Bar</string>
+    <string name="criteria_bowling_alleys">Bowling</string>
+    <string name="criteria_cafes">Cafe</string>
+    <string name="criteria_casinos">Casino</string>
     <string name="criteria_movie_theaters">Movie theaters</string>
-    <string name="criteria_museums">Museums</string>
+    <string name="criteria_museums">Museum</string>
     <string name="criteria_night_clubs">Night clubs</string>
-    <string name="criteria_parks">Parks</string>
-    <string name="criteria_restaurants">Restaurants</string>
-    <string name="criteria_shopping_malls">Shopping malls</string>
-    <string name="criteria_spas">Spas</string>
-    <string name="criteria_stadiums">Stadiums</string>
-    <string name="criteria_synagogues">Synagogues</string>
-    <string name="criteria_tourist_attractions">Tourist attractions</string>
-    <string name="criteria_zoos">Zoos</string>
-    <string name="home_continue_yes_button">Yes</string>
-    <string name="home_continue_no_button">No</string>
-    <string name="home_continue_text">Continue to last activity?</string>
-
-
+    <string name="criteria_parks">Park</string>
+    <string name="criteria_restaurants">Restaurant</string>
+    <!--ABOUT FRAGMENT-->
+    <string name="about_title">About Activity X</string>
+    <string name="about_text">
+        A social planning application that provides people surprising activities based
+        on their criteria like type, budget and distance.
+        The application will use the provided criteria when picking a surprise activity.
+        The application then shows an arrow, pointing to the right location, and a oriented compass.
+        Also the application shows the distance with a decreasing image to indicate how far to go.
+        The user is now able to navigate to the location for a new activity.
+        When the phone is within 50 meters of the activity, the activity details can be revealed.
+        The users can now enter the activity and enjoy as long as they want.
+        If the users want to do something else, they can decide to leave and start a new
+        surprise activity. Standard the activity will be blocked in the future, the user is able
+        to choose to unblock the activity immediately or afterwards in the visited places window.
+        In the visited places window the user will see all activities that are revealed in the past.
+        In this window the user can click on a activity to see more information.
+    </string>
 </resources>

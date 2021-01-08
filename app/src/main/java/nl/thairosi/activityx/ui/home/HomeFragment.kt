@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.*
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.database.PlaceDatabase
@@ -46,14 +48,12 @@ class HomeFragment : Fragment() {
         // Giving the binding access to the ViewModel
         binding.homeViewModel = viewModel
 
-
         GlobalScope.launch {
             if (viewModel.notFinishedActivity() != null) {
                 binding.homeGoButton.visibility = View.INVISIBLE
                 binding.homeContinueText.visibility = View.VISIBLE
                 binding.homeContinueYesButton.visibility = View.VISIBLE
                 binding.homeContinueNoButton.visibility = View.VISIBLE
-
             }
         }
 
@@ -61,7 +61,6 @@ class HomeFragment : Fragment() {
             GlobalScope.launch {
                 viewModel.deleteNotFinishedActivity()
             }
-
             binding.homeGoButton.visibility = View.VISIBLE
             binding.homeContinueText.visibility = View.INVISIBLE
             binding.homeContinueYesButton.visibility = View.INVISIBLE
@@ -74,7 +73,7 @@ class HomeFragment : Fragment() {
 
 
         binding.homeGoButton.setOnClickListener { v: View ->
-            var requestPermissionsList = mutableListOf<String>()
+            val requestPermissionsList = mutableListOf<String>()
             requestPermissionsList.clear()
             if (ActivityCompat.checkSelfPermission(
                     requireContext(),
@@ -117,4 +116,21 @@ class HomeFragment : Fragment() {
 
         }
     }
+
+    private fun loadCriteriaTypes() {
+        val criteria = PreferenceManager.getDefaultSharedPreferences(context)
+        val types = mutableListOf<String>()
+        if (criteria.getBoolean("criteriaBarsSwitch", true)) { types.add("bar") }
+        if (criteria.getBoolean("criteriaCafesSwitch", true)) { types.add("cafe") }
+        if (criteria.getBoolean("criteriaRestaurantsSwitch", true)) { types.add("restaurant") }
+        if (criteria.getBoolean("criteriaNightClubsSwitch", true)) { types.add("night_club") }
+        if (criteria.getBoolean("criteriaCafesSwitch", true)) { types.add("cafe") }
+        if (criteria.getBoolean("criteriaCafesSwitch", true)) { types.add("cafe") }
+        if (criteria.getBoolean("criteriaCafesSwitch", true)) { types.add("cafe") }
+        if (criteria.getBoolean("criteriaCafesSwitch", true)) { types.add("cafe") }
+        if (criteria.getBoolean("criteriaCafesSwitch", true)) { types.add("cafe") }
+        if (criteria.getBoolean("criteriaCafesSwitch", true)) { types.add("cafe") }
+
+    }
+
 }

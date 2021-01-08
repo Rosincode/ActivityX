@@ -1,0 +1,42 @@
+<resources>
+
+    <string-array name="criteria_type_entries">
+        <item>@string/criteria_bars</item>
+        <item>@string/criteria_cafes</item>
+        <item>@string/criteria_restaurants</item>
+        <item>@string/criteria_night_clubs</item>
+        <item>@string/criteria_casinos</item>
+        <item>@string/criteria_bowling_alleys</item>
+        <item>@string/criteria_movie_theaters</item>
+        <item>@string/criteria_museums</item>
+        <item>@string/criteria_parks</item>
+    </string-array>
+
+    <string-array name="criteria_type_values">
+        <item>bar</item>
+        <item>cafe</item>
+        <item>restaurant</item>
+        <item>night_club</item>
+        <item>casino</item>
+        <item>bowling_alley</item>
+        <item>movie_theater</item>
+        <item>museum</item>
+        <item>park</item>
+    </string-array>
+
+    <string-array name="criteria_price_entries">
+        <item>@string/criteria_price_free</item>
+        <item>@string/criteria_price_inexpensive</item>
+        <item>@string/criteria_price_moderate</item>
+        <item>@string/criteria_price_expensive</item>
+        <item>@string/criteria_price_very_expensive</item>
+    </string-array>
+
+    <string-array name="criteria_price_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+</resources>

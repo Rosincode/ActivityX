@@ -1,0 +1,92 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="@string/criteria_category_text">
+
+        <ListPreference
+            app:entries="@array/criteria_type_entries"
+            app:entryValues="@array/criteria_type_values"
+            app:icon="@drawable/ic_baseline_local_activity_24"
+            app:key="criteriaTypePreference"
+            app:defaultValue="bar"
+            app:summary="Bar"
+            app:title="Type" />
+
+        <ListPreference
+            app:entries="@array/criteria_price_entries"
+            app:entryValues="@array/criteria_price_values"
+            app:icon="@drawable/ic_baseline_euro_24"
+            app:key="criteriaPricePreference"
+            app:defaultValue="2"
+            app:useSimpleSummaryProvider="true"
+            app:title="Maximum price level" />
+
+        <SeekBarPreference
+            app:icon="@drawable/ic_baseline_directions_walk_24"
+            app:key="criteriaDistanceSeekBar"
+            android:max="10"
+            app:min="1"
+            app:defaultValue="2"
+            app:showSeekBarValue="true"
+            app:title="@string/criteria_distance_label" />
+
+    </PreferenceCategory>
+
+
+    <!--    <PreferenceCategory app:title="@string/criteria_types_label">-->
+
+    <!--        <SwitchPreferenceCompat-->
+    <!--            app:key="criteriaBarsSwitch"-->
+    <!--            app:icon="@drawable/ic_baseline_local_bar_24"-->
+    <!--            app:defaultValue="true"-->
+    <!--            app:title="@string/criteria_bars" />-->
+
+    <!--        <SwitchPreferenceCompat-->
+    <!--            app:key="criteriaCafesSwitch"-->
+    <!--            app:icon="@drawable/ic_baseline_local_cafe_24"-->
+    <!--            app:defaultValue="true"-->
+    <!--            app:title="@string/criteria_cafes" />-->
+
+    <!--        <SwitchPreferenceCompat-->
+    <!--            app:key="criteriaRestaurantsSwitch"-->
+    <!--            app:icon="@drawable/ic_baseline_restaurant_24"-->
+    <!--            app:defaultValue="false"-->
+    <!--            app:title="@string/criteria_restaurants" />-->
+
+    <!--        <SwitchPreferenceCompat-->
+    <!--            app:key="criteriaNightClubsSwitch"-->
+    <!--            app:icon="@drawable/ic_baseline_music_note_24"-->
+    <!--            app:defaultValue="false"-->
+    <!--            app:title="@string/criteria_night_clubs" />-->
+
+    <!--        <SwitchPreferenceCompat-->
+    <!--            app:key="criteriaCasinosSwitch"-->
+    <!--            app:icon="@drawable/ic_baseline_casino_24"-->
+    <!--            app:defaultValue="false"-->
+    <!--            app:title="@string/criteria_casinos" />-->
+
+    <!--        <SwitchPreferenceCompat-->
+    <!--            app:key="criteriaBowlingAlleysSwitch"-->
+    <!--            app:icon="@drawable/ic_baseline_bowling_24"-->
+    <!--            app:defaultValue="false"-->
+    <!--            app:title="@string/criteria_bowling_alleys" />-->
+
+    <!--        <SwitchPreferenceCompat-->
+    <!--            app:key="criteriaMovieTheatersSwitch"-->
+    <!--            app:icon="@drawable/ic_baseline_local_movies_24"-->
+    <!--            app:defaultValue="false"-->
+    <!--            app:title="@string/criteria_movie_theaters" />-->
+
+    <!--        <SwitchPreferenceCompat-->
+    <!--            app:key="criteriaMuseumsSwitch"-->
+    <!--            app:icon="@drawable/ic_baseline_museum_24"-->
+    <!--            app:defaultValue="false"-->
+    <!--            app:title="@string/criteria_museums" />-->
+
+    <!--        <SwitchPreferenceCompat-->
+    <!--            app:key="criteriaParksSwitch"-->
+    <!--            app:icon="@drawable/ic_baseline_grass_24"-->
+    <!--            app:defaultValue="false"-->
+    <!--            app:title="@string/criteria_parks" />-->
+
+</PreferenceScreen>

@@ -52,8 +52,7 @@
             app:popUpTo="@id/visitedPlacesFragment" />
     </fragment>
     <fragment
-        tools:layout="@layout/fragment_criteria"
         android:id="@+id/criteriaFragment"
-        android:name="nl.thairosi.activityx.ui.navigation.CriteriaFragment"
-        android:label="@string/criteria_title" />
+        android:name="nl.thairosi.activityx.ui.criteria.CriteriaFragment"
+        android:label="@string/criteria_title_text" />
 </navigation>

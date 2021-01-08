@@ -43,5 +43,4 @@ class MainActivity : AppCompatActivity() {
         val navController = this.findNavController(R.id.mainNavHostFragment)
         return NavigationUI.navigateUp(navController, appBarConfiguration)
     }
-
 }

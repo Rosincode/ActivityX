@@ -60,12 +60,18 @@ android {
 }
 
 dependencies {
+
     implementation 'com.google.android.gms:play-services-wallet:18.1.2'
+
+    // Preferences
+    def preference_version = '1.1.0'
+    implementation "androidx.preference:preference:$preference_version"
 
     // Images
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'info.androidhive:fontawesome:0.0.5'
     implementation 'com.google.android.gms:play-services-location:17.1.0'
+    implementation 'androidx.preference:preference:1.1.1'
 
     // Retrofit
     def version_retrofit = "2.9.0"

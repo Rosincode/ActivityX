@@ -1,17 +1,13 @@
-package nl.thairosi.activityx.ui.navigation
+package nl.thairosi.activityx.ui.criteria
 
-import androidx.fragment.app.Fragment
+import android.os.Bundle
+import androidx.preference.PreferenceFragmentCompat
 import nl.thairosi.activityx.R
 
-class CriteriaFragment : Fragment(R.layout.fragment_criteria) {
+class CriteriaFragment : PreferenceFragmentCompat() {
 
-//    private lateinit var viewModel: CriteriaViewModel
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater,
-//        container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//        return super.onCreateView(inflater, container, savedInstanceState)
-//    }
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        setPreferencesFromResource(R.xml.fragment_criteria, rootKey)
+    }
+
 }

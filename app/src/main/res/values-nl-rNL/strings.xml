@@ -28,4 +28,41 @@
     <string name="navigation_no_accuracy_toast">Locatie wordt bepaald</string>
     <string name="navigation_no_activity_found_toast">Geen activiteit gevonden, pas de zoek criteria aan</string>
     <string name="navigation_searching_activity_toast">Activiteit aan het zoeken</string>
+    <string name="criteria_price_free">Gratis</string>
+    <string name="criteria_price_inexpensive">Goedkoop</string>
+    <string name="criteria_price_moderate">Gemiddeld</string>
+    <string name="criteria_price_expensive">Prijzig</string>
+    <string name="criteria_price_very_expensive">Duur</string>
+    <string name="criteria_bars">Bar</string>
+    <string name="criteria_bowling_alleys">Bowlen</string>
+    <string name="criteria_cafes">Cafe</string>
+    <string name="criteria_casinos">Casino</string>
+    <string name="criteria_movie_theaters">Bioscoop</string>
+    <string name="criteria_museums">Museum</string>
+    <string name="criteria_night_clubs">Nacht club</string>
+    <string name="criteria_parks">Park</string>
+    <string name="criteria_restaurants">Restaurant</string>
+    <string name="home_continue_yes_button">Ja</string>
+    <string name="home_continue_no_button">Nee</string>
+    <string name="home_continue_text">Doorgaan naar de laatste activiteit?</string>
+    <string name="criteria_types_label">Types</string>
+    <string name="criteria_price_label">Maximaal prijs niveau</string>
+    <string name="criteria_distance_label">Maximale afstand (km)</string>
+    <string name="criteria_category_text">Zoek criteria</string>
+    <string name="criteria_title_text">Criteria</string>
+    <string name="about_text">
+        Een applicatie dat gebruikers voorziet van verassende activiteiten gebasseerd op soort
+        activiteit, budget en afstand. De applicatie zal de ingevoerde criteria gebruiken om een
+        willekeurigge activiteit uit te zoeken. De applicatie toont vervolgens een pijl, dat richting
+        de activiteit wijst, en een georienteerde compass. De applicatie toont ook
+        de afstand die de gebruikers nog moeten overbruggen om bij de activiteit te komen middels een
+        naar beneden bewegende afbeelding. De gebruikers hebben nu de mogelijkheid om naar de nieuwe
+        activiteit te navigeren. Wanneer de locatie van de telefoon binnen 50 meter van de activiteit is,
+        kunnen de activiteit details onthuld worden. De gebruikers kunnen nu genieten van de activiteit
+        zo lang zij willen. Als de gebruikers zin hebben om wat anders te gaan doen, kunnen ze beslissen
+        om de activiteit te verlaten en een nieuwe activiteit te gaan zoeken. Standaard zal de activiteit
+        in de toekomst geblokkeerd worden, de gebruiker kan er wel voor kiezen om de activiteit meteen
+        of later in het bezochte plaatsen scherm te deblokkeren. Vanuit het bezochte plaatsen scherm kunnen
+        de gebruikers ook meer informatie van de bezochte plaatsen bekijken door erop te klikken.
+    </string>
 </resources>
