@@ -37,7 +37,9 @@
     <!--CRITERIA FRAGMENT-->
     <string name="criteria_title_text">Criteria</string>
     <string name="criteria_title">Search criteria</string>
-    <string name="criteria_category_text">Search criteria</string>
+    <string name="criteria_types_title">Select activity types</string>
+    <string name="criteria_category_text">Click on "Select activity types" below to choose your desired activity types.
+        Drag the seekbar to the left or to the right if you wish to adjust the maximum travel distance.</string>
     <string name="criteria_distance_label">Maximum distance (km)</string>
     <string name="criteria_price_label">Maximum price level</string>
     <string name="criteria_price_free">Free</string>

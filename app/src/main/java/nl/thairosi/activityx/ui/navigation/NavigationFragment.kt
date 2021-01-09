@@ -32,8 +32,8 @@ class NavigationFragment : Fragment() {
     private var orientation: Float = 0F
     private var distance: Float = 10000F
     private var radius: String = "2000"
-    private var type: String = "bar"
-    private var maxPrice: String = "2"
+
+    private var types : List<String> = listOf("night_club", "bar", "bowling_alley", "cafe", "movie_theater", "museum", "restaurant", "casino", "park")
     private var initialDistance = 0.0F
 
     //Flags
@@ -117,10 +117,13 @@ class NavigationFragment : Fragment() {
     private fun setCriteria() {
         val criteria = PreferenceManager.getDefaultSharedPreferences(context)
         radius = criteria.getInt("criteriaDistanceSeekBar", 20).toString() + "000"
-        type = criteria.getString("criteriaTypePreference", "bar").toString()
-        maxPrice = criteria.getString("criteriaPricePreference", "2").toString()
+
+        val typesDefault = setOf("night_club", "bar", "bowling_alley", "cafe", "movie_theater", "museum", "restaurant", "casino", "park")
+        val typesPreferences = criteria.getStringSet("multi_select_list_types", typesDefault )
+        types = typesPreferences!!.shuffled()
+
         Log.i("navigation", "Search criteria: " +
-                "Radius = $radius, Type = $type, Maximum price = $maxPrice")
+                "Radius = $radius, Type = $types")
     }
 
     //Tries to find the correct place to be navigated to
@@ -133,7 +136,7 @@ class NavigationFragment : Fragment() {
                 false
             } else {
                 val latLng = location.latitude.toString() + "," + location.longitude.toString()
-                viewModel.getRandomPlace(latLng, radius, type, maxPrice)
+                viewModel.getRandomPlace(latLng, radius, types.elementAt(0))
                 false
             }
         }

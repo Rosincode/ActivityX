@@ -48,7 +48,7 @@
     <string name="criteria_types_label">Types</string>
     <string name="criteria_price_label">Maximaal prijs niveau</string>
     <string name="criteria_distance_label">Maximale afstand (km)</string>
-    <string name="criteria_category_text">Zoek criteria</string>
+    <string name="criteria_category_text">Klik op \"Selecteer activiteit types\" hieronder om de gewenste activiteiten te kiezen. Stel daar onder de maximale afstand in op het gewenste aantal kilometers.</string>
     <string name="criteria_title_text">Criteria</string>
     <string name="about_text">
         Een applicatie dat gebruikers voorziet van verassende activiteiten gebasseerd op soort
@@ -65,4 +65,5 @@
         of later in het bezochte plaatsen scherm te deblokkeren. Vanuit het bezochte plaatsen scherm kunnen
         de gebruikers ook meer informatie van de bezochte plaatsen bekijken door erop te klikken.
     </string>
+    <string name="criteria_types_title">Selecteer activiteit types</string>
 </resources>

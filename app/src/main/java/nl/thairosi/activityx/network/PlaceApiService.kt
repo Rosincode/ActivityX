@@ -50,8 +50,7 @@ interface PlaceAPIService {
 //        @Query("opennow") opennow: String = "true",
         @Query("location") location: String,
         @Query("radius") radius: String,
-        @Query("type") type: String,
-        @Query("maxprice") maxprice: String
+        @Query("type") type: String
     ): Call<NearbySearchResponse>
 }
 

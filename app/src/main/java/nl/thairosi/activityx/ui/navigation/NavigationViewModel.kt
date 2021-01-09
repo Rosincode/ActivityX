@@ -44,11 +44,10 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
     val orientation: LiveData<Float>
         get() = _orientation
 
-    fun getRandomPlace(location: String, radius: String, type: String, maxprice: String) {
+    fun getRandomPlace(location: String, radius: String, type: String) {
         val call = PlaceApi.RETROFIT_SERVICE.getPlaces(location = location,
             radius = radius,
-            type = type,
-            maxprice = maxprice)
+            type = type)
         call.enqueue(object : Callback<NearbySearchResponse> {
             override fun onResponse(
                 call: Call<NearbySearchResponse>,
