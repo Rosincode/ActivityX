@@ -113,24 +113,6 @@ class HomeFragment : Fragment() {
             } else {
                 Toast.makeText(context, "In order to get an activity, the app needs your permission to use your location.", Toast.LENGTH_LONG).show()
             }
-
         }
     }
-
-    private fun loadCriteriaTypes() {
-        val criteria = PreferenceManager.getDefaultSharedPreferences(context)
-        val types = mutableListOf<String>()
-        if (criteria.getBoolean("criteriaBarsSwitch", true)) { types.add("bar") }
-        if (criteria.getBoolean("criteriaCafesSwitch", true)) { types.add("cafe") }
-        if (criteria.getBoolean("criteriaRestaurantsSwitch", true)) { types.add("restaurant") }
-        if (criteria.getBoolean("criteriaNightClubsSwitch", true)) { types.add("night_club") }
-        if (criteria.getBoolean("criteriaCafesSwitch", true)) { types.add("cafe") }
-        if (criteria.getBoolean("criteriaCafesSwitch", true)) { types.add("cafe") }
-        if (criteria.getBoolean("criteriaCafesSwitch", true)) { types.add("cafe") }
-        if (criteria.getBoolean("criteriaCafesSwitch", true)) { types.add("cafe") }
-        if (criteria.getBoolean("criteriaCafesSwitch", true)) { types.add("cafe") }
-        if (criteria.getBoolean("criteriaCafesSwitch", true)) { types.add("cafe") }
-
-    }
-
 }
