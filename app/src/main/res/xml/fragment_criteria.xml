@@ -9,7 +9,7 @@
             app:icon="@drawable/ic_baseline_local_activity_24"
             app:key="criteriaTypePreference"
             app:defaultValue="bar"
-            app:summary="Bar"
+            app:useSimpleSummaryProvider="true"
             app:title="Type" />
 
         <ListPreference
