@@ -20,8 +20,6 @@ class VisitedPlacesViewModel(
         placeRepository.updateOrInsert(place)
     }
 
-    @JvmName("getVisitedPlaces1")
-    fun getVisitedPlaces() = placeRepository.getVisitedPlaces()
-
+    fun getVisitedPlacesFromDB() = placeRepository.getVisitedPlaces()
 
 }

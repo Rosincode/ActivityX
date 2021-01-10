@@ -12,11 +12,16 @@ import nl.thairosi.activityx.Keys
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.models.Place
 import nl.thairosi.activityx.network.PlaceAPIService
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 class VisitedPlacesAdapter : RecyclerView.Adapter<VisitedPlacesAdapter.PlaceViewHolder>() {
 
+    // ViewHolder for RecyclerView
     inner class PlaceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
+    // DiffUtil only update changes instead of the whole list
     private val differCallback = object : DiffUtil.ItemCallback<Place>() {
         override fun areItemsTheSame(oldItem: Place, newItem: Place): Boolean {
             return oldItem.placeId == newItem.placeId
@@ -51,32 +56,33 @@ class VisitedPlacesAdapter : RecyclerView.Adapter<VisitedPlacesAdapter.PlaceView
         holder.itemView.apply {
             Glide.with(this).load(getImageUrl(place.photoReference)).into(image_view_visited_place)
             text_view_name_visited_place.text = place.name
-            text_view_date_place_visited.text = place.getDateToView()
+            text_view_date_place_visited.text = getDateToView(place.date)
             switch_block_visited_place.isChecked = place.blocked
 
+            // OnclickListener for Item clicks
             setOnClickListener {
                 onItemClickListener?.let { it(place) }
             }
 
+            // OnclickListener for toggle "blocked"
             switch_block_visited_place.setOnClickListener {
                 place.blocked = switch_block_visited_place.isChecked
-//                println(place.blocked)
                 onToggleClickListener?.let { it(place) }
             }
 
         }
     }
 
-    // To do
-
     fun setOnItemClickListener(listener: (Place) -> Unit) {
         onItemClickListener = listener
     }
+
     fun setOnToggleClickListener(listener: (Place) -> Unit) {
         onToggleClickListener = listener
     }
 
-    fun getImageUrl(photo: String) : String {
+    // Helper method to build Image Url
+    fun getImageUrl(photo: String): String {
         val baseUrl = PlaceAPIService.BASE_URL
         val request = "photo?"
         val maxwidth = "maxwidth=400"
@@ -85,12 +91,13 @@ class VisitedPlacesAdapter : RecyclerView.Adapter<VisitedPlacesAdapter.PlaceView
         return "$baseUrl$request$maxwidth&$reference&$key"
     }
 
-//    fun getDateToView(date: LocalDateTime) : String {
-//        return if (date != null) {
-//            date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL))
-//        } else {
-//            ""
-//        }
-//    }
+    // Helper method to show date
+    fun getDateToView(date: LocalDateTime?) : String {
+        return if (date != null) {
+            date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL))
+        } else {
+            ""
+        }
+    }
 
 }

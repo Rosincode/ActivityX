@@ -45,7 +45,7 @@ class PlaceFragment : Fragment() {
         val place = args.place
         viewModel.getPlace(place)
 
-        // Load the place photo into the fragment with Picasso
+        // Load the place photo into the fragment with Glide
         viewModel.place.observe(viewLifecycleOwner, { place ->
             if(place.photoReference.contains("null")) {
                 binding.placeImage.visibility = View.VISIBLE

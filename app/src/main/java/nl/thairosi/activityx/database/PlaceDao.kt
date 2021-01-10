@@ -22,7 +22,4 @@ interface PlaceDao {
     @Query("DELETE FROM visited_places WHERE revealed = 0")
     suspend fun deleteNotFinishedPlace()
 
-//    @Query("SELECT *, strftime('%d-%m-%Y', date) as dateSimple FROM visited_places WHERE dateSimple = '04-01-2021' AND dateSimple > '03-01-2021'")
-//    fun getVisitedPlaces(): LiveData<List<Place>>
-
 }

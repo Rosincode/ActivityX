@@ -31,12 +31,4 @@ data class Place(
     var date: LocalDateTime? = LocalDateTime.parse("2001-01-01T01:01:01"),
     var blocked: Boolean = true,
     var revealed: Boolean = false
-) : Parcelable {
-    fun getDateToView() : String {
-        return if (date != null) {
-            date!!.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL))
-        } else {
-            ""
-        }
-    }
-}
+) : Parcelable

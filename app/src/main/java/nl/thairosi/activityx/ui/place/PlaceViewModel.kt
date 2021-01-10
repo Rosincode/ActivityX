@@ -17,19 +17,14 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PlaceViewModel(
-    val placeRepository: PlaceRepository
+    val placeRepository: PlaceRepository,
 ) : ViewModel() {
 
     private var _place = MutableLiveData<Place>()
     val place: LiveData<Place>
         get() = _place
 
-    fun updateOrInsert(place: Place) {
-        viewModelScope.launch {
-            placeRepository.updateOrInsert(place)
-        }
-    }
-
+    // Get Place from Maps API
     fun getPlace(place: Place) {
         viewModelScope.launch {
             val call = placeRepository.getPlace(place.placeId)
@@ -39,22 +34,19 @@ class PlaceViewModel(
                     response: Response<PlaceResponse>,
                 ) {
                     if (response.body()?.status.equals("OK")) {
-
-                        place.photoReference = response.body()?.result?.photos?.first()?.photo_reference.toString()
+                        place.photoReference =
+                            response.body()?.result?.photos?.first()?.photo_reference.toString()
                         place.name = response.body()?.result?.name.toString()
                         place.address = response.body()?.result?.formatted_address.toString()
                         place.types = typesAdapter(response.body()?.result?.types.toString())
                         place.url = response.body()?.result?.url.toString()
                         place.location = response.body()?.result?.geometry?.location?.let {
-                                locationAdapter(it)
-                            }
-
+                            locationAdapter(it)
+                        }
                         // Update live data
                         _place.value = place
-
                         // Insert into database
                         updateOrInsert(place)
-
                     } else {
                         _place.value = Place(name = "Place not found")
                     }
@@ -68,6 +60,14 @@ class PlaceViewModel(
         }
     }
 
+    // Update Place in database
+    fun updateOrInsert(place: Place) {
+        viewModelScope.launch {
+            placeRepository.updateOrInsert(place)
+        }
+    }
+
+    // Helper method to clean string
     private fun typesAdapter(types: String): String {
         return types
             .replace("[", "")
@@ -75,6 +75,7 @@ class PlaceViewModel(
             .replace("_", " ")
     }
 
+    // Helper method for create Location object
     private fun locationAdapter(apiLocation: nl.thairosi.activityx.network.PlaceApiModel.Location): Location {
         var androidLocation = Location(GPS_PROVIDER)
         androidLocation.latitude = apiLocation.lat
@@ -82,7 +83,8 @@ class PlaceViewModel(
         return androidLocation
     }
 
-    fun getImageUrl(photo: String) : String {
+    // Helper function to build Image Url
+    fun getImageUrl(photo: String): String {
         val baseUrl = PlaceAPIService.BASE_URL
         val request = "photo?"
         val maxwidth = "maxwidth=400"
@@ -90,6 +92,5 @@ class PlaceViewModel(
         val key = "key=${Keys.apiKey()}"
         return "$baseUrl$request$maxwidth&$reference&$key"
     }
-
 
 }

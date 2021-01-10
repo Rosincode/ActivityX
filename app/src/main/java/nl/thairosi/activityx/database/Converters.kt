@@ -13,7 +13,7 @@ import java.util.*
 class Converters {
 
     @TypeConverter
-    fun fromLocalDateTime(localDateTime: LocalDateTime?): String? {
+    fun fromLocalDateTime(localDateTime: LocalDateTime?): String {
         return localDateTime.toString()
     }
 
@@ -35,11 +35,6 @@ class Converters {
         val androidLocation = Location(LocationManager.GPS_PROVIDER)
         androidLocation.latitude = parts[0].toDouble()
         androidLocation.longitude = parts[1].toDouble()
-
-//        val androidLocation = Location(LocationManager.GPS_PROVIDER)
-//        androidLocation.latitude = 52.08915712791165
-//        androidLocation.longitude = 5.12157871534323
-        //
 
         return androidLocation
     }
