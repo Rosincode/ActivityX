@@ -16,133 +16,150 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import kotlinx.android.synthetic.main.fragment_navigation.*
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.databinding.FragmentNavigationBinding
 import nl.thairosi.activityx.models.Place
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
-import java.time.LocalDateTime as LocalDateTime
 
 class NavigationFragment : Fragment() {
     //Properties
+    private lateinit var radius: String
+    private lateinit var types: List<String>
     private lateinit var location: Location
     private var place: Place = Place()
     private var orientation: Float = 0F
     private var distance: Float = 10000F
-    private var radius: String = "2000"
-    private var types : List<String> = listOf("night_club","bar","bowling_alley","cafe",
-        "movie_theater","museum","restaurant","casino","park")
     private var initialDistance = 0.0F
 
     //Flags
-    private var noPlace = true
-    private var noRandomPlaceFound = true
-    private var noActivityFoundCount = 1
+    private var placeFound = false
+    private var placeNotFound = false
+    private var randomPlaceSearchStarted = false
     private var setInitialDistance = true
     private var placeAddedToDatabase = false
+    private var informedAboutWrongDirection = false
 
     private val viewModel: NavigationViewModel by lazy {
         ViewModelProvider(this).get(NavigationViewModel::class.java)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?, ): View {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
+    ): View {
         val binding: FragmentNavigationBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_navigation, container, false)
 
         binding.lifecycleOwner = this
+
         binding.navigationViewModel = viewModel // Giving the binding access to the ViewModel
 
-        setCriteria() //Get search criteria settings
+        getAndSetCriteria() //Get search criteria settings
+
         viewModel.place.observe(viewLifecycleOwner, { place = it })
-        viewModel.orientation.observe(viewLifecycleOwner, { orientation = it })
-        viewModel.location.observe(viewLifecycleOwner, { location = it
-            if (location.hasAccuracy()) {
-                if (noPlace) getPlace() else {
-                    insertPlaceIntoDatabase()
-                    setDistance(binding)
-                    setOrientation(binding)
-                }
-            } else noAccuracy()
+
+        viewModel.location.observe(viewLifecycleOwner, {
+            location = it
+            if (!placeFound) getAndSetPlace()
+            if (placeFound) calculateAndSetDistances(binding)
+            if (placeNotFound) noActivityFound()
         })
+
+        viewModel.orientation.observe(viewLifecycleOwner, {
+            orientation = it
+            if (placeFound) rotateCompassAndArrow(binding)
+        })
+
         return binding.root
     }
 
-    //Sets the criteria from the criteria settings
-    private fun setCriteria() {
+    //Gets and sets the criteria from the criteria settings
+    private fun getAndSetCriteria() {
         val criteria = PreferenceManager.getDefaultSharedPreferences(context)
         radius = criteria.getInt("criteriaDistanceSeekBar", 20).toString() + "000"
-        val typesDefault = setOf("night_club", "bar", "bowling_alley", "cafe", "movie_theater", "museum", "restaurant", "casino", "park")
-        val typesPreferences = criteria.getStringSet("multi_select_list_types", typesDefault )
+        val typesDefault = setOf("night_club", "bar", "bowling_alley", "cafe", "movie_theater",
+            "museum", "restaurant", "casino", "park")
+        var typesPreferences = criteria.getStringSet("multi_select_list_types", typesDefault)
+        if (typesPreferences.isNullOrEmpty()) {
+            Log.i("navigation", "Criteria: No types set so all types are used")
+            typesPreferences = typesDefault
+        }
         types = typesPreferences!!.shuffled()
-        Log.i("navigation", "Search criteria: Radius = $radius, Type = $types")
+        Log.i("navigation", "Criteria: Types = $types")
+        Log.i("navigation", "Criteria: Radius = $radius meter")
     }
 
-    //Tries to find the correct place to be navigated to
-    private fun getPlace() {
-        Log.i("navigation", "Searching place")
+    //Tries to find a existing or random place to be navigated to
+    private fun getAndSetPlace() {
         val text = getString(R.string.navigation_searching_activity_toast)
         Toast.makeText(context, text, Toast.LENGTH_LONG).show()
-        GlobalScope.launch {
-            noPlace = if (viewModel.notFinishedActivity() != null) {
-                false
-            } else {
-                val latLng = location.latitude.toString() + "," + location.longitude.toString()
-                    types.forEach { i ->
-                        if (noRandomPlaceFound) {
-                            Log.i("navigation", "Searching for $i")
-                            viewModel.getRandomPlace(latLng,
-                                radius,
-                                types.elementAt(types.indexOf(i)))
-                            if (place.location != null) {
-                                noRandomPlaceFound = false
-                                Log.i("navigation", "Found a $i")
-                            }
-                        }
-                    }
-                false
+        if (this::location.isInitialized && location.hasAccuracy()) {
+            GlobalScope.launch {
+                placeFound = if (viewModel.notFinishedActivity() != null) true else {
+                    searchRandomPlace()
+                    insertPlaceIntoDatabase()
+                    true
+                }
             }
         }
-        if (place.location != null) {
-            noPlace = false
-            Log.i("navigation", "place found: " + place.name)
-        } else noActivityFound()
+    }
+
+    //Searches a random place using the search criteria
+    private suspend fun searchRandomPlace() {
+        if (!randomPlaceSearchStarted) {
+            randomPlaceSearchStarted = true
+            val latLng = location.latitude.toString() + "," + location.longitude.toString()
+            types.forEach { i ->
+                delay(1000)
+                if (place.location == null) {
+                    Log.i("navigation", "searching for a $i")
+                    viewModel.getRandomPlace(latLng, radius, types.elementAt(types.indexOf(i)))
+                }
+            }
+            if (place.location == null) placeNotFound = true
+        }
     }
 
     //Toast & navigateUp: Actions on no activity found
     private fun noActivityFound() {
-        Log.i("navigation", "Searching activity attempt: $noActivityFoundCount")
-        if (noActivityFoundCount > 2) {
-            val text = getString(R.string.navigation_no_activity_found_toast)
-            Toast.makeText(context, text, Toast.LENGTH_LONG).show()
-            findNavController().navigateUp()
-        } else noActivityFoundCount++
+        Log.i("navigation", "No activity found")
+        val text = getString(R.string.navigation_no_activity_found_toast)
+        Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+        findNavController().navigateUp()
     }
 
+    //When the place is not yet inserted into the database it will be done when it is found
     private fun insertPlaceIntoDatabase() {
         if (!placeAddedToDatabase) {
-            viewModel.addToDatabase(place)
-            Log.i("navigation", "Place added to database: ${place.name}")
-            placeAddedToDatabase = true
+            if (place.location != null) {
+                viewModel.addToDatabase(place)
+                Log.i("navigation", "Place added to database: ${place.name}")
+                placeAddedToDatabase = true
+            }
         }
     }
 
-    private fun setDistance(binding: FragmentNavigationBinding) {
-        distance = location.distanceTo(place.location)
-        if (setInitialDistance) {
-            initialDistance = distance
-            setInitialDistance = false
-            Log.i("navigation", "Initial distance: $initialDistance")
-        }
-        binding.navigationDestinationImage.updatePaddingRelative(
-        bottom = calculateDistanceImagePadding())
+    //Calculates and sets the current distance when a place is found
+    private fun calculateAndSetDistances(binding: FragmentNavigationBinding) {
+        if (place.location != null) {
+            distance = location.distanceTo(place.location)
+            if (setInitialDistance) {
+                initialDistance = distance
+                setInitialDistance = false
+                Log.i("navigation", "Initial distance: $initialDistance")
+            }
+            binding.navigationDestinationImage.updatePaddingRelative(
+                bottom = calculateDistanceImagePadding())
 
-        if (distance < 50) nearbyActivity(binding)
+            if (distance < 50) nearbyActivity(binding)
+        }
     }
 
     //Returns the current local date and time
-    private fun getDateTime() : LocalDateTime {
+    private fun getDateTime(): LocalDateTime {
         val dateFormat = SimpleDateFormat(
             "yyyy-MM-dd", Locale.getDefault());
         val dateFormat2 = SimpleDateFormat(
@@ -167,20 +184,13 @@ class NavigationFragment : Fragment() {
         }
     }
 
-
-
-    //Actions on no accuracy found
-    private fun noAccuracy() {
-        Log.i("navigation", "No Accuracy: Show toast")
-        val text = getString(R.string.navigation_no_accuracy_toast)
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
-    }
-
-    //Actions on wrong direction
-    private fun wrongDirection() {
-        Log.i("navigation", "Wrong direction: Show toast")
-        val text = getString(R.string.navigation_wrong_direction_toast)
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+    //Orientates the compass and the bearing arrow in the UI
+    private fun rotateCompassAndArrow(binding: FragmentNavigationBinding) {
+        if (place.location != null && this::location.isInitialized) {
+            binding.navigationCompassImage.rotation = 360F.minus(orientation)
+            binding.navigationArrowImage.rotation =
+                location.bearingTo(place.location).minus(orientation)
+        }
     }
 
     //Actions on within 50 meters of the activity
@@ -193,17 +203,19 @@ class NavigationFragment : Fragment() {
             place.date = getDateTime()
             place.revealed = true
             viewModel.addToDatabase(place)
-            noPlace = true
+            placeFound = false
             v.findNavController().navigate(NavigationFragmentDirections
                 .actionNavigationFragmentToPlaceFragment(place))
         }
     }
 
-    private fun setOrientation(binding: FragmentNavigationBinding) {
-        //Rotates the compass using the phones orientation
-        binding.navigationCompassImage.rotation = 360F.minus(orientation)
-        //Rotates the arrow using the destination and the orientation
-        binding.navigationArrowImage.rotation =
-            location.bearingTo(place.location).minus(orientation)
+    //Actions on wrong direction
+    private fun wrongDirection() {
+        if (!informedAboutWrongDirection) {
+            Log.i("navigation", "Wrong direction: Show toast")
+            val text = getString(R.string.navigation_wrong_direction_toast)
+            Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+            informedAboutWrongDirection = true
+        }
     }
 }
