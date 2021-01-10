@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_place.*
+import com.bumptech.glide.Glide
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.database.PlaceDatabase
 import nl.thairosi.activityx.databinding.FragmentPlaceBinding
@@ -22,21 +20,20 @@ class PlaceFragment : Fragment() {
     lateinit var viewModel: PlaceViewModel
     val args: PlaceFragmentArgs by navArgs()
 
-//    private val viewModel: PlaceViewModel by lazy {
-//        ViewModelProvider(this).get(PlaceViewModel::class.java)
-//    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
+        // Binds the view for data Binding
         val binding: FragmentPlaceBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_place, container, false
         )
 
+        // Binds the lifecycleOwner to this fragment
         binding.lifecycleOwner = this
 
+        // Create an instance of the PlaceViewModel
         val placeRepository = PlaceRepository(PlaceDatabase(requireContext()))
         val viewModelProviderFactory = PlaceViewModelProviderFactory(placeRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(PlaceViewModel::class.java)
@@ -44,28 +41,31 @@ class PlaceFragment : Fragment() {
         // Giving the binding access to the ViewModel
         binding.placeViewModel = viewModel
 
-        // Load the place photo into the fragment with Picasso
-        viewModel.place.observe(viewLifecycleOwner, { place ->
-            Picasso.get().load(place.photo).into(binding.placeImage)
-        })
-
-        // Let the return button navigate to homeFragment
-////        binding.placeReturnButton.setOnClickListener(
-////            Navigation.createNavigateOnClickListener(R.id.action_placeFragment_to_homeFragment)
-////        )
-        // Return button navigates up
-        binding.placeReturnButton.setOnClickListener {
-            findNavController().navigateUp()
-        }
-
-
         // Safeargs
         val place = args.place
         viewModel.getPlace(place)
 
+        // Load the place photo into the fragment with Picasso
+        viewModel.place.observe(viewLifecycleOwner, { place ->
+            if(place.photoReference.contains("null")) {
+                binding.placeImage.visibility = View.VISIBLE
+            } else {
+                Glide.with(this)
+                    .load(viewModel.getImageUrl(place.photoReference))
+                    .into(binding.placeImage)
+                binding.placeImage.visibility = View.VISIBLE
+            }
+        })
+
+        // Update place in room database when checkbox is clicked
         binding.placeBlockActivityCheckbox.setOnClickListener {
-            place.blocked = placeBlockActivityCheckbox.isChecked
+            place.blocked = binding.placeBlockActivityCheckbox.isChecked
             viewModel.updateOrInsert(place)
+        }
+
+        // Return button navigates up
+        binding.placeReturnButton.setOnClickListener {
+            findNavController().navigateUp()
         }
 
         return binding.root

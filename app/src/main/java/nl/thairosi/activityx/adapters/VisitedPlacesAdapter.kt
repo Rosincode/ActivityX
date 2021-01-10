@@ -8,11 +8,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_visited_place.view.*
+import nl.thairosi.activityx.Keys
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.models.Place
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
+import nl.thairosi.activityx.network.PlaceAPIService
 
 class VisitedPlacesAdapter : RecyclerView.Adapter<VisitedPlacesAdapter.PlaceViewHolder>() {
 
@@ -50,7 +49,7 @@ class VisitedPlacesAdapter : RecyclerView.Adapter<VisitedPlacesAdapter.PlaceView
     override fun onBindViewHolder(holder: PlaceViewHolder, position: Int) {
         val place = differ.currentList[position]
         holder.itemView.apply {
-            Glide.with(this).load(place.photo).into(image_view_visited_place)
+            Glide.with(this).load(getImageUrl(place.photoReference)).into(image_view_visited_place)
             text_view_name_visited_place.text = place.name
             text_view_date_place_visited.text = place.getDateToView()
             switch_block_visited_place.isChecked = place.blocked
@@ -75,6 +74,15 @@ class VisitedPlacesAdapter : RecyclerView.Adapter<VisitedPlacesAdapter.PlaceView
     }
     fun setOnToggleClickListener(listener: (Place) -> Unit) {
         onToggleClickListener = listener
+    }
+
+    fun getImageUrl(photo: String) : String {
+        val baseUrl = PlaceAPIService.BASE_URL
+        val request = "photo?"
+        val maxwidth = "maxwidth=400"
+        val reference = "photoreference=$photo"
+        val key = "key=${Keys.apiKey()}"
+        return "$baseUrl$request$maxwidth&$reference&$key"
     }
 
 //    fun getDateToView(date: LocalDateTime) : String {

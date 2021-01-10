@@ -10,10 +10,9 @@ class PlaceRepository(
     val db: PlaceDatabase
 ) {
     // API
-    fun getPlace(place: Place) : Call<PlaceResponse> {
-        return PlaceApi.RETROFIT_SERVICE.getPlace(place_id = place.placeId)
+    fun getPlace(placeId: String) : Call<PlaceResponse> {
+        return PlaceApi.RETROFIT_SERVICE.getPlace(place_id = placeId)
     }
-
 
     // Database
     suspend fun updateOrInsert(place: Place) = db.getPlaceDao().updateOrInsert(place)

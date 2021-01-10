@@ -18,7 +18,7 @@ class Converters {
     }
 
     @TypeConverter
-    fun ToLocalDateTime(date: String?): LocalDateTime? {
+    fun toLocalDateTime(date: String?): LocalDateTime? {
         return LocalDateTime.parse(date)
     }
 

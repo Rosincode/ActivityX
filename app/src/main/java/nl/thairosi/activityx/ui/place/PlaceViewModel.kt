@@ -1,7 +1,6 @@
 package nl.thairosi.activityx.ui.place
 
 import android.location.Location
-import android.location.LocationManager
 import android.location.LocationManager.GPS_PROVIDER
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,14 +9,12 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import nl.thairosi.activityx.Keys
 import nl.thairosi.activityx.models.Place
-import nl.thairosi.activityx.network.PlaceApi
+import nl.thairosi.activityx.network.PlaceAPIService
 import nl.thairosi.activityx.network.PlaceApiModel.PlaceResponse
 import nl.thairosi.activityx.repository.PlaceRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.LocalDateTime
-import java.util.*
 
 class PlaceViewModel(
     val placeRepository: PlaceRepository
@@ -27,11 +24,6 @@ class PlaceViewModel(
     val place: LiveData<Place>
         get() = _place
 
-    init {
-//        getPlace("ChIJW5MOkVpvxkcRDYqgo2pLGBY")
-
-    }
-
     fun updateOrInsert(place: Place) {
         viewModelScope.launch {
             placeRepository.updateOrInsert(place)
@@ -40,7 +32,7 @@ class PlaceViewModel(
 
     fun getPlace(place: Place) {
         viewModelScope.launch {
-            val call = PlaceApi.RETROFIT_SERVICE.getPlace(place_id = place.placeId)
+            val call = placeRepository.getPlace(place.placeId)
             call.enqueue(object : Callback<PlaceResponse> {
                 override fun onResponse(
                     call: Call<PlaceResponse>,
@@ -48,8 +40,7 @@ class PlaceViewModel(
                 ) {
                     if (response.body()?.status.equals("OK")) {
 
-//                        activityx.placeId = response.body()?.result?.place_id.toString(),
-                        place.photo = photoAdapter(response.body()?.result?.photos?.first()?.photo_reference.toString())
+                        place.photoReference = response.body()?.result?.photos?.first()?.photo_reference.toString()
                         place.name = response.body()?.result?.name.toString()
                         place.address = response.body()?.result?.formatted_address.toString()
                         place.types = typesAdapter(response.body()?.result?.types.toString())
@@ -57,8 +48,7 @@ class PlaceViewModel(
                         place.location = response.body()?.result?.geometry?.location?.let {
                                 locationAdapter(it)
                             }
-//                            date = LocalDateTime.parse("2021-01-04T18:50:53"),
-//                            blocked = true
+
                         // Update live data
                         _place.value = place
 
@@ -78,11 +68,6 @@ class PlaceViewModel(
         }
     }
 
-    private fun photoAdapter(photoReference: String): String {
-        val base = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
-        return base + photoReference + "&key=" + Keys.apiKey()
-    }
-
     private fun typesAdapter(types: String): String {
         return types
             .replace("[", "")
@@ -95,6 +80,15 @@ class PlaceViewModel(
         androidLocation.latitude = apiLocation.lat
         androidLocation.longitude = apiLocation.lng
         return androidLocation
+    }
+
+    fun getImageUrl(photo: String) : String {
+        val baseUrl = PlaceAPIService.BASE_URL
+        val request = "photo?"
+        val maxwidth = "maxwidth=400"
+        val reference = "photoreference=$photo"
+        val key = "key=${Keys.apiKey()}"
+        return "$baseUrl$request$maxwidth&$reference&$key"
     }
 
 

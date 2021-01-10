@@ -31,10 +31,10 @@ import retrofit2.http.Query
 
 interface PlaceAPIService {
 
-//    companion object {
-//        const val BASE_URL = "https://maps.googleapis.com/maps/api/place/"
+    companion object {
+        const val BASE_URL = "https://maps.googleapis.com/maps/api/place/"
 //        val API_KEY = Keys.apiKey()
-//    }
+    }
 
     //Google API call to get one place by its place_id
     @GET("details/json?")
@@ -52,6 +52,7 @@ interface PlaceAPIService {
         @Query("radius") radius: String,
         @Query("type") type: String
     ): Call<NearbySearchResponse>
+
 }
 
 object PlaceApi {

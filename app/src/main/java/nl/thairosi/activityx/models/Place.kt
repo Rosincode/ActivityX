@@ -22,7 +22,7 @@ import java.util.*
 @Parcelize
 data class Place(
     var placeId: String = "",
-    var photo: String = "",
+    var photoReference: String = "",
     var name: String = "",
     var address: String = "",
     var types: String = "",
