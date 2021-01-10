@@ -12,6 +12,7 @@ import nl.thairosi.activityx.models.Place
 import nl.thairosi.activityx.network.PlaceAPIService
 import nl.thairosi.activityx.network.PlaceApiModel.PlaceResponse
 import nl.thairosi.activityx.repository.PlaceRepository
+import nl.thairosi.activityx.utils.Utils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,10 +39,10 @@ class PlaceViewModel(
                             response.body()?.result?.photos?.first()?.photo_reference.toString()
                         place.name = response.body()?.result?.name.toString()
                         place.address = response.body()?.result?.formatted_address.toString()
-                        place.types = typesAdapter(response.body()?.result?.types.toString())
+                        place.types = Utils.typesAdapter(response.body()?.result?.types.toString())
                         place.url = response.body()?.result?.url.toString()
                         place.location = response.body()?.result?.geometry?.location?.let {
-                            locationAdapter(it)
+                            Utils.locationAdapter(it)
                         }
                         // Update live data
                         _place.value = place
@@ -67,30 +68,30 @@ class PlaceViewModel(
         }
     }
 
-    // Helper method to clean string
-    private fun typesAdapter(types: String): String {
-        return types
-            .replace("[", "")
-            .replace("]", "")
-            .replace("_", " ")
-    }
-
-    // Helper method for create Location object
-    private fun locationAdapter(apiLocation: nl.thairosi.activityx.network.PlaceApiModel.Location): Location {
-        var androidLocation = Location(GPS_PROVIDER)
-        androidLocation.latitude = apiLocation.lat
-        androidLocation.longitude = apiLocation.lng
-        return androidLocation
-    }
-
-    // Helper function to build Image Url
-    fun getImageUrl(photo: String): String {
-        val baseUrl = PlaceAPIService.BASE_URL
-        val request = "photo?"
-        val maxwidth = "maxwidth=400"
-        val reference = "photoreference=$photo"
-        val key = "key=${Keys.apiKey()}"
-        return "$baseUrl$request$maxwidth&$reference&$key"
-    }
+//    // Helper method to clean string
+//    private fun typesAdapter(types: String): String {
+//        return types
+//            .replace("[", "")
+//            .replace("]", "")
+//            .replace("_", " ")
+//    }
+//
+//    // Helper method for create Location object
+//    private fun locationAdapter(apiLocation: nl.thairosi.activityx.network.PlaceApiModel.Location): Location {
+//        var androidLocation = Location(GPS_PROVIDER)
+//        androidLocation.latitude = apiLocation.lat
+//        androidLocation.longitude = apiLocation.lng
+//        return androidLocation
+//    }
+//
+//    // Helper function to build Image Url
+//    fun getImageUrl(photoReference: String): String {
+//        val baseUrl = PlaceAPIService.BASE_URL
+//        val request = "photo?"
+//        val maxwidth = "maxwidth=400"
+//        val reference = "photoreference=$photoReference"
+//        val key = "key=${Keys.apiKey()}"
+//        return "$baseUrl$request$maxwidth&$reference&$key"
+//    }
 
 }

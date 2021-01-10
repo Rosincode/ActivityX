@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.databinding.FragmentNavigationBinding
 import nl.thairosi.activityx.models.Place
+import nl.thairosi.activityx.utils.Utils
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.*
@@ -160,17 +161,6 @@ class NavigationFragment : Fragment() {
         }
     }
 
-    //Returns the current local date and time
-    private fun getDateTime(): LocalDateTime {
-        val dateFormat = SimpleDateFormat(
-            "yyyy-MM-dd", Locale.getDefault());
-        val dateFormat2 = SimpleDateFormat(
-            "HH:mm:ss", Locale.getDefault());
-        val date = Date();
-        Log.i("navigation", "LocalDateTime added to this place in the database: $date")
-        return LocalDateTime.parse(dateFormat.format(date) + "T" + dateFormat2.format(date))
-    }
-
     //Calculates the necessary padding for the distance image in the fragment ui
     private fun calculateDistanceImagePadding(): Int {
         //Calculates the percentage of the distance over the initialDistance less than 100%
@@ -204,7 +194,7 @@ class NavigationFragment : Fragment() {
             Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
             navigationRevealButton.visibility = View.VISIBLE
             binding.navigationRevealButton.setOnClickListener { v: View ->
-                place.date = getDateTime()
+                place.date = Utils.getDateTime()
                 place.revealed = true
                 viewModel.addToDatabase(place)
                 placeFound = false

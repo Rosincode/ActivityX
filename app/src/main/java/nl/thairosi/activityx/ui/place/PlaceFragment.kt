@@ -14,6 +14,7 @@ import nl.thairosi.activityx.R
 import nl.thairosi.activityx.database.PlaceDatabase
 import nl.thairosi.activityx.databinding.FragmentPlaceBinding
 import nl.thairosi.activityx.repository.PlaceRepository
+import nl.thairosi.activityx.utils.Utils
 
 class PlaceFragment : Fragment() {
 
@@ -51,7 +52,7 @@ class PlaceFragment : Fragment() {
                 binding.placeImage.visibility = View.VISIBLE
             } else {
                 Glide.with(this)
-                    .load(viewModel.getImageUrl(place.photoReference))
+                    .load(Utils.getImageUrl(place.photoReference))
                     .into(binding.placeImage)
                 binding.placeImage.visibility = View.VISIBLE
             }
