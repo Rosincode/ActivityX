@@ -7,7 +7,7 @@ import nl.thairosi.activityx.network.PlaceApiModel.PlaceResponse
 import retrofit2.Call
 
 class PlaceRepository(
-    val db: PlaceDatabase
+    private val db: PlaceDatabase
 ) {
     // API
     fun getPlace(placeId: String) : Call<PlaceResponse> {
@@ -18,6 +18,6 @@ class PlaceRepository(
     suspend fun updateOrInsert(place: Place) = db.getPlaceDao().updateOrInsert(place)
     fun getVisitedPlaces() = db.getPlaceDao().getVisitedPlaces()
     fun getNotFinishedPlace() = db.getPlaceDao().getNotFinishedPlace()
+    fun getBlockedPlaces() = db.getPlaceDao().getBlockedPlaces()
     suspend fun deleteNotFinishedActivity() = db.getPlaceDao().deleteNotFinishedPlace()
-
 }

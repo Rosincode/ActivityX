@@ -41,6 +41,7 @@ class NavigationFragment : Fragment() {
     private var randomPlaceSearchStarted = false
     private var setInitialDistance = true
     private var placeAddedToDatabase = false
+    private var nearbyActivity = false
     private var informedAboutWrongDirection = false
 
     private val viewModel: NavigationViewModel by lazy {
@@ -48,8 +49,7 @@ class NavigationFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
-    ): View {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?, ): View {
         val binding: FragmentNavigationBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_navigation, container, false)
 
@@ -59,7 +59,9 @@ class NavigationFragment : Fragment() {
 
         getAndSetCriteria() //Get search criteria settings
 
-        viewModel.place.observe(viewLifecycleOwner, { place = it })
+        viewModel.place.observe(viewLifecycleOwner, {
+            place = it
+        })
 
         viewModel.location.observe(viewLifecycleOwner, {
             location = it
@@ -79,7 +81,7 @@ class NavigationFragment : Fragment() {
     //Gets and sets the criteria from the criteria settings
     private fun getAndSetCriteria() {
         val criteria = PreferenceManager.getDefaultSharedPreferences(context)
-        radius = criteria.getInt("criteriaDistanceSeekBar", 20).toString() + "000"
+        radius = criteria.getInt("criteriaDistanceSeekBar", 2).toString() + "000"
         val typesDefault = setOf("night_club", "bar", "bowling_alley", "cafe", "movie_theater",
             "museum", "restaurant", "casino", "park")
         var typesPreferences = criteria.getStringSet("multi_select_list_types", typesDefault)
@@ -87,7 +89,7 @@ class NavigationFragment : Fragment() {
             Log.i("navigation", "Criteria: No types set so all types are used")
             typesPreferences = typesDefault
         }
-        types = typesPreferences!!.shuffled()
+        types = typesPreferences.shuffled()
         Log.i("navigation", "Criteria: Types = $types")
         Log.i("navigation", "Criteria: Radius = $radius meter")
     }
@@ -96,7 +98,8 @@ class NavigationFragment : Fragment() {
     private fun getAndSetPlace() {
         val text = getString(R.string.navigation_searching_activity_toast)
         Toast.makeText(context, text, Toast.LENGTH_LONG).show()
-        if (this::location.isInitialized && location.hasAccuracy()) {
+        if (this::location.isInitialized && this::radius.isInitialized &&
+            this::types.isInitialized && location.hasAccuracy()) {
             GlobalScope.launch {
                 placeFound = if (viewModel.notFinishedActivity() != null) true else {
                     searchRandomPlace()
@@ -113,10 +116,10 @@ class NavigationFragment : Fragment() {
             randomPlaceSearchStarted = true
             val latLng = location.latitude.toString() + "," + location.longitude.toString()
             types.forEach { i ->
-                delay(1000)
                 if (place.location == null) {
                     Log.i("navigation", "searching for a $i")
                     viewModel.getRandomPlace(latLng, radius, types.elementAt(types.indexOf(i)))
+                    delay(1000)
                 }
             }
             if (place.location == null) placeNotFound = true
@@ -153,7 +156,6 @@ class NavigationFragment : Fragment() {
             }
             binding.navigationDestinationImage.updatePaddingRelative(
                 bottom = calculateDistanceImagePadding())
-
             if (distance < 50) nearbyActivity(binding)
         }
     }
@@ -195,26 +197,29 @@ class NavigationFragment : Fragment() {
 
     //Actions on within 50 meters of the activity
     private fun nearbyActivity(binding: FragmentNavigationBinding) {
-        Log.i("navigation", "Nearby activity: Show toast & reveal button")
-        val text = getString(R.string.navigation_nearby_activity_toast)
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
-        navigationRevealButton.visibility = View.VISIBLE
-        binding.navigationRevealButton.setOnClickListener { v: View ->
-            place.date = getDateTime()
-            place.revealed = true
-            viewModel.addToDatabase(place)
-            placeFound = false
-            v.findNavController().navigate(NavigationFragmentDirections
-                .actionNavigationFragmentToPlaceFragment(place))
+        if (!nearbyActivity) {
+            nearbyActivity = true
+            Log.i("navigation", "Nearby activity: Show toast & reveal button")
+            val text = getString(R.string.navigation_nearby_activity_toast)
+            Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+            navigationRevealButton.visibility = View.VISIBLE
+            binding.navigationRevealButton.setOnClickListener { v: View ->
+                place.date = getDateTime()
+                place.revealed = true
+                viewModel.addToDatabase(place)
+                placeFound = false
+                v.findNavController().navigate(NavigationFragmentDirections
+                    .actionNavigationFragmentToPlaceFragment(place))
+            }
         }
     }
 
     //Actions on wrong direction
     private fun wrongDirection() {
         if (!informedAboutWrongDirection) {
-            Log.i("navigation", "Wrong direction: Show toast")
+            Log.i("navigation", "Wrong direction")
             val text = getString(R.string.navigation_wrong_direction_toast)
-            Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, text, Toast.LENGTH_LONG).show()
             informedAboutWrongDirection = true
         }
     }

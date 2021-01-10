@@ -3,11 +3,12 @@ package nl.thairosi.activityx.ui.navigation
 import android.app.Application
 import android.location.Location
 import android.location.LocationManager
-import androidx.core.content.ContentProviderCompat.requireContext
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import nl.thairosi.activityx.database.PlaceDatabase
 import nl.thairosi.activityx.models.Place
@@ -30,11 +31,14 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
 
     private val repository: PlaceRepository = PlaceRepository(PlaceDatabase(application))
 
+    var blockedList : List<String>? = null
+
     //LocationLiveData provides a live current GPS location of the phone for this location value
     private val _location = LocationLiveData(application)
     val location: LiveData<Location>
         get() = _location
 
+    //The place MutableLiveData will be filled with data when a place is found
     private var _place = MutableLiveData(Place())
     val place: LiveData<Place>
         get() = _place
@@ -44,6 +48,11 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
     val orientation: LiveData<Float>
         get() = _orientation
 
+    init {
+        getBlockedPlaces()
+    }
+
+    //Gets a random place using the criteria settings and blocked places
     fun getRandomPlace(location: String, radius: String, type: String) {
         val call = PlaceApi.RETROFIT_SERVICE.getPlaces(location = location,
             radius = radius,
@@ -54,27 +63,49 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
                 response: Response<NearbySearchResponse>,
             ) {
                 if (response.body()?.status.equals("OK")) {
-                    val resultList: List<Result> = response.body()?.results?.toList()!!
-                    val result = resultList.random()
+                    val resultList: MutableList<Result> = response.body()?.results?.toMutableList()!!
 
-                    _place.value = Place(
-                        placeId = result.place_id,
-                        location = locationConverter(
-                            result.geometry.location.lat,
-                            result.geometry.location.lng
-                        ),
-                        name = result.name
-                    )
+                    if(resultList.isNotEmpty()) {
+                        if (blockedList!!.isNotEmpty()) {
+                            resultList.forEach {
+                                if (blockedList!!.contains(it.place_id)) {
+                                    resultList.removeAt(resultList.indexOf(it))
+                                }
+                            }
+                        }
 
-                } else {
-                    //TODO (report place not found and return to home)
+                        if (resultList.isNotEmpty()) {
+                            val result = resultList.random()
+                            _place.value = Place(
+                                placeId = result.place_id,
+                                location = locationConverter(
+                                    result.geometry.location.lat,
+                                    result.geometry.location.lng
+                                ),
+                                name = result.name
+                            )
+                        }
+                    }
                 }
             }
-
             override fun onFailure(call: Call<NearbySearchResponse>, t: Throwable) {
-                //TODO (report failure)
+                Log.i("navigate", "API call failure: $t")
             }
         })
+    }
+
+//    suspend fun isBlockedPlace(placeId: String) : Boolean {
+//        var isBlocked = false
+//        if (repository.getBlockedPlaces()!!.contains(placeId)) {
+//            isBlocked = true
+//        }
+//        return isBlocked
+//    }
+
+    private fun getBlockedPlaces() {
+        GlobalScope.launch {
+            blockedList = repository.getBlockedPlaces()
+        }
     }
 
     fun addToDatabase(place: Place) {
@@ -99,5 +130,4 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
         androidLocation.longitude = lng
         return androidLocation
     }
-
 }

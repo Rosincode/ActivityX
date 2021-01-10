@@ -33,7 +33,7 @@
                     android:layout_height="@dimen/place_imageHeight"
                     android:contentDescription="@string/place_image_content_description"
                     android:scaleType="centerCrop"
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     app:srcCompat="@drawable/ic_no_image_available" />
 
                 <TextView
