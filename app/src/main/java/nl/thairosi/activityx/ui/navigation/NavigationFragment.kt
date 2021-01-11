@@ -21,10 +21,8 @@ import kotlinx.coroutines.launch
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.databinding.FragmentNavigationBinding
 import nl.thairosi.activityx.models.Place
+import nl.thairosi.activityx.preferences.Preferences
 import nl.thairosi.activityx.utils.Utils
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.util.*
 
 class NavigationFragment : Fragment() {
     //Properties
@@ -58,7 +56,10 @@ class NavigationFragment : Fragment() {
 
         binding.navigationViewModel = viewModel // Giving the binding access to the ViewModel
 
-        getAndSetCriteria() //Get search criteria settings
+        val preferenceManager = PreferenceManager.getDefaultSharedPreferences(context)
+
+        radius = Preferences.getRadius(preferenceManager)
+        types = Preferences.getTypes(preferenceManager)
 
         viewModel.place.observe(viewLifecycleOwner, {
             place = it
@@ -79,28 +80,12 @@ class NavigationFragment : Fragment() {
         return binding.root
     }
 
-    //Gets and sets the criteria from the criteria settings
-    private fun getAndSetCriteria() {
-        val criteria = PreferenceManager.getDefaultSharedPreferences(context)
-        radius = criteria.getInt("criteriaDistanceSeekBar", 2).toString() + "000"
-        val typesDefault = setOf("night_club", "bar", "bowling_alley", "cafe", "movie_theater",
-            "museum", "restaurant", "casino", "park")
-        var typesPreferences = criteria.getStringSet("multi_select_list_types", typesDefault)
-        if (typesPreferences.isNullOrEmpty()) {
-            Log.i("navigation", "Criteria: No types set so all types are used")
-            typesPreferences = typesDefault
-        }
-        types = typesPreferences.shuffled()
-        Log.i("navigation", "Criteria: Types = $types")
-        Log.i("navigation", "Criteria: Radius = $radius meter")
-    }
-
     //Tries to find a existing or random place to be navigated to
     private fun getAndSetPlace() {
         val text = getString(R.string.navigation_searching_activity_toast)
         Toast.makeText(context, text, Toast.LENGTH_LONG).show()
-        if (this::location.isInitialized && this::radius.isInitialized &&
-            this::types.isInitialized && location.hasAccuracy()) {
+        if (this::location.isInitialized && radius.isNotBlank() &&
+            types.isNotEmpty() && location.hasAccuracy()) {
             GlobalScope.launch {
                 placeFound = if (viewModel.notFinishedActivity() != null) true else {
                     searchRandomPlace()
