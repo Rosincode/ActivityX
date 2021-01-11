@@ -3,8 +3,8 @@ package nl.thairosi.activityx.network
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import nl.thairosi.activityx.Keys
-import nl.thairosi.activityx.network.NearbySearchApiModel.NearbySearchResponse
-import nl.thairosi.activityx.network.PlaceApiModel.PlaceResponse
+import nl.thairosi.activityx.models.NearbySearchApiModel.NearbySearchResponse
+import nl.thairosi.activityx.models.PlaceApiModel.PlaceResponse
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -28,7 +28,7 @@ interface PlaceAPIService {
     @GET("details/json?")
     fun getPlace(
         @Query("key") key: String = Keys.apiKey(),
-        @Query("place_id") place_id: String?
+        @Query("place_id") place_id: String?,
     ): Call<PlaceResponse>
 
     //Google API call to get multiple places of a chosen type within a chosen radius
@@ -38,7 +38,7 @@ interface PlaceAPIService {
         @Query("opennow") opennow: String = "true",
         @Query("location") location: String,
         @Query("radius") radius: String,
-        @Query("type") type: String
+        @Query("type") type: String,
     ): Call<NearbySearchResponse>
 
 }

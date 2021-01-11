@@ -1,16 +1,12 @@
 package nl.thairosi.activityx.ui.place
 
-import android.location.Location
-import android.location.LocationManager.GPS_PROVIDER
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import nl.thairosi.activityx.Keys
 import nl.thairosi.activityx.models.Place
-import nl.thairosi.activityx.network.PlaceAPIService
-import nl.thairosi.activityx.network.PlaceApiModel.PlaceResponse
+import nl.thairosi.activityx.models.PlaceApiModel.PlaceResponse
 import nl.thairosi.activityx.repository.PlaceRepository
 import nl.thairosi.activityx.utils.Utils
 import retrofit2.Call
@@ -18,7 +14,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PlaceViewModel(
-    val placeRepository: PlaceRepository,
+    private val placeRepository: PlaceRepository,
 ) : ViewModel() {
 
     private var _place = MutableLiveData<Place>()
@@ -67,31 +63,4 @@ class PlaceViewModel(
             placeRepository.updateOrInsert(place)
         }
     }
-
-//    // Helper method to clean string
-//    private fun typesAdapter(types: String): String {
-//        return types
-//            .replace("[", "")
-//            .replace("]", "")
-//            .replace("_", " ")
-//    }
-//
-//    // Helper method for create Location object
-//    private fun locationAdapter(apiLocation: nl.thairosi.activityx.network.PlaceApiModel.Location): Location {
-//        var androidLocation = Location(GPS_PROVIDER)
-//        androidLocation.latitude = apiLocation.lat
-//        androidLocation.longitude = apiLocation.lng
-//        return androidLocation
-//    }
-//
-//    // Helper function to build Image Url
-//    fun getImageUrl(photoReference: String): String {
-//        val baseUrl = PlaceAPIService.BASE_URL
-//        val request = "photo?"
-//        val maxwidth = "maxwidth=400"
-//        val reference = "photoreference=$photoReference"
-//        val key = "key=${Keys.apiKey()}"
-//        return "$baseUrl$request$maxwidth&$reference&$key"
-//    }
-
 }

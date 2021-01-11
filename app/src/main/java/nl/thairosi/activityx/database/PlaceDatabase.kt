@@ -14,7 +14,7 @@ import nl.thairosi.activityx.models.Place
 @TypeConverters(Converters::class)
 abstract class PlaceDatabase : RoomDatabase() {
 
-    abstract fun getPlaceDao() : PlaceDao
+    abstract fun getPlaceDao(): PlaceDao
 
     companion object {
         @Volatile
@@ -22,7 +22,7 @@ abstract class PlaceDatabase : RoomDatabase() {
         private val LOCK = Any()
 
         operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
-            instance ?: createDatabase(context).also { instance = it}
+            instance ?: createDatabase(context).also { instance = it }
         }
 
         private fun createDatabase(context: Context) =

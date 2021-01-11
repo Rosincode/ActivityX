@@ -1,4 +1,4 @@
-package nl.thairosi.activityx.network.NearbySearchApiModel
+package nl.thairosi.activityx.models.NearbySearchApiModel
 
 data class NearbySearchResponse(
     val results: List<Result>,

@@ -3,7 +3,7 @@ package nl.thairosi.activityx.Utils
 import android.location.LocationManager
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import nl.thairosi.activityx.Keys
-import nl.thairosi.activityx.network.PlaceApiModel.Location
+import nl.thairosi.activityx.models.PlaceApiModel.Location
 import nl.thairosi.activityx.utils.Utils
 
 

@@ -9,7 +9,6 @@ import java.time.LocalDateTime
 
 import java.util.*
 
-
 class Converters {
 
     @TypeConverter
@@ -38,5 +37,4 @@ class Converters {
 
         return androidLocation
     }
-
 }

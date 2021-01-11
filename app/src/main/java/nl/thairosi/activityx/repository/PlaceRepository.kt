@@ -2,15 +2,15 @@ package nl.thairosi.activityx.repository
 
 import nl.thairosi.activityx.database.PlaceDatabase
 import nl.thairosi.activityx.models.Place
+import nl.thairosi.activityx.models.PlaceApiModel.PlaceResponse
 import nl.thairosi.activityx.network.PlaceApi
-import nl.thairosi.activityx.network.PlaceApiModel.PlaceResponse
 import retrofit2.Call
 
 class PlaceRepository(
-    private val db: PlaceDatabase
+    private val db: PlaceDatabase,
 ) {
     // API
-    fun getPlace(placeId: String) : Call<PlaceResponse> {
+    fun getPlace(placeId: String): Call<PlaceResponse> {
         return PlaceApi.RETROFIT_SERVICE.getPlace(place_id = placeId)
     }
 

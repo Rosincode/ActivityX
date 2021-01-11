@@ -9,8 +9,8 @@ import nl.thairosi.activityx.models.Place
 import nl.thairosi.activityx.repository.PlaceRepository
 
 class VisitedPlacesViewModel(
-    val placeRepository: PlaceRepository
-    ) : ViewModel() {
+    val placeRepository: PlaceRepository,
+) : ViewModel() {
 
     private var _visitedPlaces = MutableLiveData<List<Place>>()
     val visitedPlaces: LiveData<List<Place>>

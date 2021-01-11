@@ -1,10 +1,7 @@
 package nl.thairosi.activityx.utils
 
-import android.location.LocationManager
-import nl.thairosi.activityx.network.PlaceApiModel.Location
 import org.junit.Assert.*
 import org.junit.Test
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 import java.util.*

@@ -49,7 +49,8 @@ class NavigationFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?, ): View {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
+    ): View {
         val binding: FragmentNavigationBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_navigation, container, false)
 
@@ -89,7 +90,8 @@ class NavigationFragment : Fragment() {
         val text = getString(R.string.navigation_searching_activity_toast)
         Toast.makeText(context, text, Toast.LENGTH_LONG).show()
         if (this::location.isInitialized && radius.isNotBlank() &&
-            types.isNotEmpty() && location.hasAccuracy()) {
+            types.isNotEmpty() && location.hasAccuracy()
+        ) {
             GlobalScope.launch {
                 placeFound = if (viewModel.notFinishedActivity() != null) true else {
                     searchRandomPlace()

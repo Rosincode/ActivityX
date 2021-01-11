@@ -2,7 +2,6 @@ package nl.thairosi.activityx.utils
 
 import android.location.Location
 import android.location.LocationManager
-import android.util.Log
 import nl.thairosi.activityx.Keys
 import nl.thairosi.activityx.network.PlaceAPIService
 import java.text.SimpleDateFormat
@@ -24,7 +23,7 @@ class Utils {
         }
 
         // Helper method for create Location object
-        fun locationAdapter(apiLocation: nl.thairosi.activityx.network.PlaceApiModel.Location): Location {
+        fun locationAdapter(apiLocation: nl.thairosi.activityx.models.PlaceApiModel.Location): Location {
             var androidLocation = Location(LocationManager.GPS_PROVIDER)
             androidLocation.latitude = apiLocation.lat
             androidLocation.longitude = apiLocation.lng
@@ -52,15 +51,12 @@ class Utils {
         }
 
         // Helper method to format a date
-        fun getDateToView(date: LocalDateTime?) : String {
+        fun getDateToView(date: LocalDateTime?): String {
             return if (date != null) {
                 date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL))
             } else {
                 ""
             }
         }
-
     }
-
-
 }

@@ -23,7 +23,7 @@ class PlaceFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
 
         // Binds the view for data Binding
@@ -37,7 +37,8 @@ class PlaceFragment : Fragment() {
         // Create an instance of the PlaceViewModel
         val placeRepository = PlaceRepository(PlaceDatabase(requireContext()))
         val viewModelProviderFactory = PlaceViewModelProviderFactory(placeRepository)
-        viewModel = ViewModelProvider(this, viewModelProviderFactory).get(PlaceViewModel::class.java)
+        viewModel =
+            ViewModelProvider(this, viewModelProviderFactory).get(PlaceViewModel::class.java)
 
         // Giving the binding access to the ViewModel
         binding.placeViewModel = viewModel
@@ -48,7 +49,7 @@ class PlaceFragment : Fragment() {
 
         // Load the place photo into the fragment with Glide
         viewModel.place.observe(viewLifecycleOwner, { place ->
-            if(place.photoReference.contains("null")) {
+            if (place.photoReference.contains("null")) {
                 binding.placeImage.visibility = View.VISIBLE
             } else {
                 Glide.with(this)

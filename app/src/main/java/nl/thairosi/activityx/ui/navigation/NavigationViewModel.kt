@@ -11,9 +11,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import nl.thairosi.activityx.database.PlaceDatabase
+import nl.thairosi.activityx.models.NearbySearchApiModel.NearbySearchResponse
+import nl.thairosi.activityx.models.NearbySearchApiModel.Result
 import nl.thairosi.activityx.models.Place
-import nl.thairosi.activityx.network.NearbySearchApiModel.NearbySearchResponse
-import nl.thairosi.activityx.network.NearbySearchApiModel.Result
 import nl.thairosi.activityx.network.PlaceApi
 import nl.thairosi.activityx.repository.PlaceRepository
 import retrofit2.Call
@@ -31,7 +31,7 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
 
     private val repository: PlaceRepository = PlaceRepository(PlaceDatabase(application))
 
-    private var blockedList : List<String> = emptyList()
+    private var blockedList: List<String> = emptyList()
 
     //LocationLiveData provides a live current GPS location of the phone for this location value
     private val _location = LocationLiveData(application)
@@ -59,9 +59,10 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
                 response: Response<NearbySearchResponse>,
             ) {
                 if (response.body()?.status.equals("OK")) {
-                    val resultList: MutableList<Result>? = response.body()?.results?.toMutableList()!!
+                    val resultList: MutableList<Result>? =
+                        response.body()?.results?.toMutableList()!!
 
-                    if(!resultList.isNullOrEmpty()) {
+                    if (!resultList.isNullOrEmpty()) {
                         getBlockedPlaces()
                         if (!blockedList.isNullOrEmpty()) {
                             resultList.forEach {
@@ -84,6 +85,7 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
                     }
                 }
             }
+
             override fun onFailure(call: Call<NearbySearchResponse>, t: Throwable) {
                 Log.i("navigate", "API call failure: $t")
             }
@@ -102,7 +104,7 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
         }
     }
 
-    fun notFinishedActivity() : Place? {
+    fun notFinishedActivity(): Place? {
         val notFinishedActivity = repository.getNotFinishedPlace()
         viewModelScope.launch {
             if (notFinishedActivity != null) {

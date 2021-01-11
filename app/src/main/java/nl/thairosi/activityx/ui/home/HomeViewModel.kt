@@ -6,7 +6,7 @@ import nl.thairosi.activityx.repository.PlaceRepository
 
 class HomeViewModel(private val placeRepository: PlaceRepository) : ViewModel() {
 
-    suspend fun notFinishedActivity(): Place? {
+    fun notFinishedActivity(): Place? {
         return placeRepository.getNotFinishedPlace()
     }
 

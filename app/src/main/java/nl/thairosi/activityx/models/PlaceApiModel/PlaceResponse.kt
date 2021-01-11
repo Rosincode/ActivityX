@@ -1,4 +1,4 @@
-package nl.thairosi.activityx.network.PlaceApiModel
+package nl.thairosi.activityx.models.PlaceApiModel
 
 data class PlaceResponse(
     val result: Result,

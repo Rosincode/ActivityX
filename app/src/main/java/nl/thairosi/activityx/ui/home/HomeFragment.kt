@@ -3,27 +3,22 @@ package nl.thairosi.activityx.ui.home
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.provider.Settings
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.preference.PreferenceManager
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.database.PlaceDatabase
 import nl.thairosi.activityx.databinding.FragmentHomeBinding
-import nl.thairosi.activityx.models.Place
 import nl.thairosi.activityx.repository.PlaceRepository
-import nl.thairosi.activityx.ui.place.PlaceViewModel
-import nl.thairosi.activityx.ui.place.PlaceViewModelProviderFactory
 
 class HomeFragment : Fragment() {
 
@@ -32,12 +27,13 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
-            val binding: FragmentHomeBinding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_home,
-                container,
-                false)
+        savedInstanceState: Bundle?,
+    ): View? {
+        val binding: FragmentHomeBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_home,
+            container,
+            false)
 
         binding.lifecycleOwner = this
 
@@ -68,7 +64,8 @@ class HomeFragment : Fragment() {
         }
 
         binding.homeContinueYesButton.setOnClickListener { v: View ->
-            v.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNavigationFragment())
+            v.findNavController()
+                .navigate(HomeFragmentDirections.actionHomeFragmentToNavigationFragment())
         }
 
 
@@ -77,19 +74,22 @@ class HomeFragment : Fragment() {
             requestPermissionsList.clear()
             if (ActivityCompat.checkSelfPermission(
                     requireContext(),
-                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+            ) {
                 requestPermissionsList.add(Manifest.permission.ACCESS_FINE_LOCATION)
             }
-            if(ActivityCompat.checkSelfPermission(
+            if (ActivityCompat.checkSelfPermission(
                     requireContext(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+            ) {
                 requestPermissionsList.add(Manifest.permission.ACCESS_COARSE_LOCATION)
             }
-            if(requestPermissionsList.isNotEmpty()) {
+            if (requestPermissionsList.isNotEmpty()) {
                 requestPermissions(requestPermissionsList.toTypedArray(), 0)
 
             } else {
-            v.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNavigationFragment())
+                v.findNavController()
+                    .navigate(HomeFragmentDirections.actionHomeFragmentToNavigationFragment())
             }
         }
         return binding.root
@@ -98,20 +98,22 @@ class HomeFragment : Fragment() {
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == 0 && grantResults.isNotEmpty()) {
+        if (requestCode == 0 && grantResults.isNotEmpty()) {
             var permissionGranted = true
-            for(i in grantResults.indices) {
-                if(grantResults[i] == PackageManager.PERMISSION_DENIED) {
+            for (i in grantResults.indices) {
+                if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
                     permissionGranted = false
                 }
             }
-            if(permissionGranted) {
+            if (permissionGranted) {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNavigationFragment())
             } else {
-                Toast.makeText(context, "In order to get an activity, the app needs your permission to use your location.", Toast.LENGTH_LONG).show()
+                Toast.makeText(context,
+                    "In order to get an activity, the app needs your permission to use your location.",
+                    Toast.LENGTH_LONG).show()
             }
         }
     }
