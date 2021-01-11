@@ -48,10 +48,6 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
     val orientation: LiveData<Float>
         get() = _orientation
 
-    init {
-        getBlockedPlaces()
-    }
-
     //Gets a random place using the criteria settings and blocked places
     fun getRandomPlace(location: String, radius: String, type: String) {
         val call = PlaceApi.RETROFIT_SERVICE.getPlaces(location = location,
@@ -66,9 +62,10 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
                     val resultList: MutableList<Result>? = response.body()?.results?.toMutableList()!!
 
                     if(!resultList.isNullOrEmpty()) {
+                        getBlockedPlaces()
                         if (!blockedList.isNullOrEmpty()) {
                             resultList.forEach {
-                                if (blockedList!!.contains(it.place_id)) {
+                                if (blockedList.contains(it.place_id)) {
                                     resultList.removeAt(resultList.indexOf(it))
                                 }
                             }
