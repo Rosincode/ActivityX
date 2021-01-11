@@ -7,12 +7,13 @@ import nl.thairosi.activityx.Keys
 import nl.thairosi.activityx.network.PlaceAPIService
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.*
 
 class Utils {
 
     companion object {
-
 
         // Helper method to clean string
         fun typesAdapter(types: String): String {
@@ -40,16 +41,24 @@ class Utils {
             return "$baseUrl$request$maxwidth&$reference&$key"
         }
 
-        //Returns the current local date and time
+        //Returns the current local date and time in ISO format
         fun getDateTime(): LocalDateTime {
             val dateFormat = SimpleDateFormat(
-                "yyyy-MM-dd", Locale.getDefault());
+                "yyyy-MM-dd", Locale.getDefault())
             val dateFormat2 = SimpleDateFormat(
-                "HH:mm:ss", Locale.getDefault());
-            val date = Date();
+                "HH:mm:ss", Locale.getDefault())
+            val date = Date()
             return LocalDateTime.parse(dateFormat.format(date) + "T" + dateFormat2.format(date))
         }
 
+        // Helper method to format a date
+        fun getDateToView(date: LocalDateTime?) : String {
+            return if (date != null) {
+                date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL))
+            } else {
+                ""
+            }
+        }
 
     }
 
