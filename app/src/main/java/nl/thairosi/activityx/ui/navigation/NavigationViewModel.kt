@@ -31,7 +31,7 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
 
     private val repository: PlaceRepository = PlaceRepository(PlaceDatabase(application))
 
-    var blockedList : List<String>? = null
+    private var blockedList : List<String> = emptyList()
 
     //LocationLiveData provides a live current GPS location of the phone for this location value
     private val _location = LocationLiveData(application)
@@ -63,10 +63,10 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
                 response: Response<NearbySearchResponse>,
             ) {
                 if (response.body()?.status.equals("OK")) {
-                    val resultList: MutableList<Result> = response.body()?.results?.toMutableList()!!
+                    val resultList: MutableList<Result>? = response.body()?.results?.toMutableList()!!
 
-                    if(resultList.isNotEmpty()) {
-                        if (blockedList!!.isNotEmpty()) {
+                    if(!resultList.isNullOrEmpty()) {
+                        if (!blockedList.isNullOrEmpty()) {
                             resultList.forEach {
                                 if (blockedList!!.contains(it.place_id)) {
                                     resultList.removeAt(resultList.indexOf(it))
@@ -80,8 +80,7 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
                                 placeId = result.place_id,
                                 location = locationConverter(
                                     result.geometry.location.lat,
-                                    result.geometry.location.lng
-                                ),
+                                    result.geometry.location.lng),
                                 name = result.name
                             )
                         }
@@ -94,17 +93,9 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
         })
     }
 
-//    suspend fun isBlockedPlace(placeId: String) : Boolean {
-//        var isBlocked = false
-//        if (repository.getBlockedPlaces()!!.contains(placeId)) {
-//            isBlocked = true
-//        }
-//        return isBlocked
-//    }
-
     private fun getBlockedPlaces() {
         GlobalScope.launch {
-            blockedList = repository.getBlockedPlaces()
+            blockedList = repository.getBlockedPlaces()!!
         }
     }
 

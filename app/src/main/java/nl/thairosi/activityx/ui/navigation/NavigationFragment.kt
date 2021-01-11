@@ -37,6 +37,7 @@ class NavigationFragment : Fragment() {
     //Flags
     private var placeFound = false
     private var placeNotFound = false
+    private var searching = false
     private var randomPlaceSearchStarted = false
     private var setInitialDistance = true
     private var placeAddedToDatabase = false
@@ -67,7 +68,10 @@ class NavigationFragment : Fragment() {
 
         viewModel.location.observe(viewLifecycleOwner, {
             location = it
-            if (!placeFound) getAndSetPlace()
+            if (!placeFound && !searching) {
+                searching = true
+                getAndSetPlace()
+            }
             if (placeFound) calculateAndSetDistances(binding)
             if (placeNotFound) noActivityFound()
         })
@@ -129,6 +133,7 @@ class NavigationFragment : Fragment() {
                 placeAddedToDatabase = true
             }
         }
+        searching = false
     }
 
     //Calculates and sets the current distance when a place is found
