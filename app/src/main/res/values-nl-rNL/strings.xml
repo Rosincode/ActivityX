@@ -66,4 +66,6 @@
         de gebruikers ook meer informatie van de bezochte plaatsen bekijken door erop te klikken.
     </string>
     <string name="criteria_types_title">Selecteer activiteit types</string>
+    <string name="navigation_loading_toast">Aan het laden</string>
+    <string name="navigation_activity_found_toast">Acitiveit gevonden</string>
 </resources>

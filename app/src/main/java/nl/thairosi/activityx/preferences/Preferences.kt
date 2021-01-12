@@ -1,7 +1,9 @@
 package nl.thairosi.activityx.preferences
 
 import android.content.SharedPreferences
+import android.provider.Settings.Global.getString
 import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 
 class Preferences : Fragment() {

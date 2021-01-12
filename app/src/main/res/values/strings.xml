@@ -24,6 +24,8 @@
     <string name="navigation_no_accuracy_toast">Location is being determined</string>
     <string name="navigation_no_activity_found_toast">No activity found, please adjust your search criteria</string>
     <string name="navigation_searching_activity_toast">Searching activity</string>
+    <string name="navigation_loading_toast">Loading</string>
+    <string name="navigation_activity_found_toast">Activity found</string>
     <!--PLACE FRAGMENT-->
     <string name="place_title">Activity details</string>
     <string name="place_url_label">Link to google maps</string>

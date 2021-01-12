@@ -43,6 +43,7 @@ class NavigationFragment : Fragment() {
     private var placeAddedToDatabase = false
     private var nearbyActivity = false
     private var informedAboutWrongDirection = false
+    private var informedAboutActivityFound = false
 
     private val viewModel: NavigationViewModel by lazy {
         ViewModelProvider(this).get(NavigationViewModel::class.java)
@@ -60,6 +61,8 @@ class NavigationFragment : Fragment() {
 
         val preferenceManager = PreferenceManager.getDefaultSharedPreferences(context)
 
+        loadingToast()
+
         radius = Preferences.getRadius(preferenceManager)
         types = Preferences.getTypes(preferenceManager)
 
@@ -69,7 +72,7 @@ class NavigationFragment : Fragment() {
 
         viewModel.location.observe(viewLifecycleOwner, {
             location = it
-            if (!placeFound && !searching) {
+            if (!placeFound && !searching && location.hasAccuracy()) {
                 searching = true
                 getAndSetPlace()
             }
@@ -85,13 +88,17 @@ class NavigationFragment : Fragment() {
         return binding.root
     }
 
+    private fun loadingToast() {
+        val loadingSettingsToastText = getString(R.string.navigation_loading_toast)
+        Toast.makeText(context, loadingSettingsToastText, Toast.LENGTH_SHORT).show()
+    }
+
     //Tries to find a existing or random place to be navigated to
     private fun getAndSetPlace() {
-        val text = getString(R.string.navigation_searching_activity_toast)
-        Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+        val searchingActivityToastText = getString(R.string.navigation_searching_activity_toast)
+        Toast.makeText(context, searchingActivityToastText, Toast.LENGTH_SHORT).show()
         if (this::location.isInitialized && radius.isNotBlank() &&
-            types.isNotEmpty() && location.hasAccuracy()
-        ) {
+            types.isNotEmpty() && location.hasAccuracy()) {
             GlobalScope.launch {
                 placeFound = if (viewModel.notFinishedActivity() != null) true else {
                     searchRandomPlace()
@@ -121,8 +128,8 @@ class NavigationFragment : Fragment() {
     //Toast & navigateUp: Actions on no activity found
     private fun noActivityFound() {
         Log.i("navigation", "No activity found")
-        val text = getString(R.string.navigation_no_activity_found_toast)
-        Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+        val noActivityFoundToastText = getString(R.string.navigation_no_activity_found_toast)
+        Toast.makeText(context, noActivityFoundToastText, Toast.LENGTH_LONG).show()
         findNavController().navigateUp()
     }
 
@@ -140,6 +147,11 @@ class NavigationFragment : Fragment() {
 
     //Calculates and sets the current distance when a place is found
     private fun calculateAndSetDistances(binding: FragmentNavigationBinding) {
+        if (!informedAboutActivityFound) {
+            val activityFoundToastText = getString(R.string.navigation_activity_found_toast)
+            Toast.makeText(context, activityFoundToastText, Toast.LENGTH_SHORT).show()
+            informedAboutActivityFound = true
+        }
         if (place.location != null) {
             distance = location.distanceTo(place.location)
             if (setInitialDistance) {
@@ -182,8 +194,8 @@ class NavigationFragment : Fragment() {
         if (!nearbyActivity) {
             nearbyActivity = true
             Log.i("navigation", "Nearby activity: Show toast & reveal button")
-            val text = getString(R.string.navigation_nearby_activity_toast)
-            Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+            val nearbyActivityToastText = getString(R.string.navigation_nearby_activity_toast)
+            Toast.makeText(context, nearbyActivityToastText, Toast.LENGTH_LONG).show()
             navigationRevealButton.visibility = View.VISIBLE
             binding.navigationRevealButton.setOnClickListener { v: View ->
                 place.date = Utils.getDateTime()
@@ -200,8 +212,8 @@ class NavigationFragment : Fragment() {
     private fun wrongDirection() {
         if (!informedAboutWrongDirection) {
             Log.i("navigation", "Wrong direction")
-            val text = getString(R.string.navigation_wrong_direction_toast)
-            Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+            val wrongDirectionToastText = getString(R.string.navigation_wrong_direction_toast)
+            Toast.makeText(context, wrongDirectionToastText, Toast.LENGTH_LONG).show()
             informedAboutWrongDirection = true
         }
     }
