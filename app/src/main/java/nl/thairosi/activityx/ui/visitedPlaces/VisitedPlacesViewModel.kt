@@ -7,9 +7,10 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import nl.thairosi.activityx.models.Place
 import nl.thairosi.activityx.repository.PlaceRepository
+import nl.thairosi.activityx.repository.Repository
 
 class VisitedPlacesViewModel(
-    val placeRepository: PlaceRepository,
+    val placeRepository: Repository,
 ) : ViewModel() {
 
     private var _visitedPlaces = MutableLiveData<List<Place>>()

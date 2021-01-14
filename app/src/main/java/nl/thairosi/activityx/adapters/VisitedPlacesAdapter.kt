@@ -51,11 +51,14 @@ class VisitedPlacesAdapter : RecyclerView.Adapter<VisitedPlacesAdapter.PlaceView
     override fun onBindViewHolder(holder: PlaceViewHolder, position: Int) {
         val place = differ.currentList[position]
         holder.itemView.apply {
-            Glide.with(this).load(Utils.getImageUrl(place.photoReference))
+            Glide.with(this)
+                .load(Utils.getImageUrl(place.photoReference))
                 .into(image_view_visited_place)
             text_view_name_visited_place.text = place.name
             text_view_date_place_visited.text = Utils.getDateToView(place.date)
             switch_block_visited_place.isChecked = place.blocked
+
+            image_view_visited_place.visibility = View.VISIBLE
 
             // OnclickListener for Item clicks
             setOnClickListener {

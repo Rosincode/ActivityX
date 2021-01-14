@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_visited_places.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import nl.thairosi.activityx.PlaceApplication
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.adapters.VisitedPlacesAdapter
 import nl.thairosi.activityx.database.PlaceDatabase
@@ -39,7 +40,7 @@ class VisitedPlacesFragment : Fragment() {
         binding.lifecycleOwner = this
 
         // Create an instance of the PlaceViewModel
-        val placeRepository = PlaceRepository(PlaceDatabase(requireContext()))
+        val placeRepository = (requireContext().applicationContext as PlaceApplication).taskRepository
         val viewModelProviderFactory = VisitedPlacesViewModelFactory(placeRepository)
         viewModel = ViewModelProvider(this,
             viewModelProviderFactory).get(VisitedPlacesViewModel::class.java)

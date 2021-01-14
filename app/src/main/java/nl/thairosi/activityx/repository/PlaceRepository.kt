@@ -8,16 +8,16 @@ import retrofit2.Call
 
 class PlaceRepository(
     private val db: PlaceDatabase,
-) {
+) : Repository {
     // API
-    fun getPlace(placeId: String): Call<PlaceResponse> {
+    override fun getPlace(placeId: String): Call<PlaceResponse> {
         return PlaceApi.RETROFIT_SERVICE.getPlace(place_id = placeId)
     }
 
     // Database
-    suspend fun updateOrInsert(place: Place) = db.getPlaceDao().updateOrInsert(place)
-    fun getVisitedPlaces() = db.getPlaceDao().getVisitedPlaces()
-    fun getNotFinishedPlace() = db.getPlaceDao().getNotFinishedPlace()
-    fun getBlockedPlaces() = db.getPlaceDao().getBlockedPlaces()
-    suspend fun deleteNotFinishedActivity() = db.getPlaceDao().deleteNotFinishedPlace()
+    override suspend fun updateOrInsert(place: Place) = db.getPlaceDao().updateOrInsert(place)
+    override fun getVisitedPlaces() = db.getPlaceDao().getVisitedPlaces()
+    override fun getNotFinishedPlace() = db.getPlaceDao().getNotFinishedPlace()
+    override fun getBlockedPlaces() = db.getPlaceDao().getBlockedPlaces()
+    override suspend fun deleteNotFinishedActivity() = db.getPlaceDao().deleteNotFinishedPlace()
 }
