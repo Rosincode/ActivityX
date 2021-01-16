@@ -1,17 +1,10 @@
 package nl.thairosi.activityx.ui.visitedPlaces
 
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.DrawerActions
-import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
-import androidx.test.espresso.contrib.RecyclerViewActions.scrollToPosition
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import kotlinx.coroutines.test.runBlockingTest
@@ -24,11 +17,8 @@ import nl.thairosi.activityx.repository.FakeTestPlaceRepository
 import nl.thairosi.activityx.repository.Repository
 import nl.thairosi.activityx.ui.MainActivity
 import nl.thairosi.activityx.utils.Utils
-import org.hamcrest.Matchers
 import org.junit.After
 import org.junit.Before
-
-import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 

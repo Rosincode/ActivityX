@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.runBlocking
 import nl.thairosi.activityx.models.Place
 import nl.thairosi.activityx.models.PlaceApiModel.PlaceResponse
+import nl.thairosi.activityx.network.PlaceApi
 import retrofit2.Call
 
 class FakeTestPlaceRepository : Repository {
@@ -21,7 +22,7 @@ class FakeTestPlaceRepository : Repository {
     }
 
     override fun getPlace(placeId: String): Call<PlaceResponse> {
-        TODO("Not yet implemented")
+        return PlaceApi.RETROFIT_SERVICE.getPlace(place_id = placeId)
     }
 
     override suspend fun updateOrInsert(place: Place): Long {

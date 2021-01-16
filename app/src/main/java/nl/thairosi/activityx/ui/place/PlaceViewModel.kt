@@ -8,13 +8,14 @@ import kotlinx.coroutines.launch
 import nl.thairosi.activityx.models.Place
 import nl.thairosi.activityx.models.PlaceApiModel.PlaceResponse
 import nl.thairosi.activityx.repository.PlaceRepository
+import nl.thairosi.activityx.repository.Repository
 import nl.thairosi.activityx.utils.Utils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class PlaceViewModel(
-    private val placeRepository: PlaceRepository,
+    private val placeRepository: Repository,
 ) : ViewModel() {
 
     private var _place = MutableLiveData<Place>()
