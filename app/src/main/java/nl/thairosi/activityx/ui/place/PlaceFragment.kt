@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import nl.thairosi.activityx.PlaceApplication
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.database.PlaceDatabase
 import nl.thairosi.activityx.databinding.FragmentPlaceBinding
@@ -39,7 +40,7 @@ class PlaceFragment : Fragment() {
         binding.lifecycleOwner = this
 
         // Create an instance of the PlaceViewModel
-        val placeRepository = PlaceRepository(PlaceDatabase(requireContext()))
+        val placeRepository = (requireContext().applicationContext as PlaceApplication).taskRepository
         val viewModelProviderFactory = PlaceViewModelProviderFactory(placeRepository)
         viewModel =
             ViewModelProvider(this, viewModelProviderFactory).get(PlaceViewModel::class.java)
