@@ -30,7 +30,7 @@ class UtilsAndroidUnitTest {
     @Test
     fun tests_if_an_API_location_is_correctly_converted_to_android_location() {
         val location = Location(37.5544407, -122.0541085)
-        val result = Utils.locationAdapter(location)
+        val result = Utils.apiLocationToAndroidLocation(location)
 
         val androidLocation = android.location.Location(LocationManager.GPS_PROVIDER)
         androidLocation.latitude = 37.5544407

@@ -32,10 +32,10 @@ class VisitedPlacesFragmentTest {
 
         // GIVEN - Add place to DB
         val apiLocation = Location(37.4220996, -122.0819686)
-        val location = Utils.locationAdapter(apiLocation)
+        val location = Utils.apiLocationToAndroidLocation(apiLocation)
         val date = Utils.getDateTime()
         val place = Place("ChIJo4za6vi5j4ARMua093RgGGA", "ATtYBwLAMkBQQXb3uxnF4CyoST--LJa586mVvC-KTBJE5Gk2ZFBDMrguZY4o-_d2LVMloImFNF76zWmEiD2dohRMhuyj_FSSKXAtGaXscbfM64hmWXw-djxF4BIVVlMhzEXBjeLzCaEFca8GbGg_Sip0dYYfUCZRUySiM1Pnvlvxtk9atvfQ", "Charleston Park", "1500 Charleston Rd, Mountain View, CA 94043, USA", "park, point of interest, establishment", "https://maps.google.com/?cid=6924390482570438194", location, date, true, true )
-        repository.updateOrInsert(place)
+        repository.updateOrInsertPlace(place)
     }
 
     @After

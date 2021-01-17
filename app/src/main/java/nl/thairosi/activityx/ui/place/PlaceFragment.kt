@@ -41,7 +41,7 @@ class PlaceFragment : Fragment() {
         binding.lifecycleOwner = this
 
         // Create an instance of the PlaceViewModel
-        val placeRepository = (requireContext().applicationContext as PlaceApplication).taskRepository
+        val placeRepository = (requireContext().applicationContext as PlaceApplication).placeRepository
         val viewModelProviderFactory = PlaceViewModelProviderFactory(placeRepository)
         viewModel =
             ViewModelProvider(this, viewModelProviderFactory).get(PlaceViewModel::class.java)

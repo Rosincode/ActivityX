@@ -17,6 +17,7 @@ import nl.thairosi.activityx.PlaceApplication
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.databinding.FragmentVisitedPlacesBinding
 import nl.thairosi.activityx.repository.PlaceRepository
+import nl.thairosi.activityx.repository.Repository
 
 /**
  * Provides a list of visited places to the user in the UI using a recycler view
@@ -42,8 +43,8 @@ class VisitedPlacesFragment : Fragment() {
         binding.lifecycleOwner = this
 
         // Create an instance of the PlaceViewModel
-        val placeRepository = (requireContext().applicationContext as PlaceApplication).taskRepository
-        val viewModelProviderFactory = VisitedPlacesViewModelProviderFactory(placeRepository as PlaceRepository)
+        val placeRepository = (requireContext().applicationContext as PlaceApplication).placeRepository
+        val viewModelProviderFactory = VisitedPlacesViewModelProviderFactory(placeRepository as Repository)
         viewModel = ViewModelProvider(this,
             viewModelProviderFactory).get(VisitedPlacesViewModel::class.java)
 

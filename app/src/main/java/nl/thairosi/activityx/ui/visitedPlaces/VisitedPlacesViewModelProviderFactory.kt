@@ -6,7 +6,7 @@ import nl.thairosi.activityx.repository.PlaceRepository
 import nl.thairosi.activityx.repository.Repository
 
 class VisitedPlacesViewModelProviderFactory(
-    private val placeRepository: PlaceRepository,
+    private val placeRepository: Repository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return VisitedPlacesViewModel(placeRepository) as T

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.runBlocking
 import nl.thairosi.activityx.models.Place
 import nl.thairosi.activityx.models.PlaceApiModel.PlaceResponse
+import nl.thairosi.activityx.models.PlaceApiModel.TextSearchResponse
 import nl.thairosi.activityx.network.PlaceApi
 import retrofit2.Call
 
@@ -25,7 +26,15 @@ class FakeTestPlaceRepository : Repository {
         return PlaceApi.RETROFIT_SERVICE.getPlace(place_id = placeId)
     }
 
-    override suspend fun updateOrInsert(place: Place): Long {
+    override fun getPlaces(
+        location: String,
+        radius: String,
+        type: String,
+    ): Call<TextSearchResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateOrInsertPlace(place: Place): Long {
         runBlocking {
             tasksServiceData[place.placeId] = place
             observableTasks.postValue(tasksServiceData.values.toList())
@@ -37,7 +46,7 @@ class FakeTestPlaceRepository : Repository {
         return observableTasks
     }
 
-    override fun getNotFinishedPlace(): Place? {
+    override fun getUnfinishedPlace(): Place? {
         TODO("Not yet implemented")
     }
 
@@ -45,7 +54,7 @@ class FakeTestPlaceRepository : Repository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteNotFinishedActivity() {
+    override suspend fun deleteUnfinishedPlace() {
         TODO("Not yet implemented")
     }
 

@@ -5,7 +5,7 @@ import nl.thairosi.activityx.repository.Repository
 
 class PlaceApplication : Application() {
 
-    val taskRepository: Repository
+    val placeRepository: Repository
         get() = ServiceLocator.provideTasksRepository(this)
 
 }
