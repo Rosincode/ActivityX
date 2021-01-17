@@ -7,6 +7,10 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import nl.thairosi.activityx.models.Place
 
+/**
+ * This class creates a Room database: activityx_db.db
+ * The implementation of the abstract function getPlaceDao will be executed for DAO operations
+ */
 @Database(
     entities = [Place::class],
     version = 1

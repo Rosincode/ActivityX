@@ -3,6 +3,7 @@ package nl.thairosi.activityx.repository
 import nl.thairosi.activityx.database.PlaceDatabase
 import nl.thairosi.activityx.models.Place
 import nl.thairosi.activityx.models.PlaceApiModel.PlaceResponse
+import nl.thairosi.activityx.models.PlaceApiModel.TextSearchResponse
 import nl.thairosi.activityx.network.PlaceApi
 import retrofit2.Call
 
@@ -14,10 +15,15 @@ class PlaceRepository(
         return PlaceApi.RETROFIT_SERVICE.getPlace(place_id = placeId)
     }
 
+    override fun getPlaces(location: String, radius: String, type: String): Call<TextSearchResponse> {
+        return PlaceApi.RETROFIT_SERVICE.getPlaces(location = location, radius = radius, type = type)
+    }
+
+
     // Database
-    override suspend fun updateOrInsert(place: Place) = db.getPlaceDao().updateOrInsert(place)
+    override suspend fun updateOrInsertPlace(place: Place) = db.getPlaceDao().updateOrInsertPlace(place)
     override fun getVisitedPlaces() = db.getPlaceDao().getVisitedPlaces()
-    override fun getNotFinishedPlace() = db.getPlaceDao().getNotFinishedPlace()
+    override fun getUnfinishedPlace() = db.getPlaceDao().getUnfinishedPlace()
     override fun getBlockedPlaces() = db.getPlaceDao().getBlockedPlaces()
-    override suspend fun deleteNotFinishedActivity() = db.getPlaceDao().deleteNotFinishedPlace()
+    override suspend fun deleteUnfinishedPlace() = db.getPlaceDao().deleteUnfinishedPlace()
 }

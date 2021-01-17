@@ -24,21 +24,28 @@ import nl.thairosi.activityx.models.Place
 import nl.thairosi.activityx.preferences.Preferences
 import nl.thairosi.activityx.utils.Utils
 
+/**
+ * This NavigationFragment is the base of the application because it provides the user with all
+ * functionality to navigate to a randomly found activity
+ *
+ * This fragment uses a viewModel to access external data for example to observe live location
+ * and orientation values
+ */
 class NavigationFragment : Fragment() {
-    //Properties
+
+    // Properties
     private lateinit var radius: String
     private lateinit var types: List<String>
     private lateinit var location: Location
     private var place: Place = Place()
     private var orientation: Float = 0F
     private var distance: Float = 10000F
-    private var initialDistance = 0.0F
+    private var initialDistance: Float = 0.0F
 
-    //Flags
+    // Flags
     private var placeFound = false
     private var placeNotFound = false
     private var searching = false
-    private var randomPlaceSearchStarted = false
     private var setInitialDistance = true
     private var placeAddedToDatabase = false
     private var nearbyActivity = false
@@ -50,7 +57,7 @@ class NavigationFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         val binding: FragmentNavigationBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_navigation, container, false)
@@ -61,7 +68,7 @@ class NavigationFragment : Fragment() {
 
         val preferenceManager = PreferenceManager.getDefaultSharedPreferences(context)
 
-        loadingToast()
+        loading()
 
         radius = Preferences.getRadius(preferenceManager)
         types = Preferences.getTypes(preferenceManager)
@@ -76,7 +83,7 @@ class NavigationFragment : Fragment() {
                 searching = true
                 getAndSetPlace()
             }
-            if (placeFound) calculateAndSetDistances(binding)
+            if (placeFound) calculateAndSetDistance(binding)
             if (placeNotFound) noActivityFound()
         })
 
@@ -88,12 +95,13 @@ class NavigationFragment : Fragment() {
         return binding.root
     }
 
-    private fun loadingToast() {
+    // Shows a toast to inform the user that the application is loading
+    private fun loading() {
         val loadingSettingsToastText = getString(R.string.navigation_loading_toast)
         Toast.makeText(context, loadingSettingsToastText, Toast.LENGTH_SHORT).show()
     }
 
-    //Tries to find a existing or random place to be navigated to
+    // Tries to find a existing or random place to be navigated to
     private fun getAndSetPlace() {
         val searchingActivityToastText = getString(R.string.navigation_searching_activity_toast)
         Toast.makeText(context, searchingActivityToastText, Toast.LENGTH_SHORT).show()
@@ -109,23 +117,20 @@ class NavigationFragment : Fragment() {
         }
     }
 
-    //Searches a random place using the search criteria
+    // Searches a random place using the search criteria
     private suspend fun searchRandomPlace() {
-        if (!randomPlaceSearchStarted) {
-            randomPlaceSearchStarted = true
-            val latLng = location.latitude.toString() + "," + location.longitude.toString()
-            types.forEach { i ->
-                if (place.location == null) {
-                    Log.i("navigation", "searching for a $i")
-                    viewModel.getRandomPlace(latLng, radius, types.elementAt(types.indexOf(i)))
-                    delay(1000)
-                }
+        val latLng = location.latitude.toString() + "," + location.longitude.toString()
+        types.forEach { i ->
+            if (place.location == null) {
+                Log.i("navigation", "searching for a $i")
+                viewModel.getRandomPlace(latLng, radius, types.elementAt(types.indexOf(i)))
+                delay(2000)
             }
-            if (place.location == null) placeNotFound = true
         }
+        if (place.location == null) placeNotFound = true
     }
 
-    //Toast & navigateUp: Actions on no activity found
+    // Actions on no activity found
     private fun noActivityFound() {
         Log.i("navigation", "No activity found")
         val noActivityFoundToastText = getString(R.string.navigation_no_activity_found_toast)
@@ -133,7 +138,7 @@ class NavigationFragment : Fragment() {
         findNavController().navigateUp()
     }
 
-    //When the place is not yet inserted into the database it will be done when it is found
+    // When the place is not yet inserted into the database it will be done when it is found
     private fun insertPlaceIntoDatabase() {
         if (!placeAddedToDatabase) {
             if (place.location != null) {
@@ -145,8 +150,8 @@ class NavigationFragment : Fragment() {
         searching = false
     }
 
-    //Calculates and sets the current distance when a place is found
-    private fun calculateAndSetDistances(binding: FragmentNavigationBinding) {
+    // Calculates and sets the current distance when a place is found
+    private fun calculateAndSetDistance(binding: FragmentNavigationBinding) {
         if (!informedAboutActivityFound) {
             val activityFoundToastText = getString(R.string.navigation_activity_found_toast)
             Toast.makeText(context, activityFoundToastText, Toast.LENGTH_SHORT).show()
@@ -161,26 +166,21 @@ class NavigationFragment : Fragment() {
             }
             binding.navigationDestinationImage.updatePaddingRelative(
                 bottom = calculateDistanceImagePadding())
+
             if (distance < 50) nearbyActivity(binding)
+            if (distance > (initialDistance + 100)) wrongDirection()
         }
     }
 
-    //Calculates the necessary padding for the distance image in the fragment ui
+    // Calculates the necessary padding for the distance image in the fragment UI
     private fun calculateDistanceImagePadding(): Int {
-        //Calculates the percentage of the distance over the initialDistance less than 100%
         return if (distance < initialDistance) {
-            val percentage = 100 * (distance / initialDistance)
-            //Multiplying 1% of the total padding with the percentage minus 300
-            (5.5 * percentage).toInt() - 300
-        } else {
-            if (distance > (initialDistance + 100)) {
-                wrongDirection()
-            }
-            250 //returns 250 as max padding when the distance is over the initial distance
-        }
+            Utils.percentageToValue(550F,
+                Utils.valueToPercentage(distance, initialDistance)).toInt() - 300
+        } else 250
     }
 
-    //Orientates the compass and the bearing arrow in the UI
+    // Orientates the compass and the bearing arrow in the UI
     private fun rotateCompassAndArrow(binding: FragmentNavigationBinding) {
         if (place.location != null && this::location.isInitialized) {
             binding.navigationCompassImage.rotation = 360F.minus(orientation)
@@ -189,7 +189,7 @@ class NavigationFragment : Fragment() {
         }
     }
 
-    //Actions on within 50 meters of the activity
+    // Actions on within 50 meters of the activity
     private fun nearbyActivity(binding: FragmentNavigationBinding) {
         if (!nearbyActivity) {
             nearbyActivity = true
@@ -208,7 +208,7 @@ class NavigationFragment : Fragment() {
         }
     }
 
-    //Actions on wrong direction
+    // Actions on wrong direction
     private fun wrongDirection() {
         if (!informedAboutWrongDirection) {
             Log.i("navigation", "Wrong direction")

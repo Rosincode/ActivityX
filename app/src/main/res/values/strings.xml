@@ -76,4 +76,5 @@
         In the visited places window the user will see all activities that are revealed in the past.
         In this window the user can click on a activity to see more information.
     </string>
+    <string name="home_ask_location_permission_toast_text">In order to get an activity, the app needs your permission to use your location.</string>
 </resources>

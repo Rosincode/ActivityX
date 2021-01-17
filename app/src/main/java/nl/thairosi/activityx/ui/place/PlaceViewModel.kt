@@ -13,6 +13,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/**
+ * The PlaceViewModel provides the PlaceFragment with place data using the Google API service
+ */
 class PlaceViewModel(
     private val placeRepository: PlaceRepository,
 ) : ViewModel() {
@@ -38,7 +41,7 @@ class PlaceViewModel(
                         place.types = Utils.typesAdapter(response.body()?.result?.types.toString())
                         place.url = response.body()?.result?.url.toString()
                         place.location = response.body()?.result?.geometry?.location?.let {
-                            Utils.locationAdapter(it)
+                            Utils.apiLocationToAndroidLocation(it)
                         }
                         // Update live data
                         _place.value = place
@@ -60,7 +63,7 @@ class PlaceViewModel(
     // Update Place in database
     fun updateOrInsert(place: Place) {
         viewModelScope.launch {
-            placeRepository.updateOrInsert(place)
+            placeRepository.updateOrInsertPlace(place)
         }
     }
 }

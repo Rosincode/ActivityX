@@ -4,6 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import nl.thairosi.activityx.repository.PlaceRepository
 
+/**
+ * The PlaceViewModelProviderFactory provides the viewModel with the placeRepository
+ */
+@Suppress("UNCHECKED_CAST")
 class PlaceViewModelProviderFactory(
     val placeRepository: PlaceRepository,
 ) : ViewModelProvider.Factory {

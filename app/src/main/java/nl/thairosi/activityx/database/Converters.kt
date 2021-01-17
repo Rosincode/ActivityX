@@ -2,13 +2,12 @@ package nl.thairosi.activityx.database
 
 import android.location.Location
 import android.location.LocationManager
-
 import androidx.room.TypeConverter
-import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 
-import java.util.*
-
+/**
+ * This class provides the type converters for the Room database
+ */
 class Converters {
 
     @TypeConverter
@@ -27,7 +26,7 @@ class Converters {
     }
 
     @TypeConverter
-    fun toLocation(location: String): android.location.Location {
+    fun toLocation(location: String): Location {
         val delimiter = ","
         val parts = location.split(delimiter)
 

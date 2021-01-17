@@ -6,7 +6,10 @@ import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 
-class Preferences : Fragment() {
+/**
+ * This Preferences class contains methods to get SharedPreferences data
+ */
+class Preferences {
 
     companion object {
 

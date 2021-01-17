@@ -12,8 +12,14 @@ import androidx.navigation.ui.NavigationUI
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.databinding.ActivityMainBinding
 
+/**
+ * The MainActivity is the only activity that is used by this application
+ * All fragments will be inflated within this activity
+ * This class provides the navController and a main menu
+ */
 class MainActivity : AppCompatActivity() {
 
+    // Properties
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -26,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
 
-        // prevent nav gesture if not on start destination
+        // Prevent nav gesture if not on start destination
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, bundle: Bundle? ->
             if (nd.id == nc.graph.startDestination) {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)

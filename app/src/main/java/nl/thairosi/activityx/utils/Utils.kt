@@ -10,11 +10,14 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.*
 
+/**
+ * This Utils class contains helper methods for the UI fragments
+ */
 class Utils {
 
     companion object {
 
-        // Helper method to clean string
+        // Converts the types to a clean string
         fun typesAdapter(types: String): String {
             return types
                 .replace("[", "")
@@ -22,15 +25,32 @@ class Utils {
                 .replace("_", " ")
         }
 
-        // Helper method for create Location object
-        fun locationAdapter(apiLocation: nl.thairosi.activityx.models.PlaceApiModel.Location): Location {
-            var androidLocation = Location(LocationManager.GPS_PROVIDER)
+        // Coverts a API Location to a Android Location
+        fun apiLocationToAndroidLocation(apiLocation: nl.thairosi.activityx.models.PlaceApiModel.Location): Location {
+            val androidLocation = Location(LocationManager.GPS_PROVIDER)
             androidLocation.latitude = apiLocation.lat
             androidLocation.longitude = apiLocation.lng
             return androidLocation
         }
 
-        // Helper function to build Image Url
+        // Converts latitude & longitude double values to a Android Location
+        fun latAndLongToAndroidLocation(lat: Double, lng: Double): Location {
+            val androidLocation = Location(LocationManager.GPS_PROVIDER)
+            androidLocation.latitude = lat
+            androidLocation.longitude = lng
+            return androidLocation
+        }
+
+        fun latLongToAndroidLocation(location: String): Location {
+            val delimiter = ","
+            val parts = location.split(delimiter)
+            val androidLocation = Location(LocationManager.GPS_PROVIDER)
+            androidLocation.latitude = parts[0].toDouble()
+            androidLocation.longitude = parts[1].toDouble()
+            return androidLocation
+        }
+
+        // Builds a Image URL to be used with the Glide library
         fun getImageUrl(photoReference: String): String {
             val baseUrl = PlaceAPIService.BASE_URL
             val request = "photo?"
@@ -40,7 +60,7 @@ class Utils {
             return "$baseUrl$request$maxwidth&$reference&$key"
         }
 
-        //Returns the current local date and time in ISO format
+        // Returns the current local date and time in ISO format
         fun getDateTime(): LocalDateTime {
             val dateFormat = SimpleDateFormat(
                 "yyyy-MM-dd", Locale.getDefault())
@@ -50,7 +70,7 @@ class Utils {
             return LocalDateTime.parse(dateFormat.format(date) + "T" + dateFormat2.format(date))
         }
 
-        // Helper method to format a date
+        // Formats a date to be used in the UI
         fun getDateToView(date: LocalDateTime?): String {
             return if (date != null) {
                 date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL))
@@ -58,5 +78,11 @@ class Utils {
                 ""
             }
         }
+
+        fun valueToPercentage(value: Float, total: Float): Float = 100 * (value / total)
+
+        fun percentageToValue(total: Float, percentage: Float): Float = (total / 100) * percentage
+
+
     }
 }

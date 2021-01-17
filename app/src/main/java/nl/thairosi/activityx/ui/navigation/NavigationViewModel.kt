@@ -11,11 +11,11 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import nl.thairosi.activityx.database.PlaceDatabase
-import nl.thairosi.activityx.models.NearbySearchApiModel.NearbySearchResponse
-import nl.thairosi.activityx.models.NearbySearchApiModel.Result
 import nl.thairosi.activityx.models.Place
+import nl.thairosi.activityx.models.PlaceApiModel.TextSearchResponse
 import nl.thairosi.activityx.network.PlaceApi
 import nl.thairosi.activityx.repository.PlaceRepository
+import nl.thairosi.activityx.utils.Utils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -53,22 +53,26 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
         val call = PlaceApi.RETROFIT_SERVICE.getPlaces(location = location,
             radius = radius,
             type = type)
-        call.enqueue(object : Callback<NearbySearchResponse> {
+        call.enqueue(object : Callback<TextSearchResponse> {
             override fun onResponse(
-                call: Call<NearbySearchResponse>,
-                response: Response<NearbySearchResponse>,
+                call: Call<TextSearchResponse>,
+                response: Response<TextSearchResponse>,
             ) {
                 if (response.body()?.status.equals("OK")) {
-                    val resultList: MutableList<Result>? =
-                        response.body()?.results?.toMutableList()!!
+
+                    val resultList = response.body()?.results?.toMutableList()
 
                     if (!resultList.isNullOrEmpty()) {
+
                         getBlockedPlaces()
-                        if (!blockedList.isNullOrEmpty()) {
-                            resultList.forEach {
-                                if (blockedList.contains(it.place_id)) {
-                                    resultList.removeAt(resultList.indexOf(it))
-                                }
+
+                        if (!resultList.isNullOrEmpty()) {
+                            resultList.removeIf {
+                                Utils.latLongToAndroidLocation(location).distanceTo(Utils.
+                                apiLocationToAndroidLocation(it.geometry.location)) > radius.toInt()
+                            }
+                            resultList.removeIf {
+                                blockedList.contains(it.place_id)
                             }
                         }
 
@@ -86,7 +90,7 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
                 }
             }
 
-            override fun onFailure(call: Call<NearbySearchResponse>, t: Throwable) {
+            override fun onFailure(call: Call<TextSearchResponse>, t: Throwable) {
                 Log.i("navigate", "API call failure: $t")
             }
         })
@@ -100,12 +104,12 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
 
     fun addToDatabase(place: Place) {
         viewModelScope.launch {
-            repository.updateOrInsert(place)
+            repository.updateOrInsertPlace(place)
         }
     }
 
     fun notFinishedActivity(): Place? {
-        val notFinishedActivity = repository.getNotFinishedPlace()
+        val notFinishedActivity = repository.getUnfinishedPlace()
         viewModelScope.launch {
             if (notFinishedActivity != null) {
                 _place.value = notFinishedActivity

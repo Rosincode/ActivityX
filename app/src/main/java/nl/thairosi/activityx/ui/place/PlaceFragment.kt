@@ -16,10 +16,14 @@ import nl.thairosi.activityx.databinding.FragmentPlaceBinding
 import nl.thairosi.activityx.repository.PlaceRepository
 import nl.thairosi.activityx.utils.Utils
 
+/**
+ * This class inflates the place fragments to show place details to the user in the UI using
+ * safeargs and Google API services via the PlaceRepository
+ */
 class PlaceFragment : Fragment() {
 
-    lateinit var viewModel: PlaceViewModel
-    val args: PlaceFragmentArgs by navArgs()
+    private lateinit var viewModel: PlaceViewModel
+    private val args: PlaceFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,5 +76,4 @@ class PlaceFragment : Fragment() {
 
         return binding.root
     }
-
 }

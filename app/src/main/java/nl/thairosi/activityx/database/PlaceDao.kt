@@ -7,11 +7,14 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import nl.thairosi.activityx.models.Place
 
+/**
+ * The PlaceDao interface holds all necessary queries for CRUD operations
+ */
 @Dao
 interface PlaceDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateOrInsert(place: Place): Long
+    suspend fun updateOrInsertPlace(place: Place): Long
 
     @Query("SELECT *, strftime('%d-%m-%Y', date) as dateSimple FROM visited_places WHERE dateSimple IS NOT '01-01-2001' ORDER BY dateSimple desc")
     fun getVisitedPlaces(): LiveData<List<Place>>
@@ -20,9 +23,8 @@ interface PlaceDao {
     fun getBlockedPlaces(): List<String>?
 
     @Query("SELECT * FROM visited_places WHERE revealed = 0")
-    fun getNotFinishedPlace(): Place?
+    fun getUnfinishedPlace(): Place?
 
     @Query("DELETE FROM visited_places WHERE revealed = 0")
-    suspend fun deleteNotFinishedPlace()
-
+    suspend fun deleteUnfinishedPlace()
 }

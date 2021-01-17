@@ -11,6 +11,10 @@ import com.google.android.gms.location.LocationServices
 
 /**
  * This class extends the location LiveData in the navigationViewModel
+ *
+ * The following permissions are used in this live data class:
+ * ACCESS_COARSE_LOCATION
+ * ACCESS_FINE_LOCATION
  */
 class LocationLiveData(context: Context) : LiveData<Location>() {
 

@@ -7,23 +7,30 @@ import android.hardware.Sensor.TYPE_ACCELEROMETER
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.util.Log
 import androidx.lifecycle.LiveData
 
 /**
- * This class extends the orientation LiveData in the navigationViewModel
+ * This class extends the orientation LiveData in the navigationViewModel to provide it with
+ * live orientation data
+ *
+ * Used sensors:
+ * TYPE_ACCELEROMETER
+ * TYPE_MAGNETIC_FIELD
  */
 class OrientationLiveData(application: Application) : LiveData<Float>(), SensorEventListener {
 
+    // Properties
     private val sensorManager: SensorManager =
         application.getSystemService(SENSOR_SERVICE) as SensorManager
-
     private var accelerometer: Sensor = sensorManager.getDefaultSensor(TYPE_ACCELEROMETER)
     private var magnetometer: Sensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
 
-    var lastAccelerometer = FloatArray(3)
-    var lastMagnetometer = FloatArray(3)
-    var lastAccelerometerSet = false
-    var lastMagnetometerSet = false
+    // Flags
+    private var lastAccelerometer = FloatArray(3)
+    private var lastMagnetometer = FloatArray(3)
+    private var lastAccelerometerSet = false
+    private var lastMagnetometerSet = false
 
     // Called when the lifecycle owner(Activity) is either paused, stopped or destroyed
     override fun onInactive() {
@@ -39,7 +46,9 @@ class OrientationLiveData(application: Application) : LiveData<Float>(), SensorE
         sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME)
     }
 
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        Log.i("orientation", "$sensor accuracy changed to: $accuracy")
+    }
 
     override fun onSensorChanged(event: SensorEvent) {
         if (event.sensor === accelerometer) {
@@ -60,12 +69,10 @@ class OrientationLiveData(application: Application) : LiveData<Float>(), SensorE
         }
     }
 
-    fun lowPass(input: FloatArray, output: FloatArray) {
+    private fun lowPass(input: FloatArray, output: FloatArray) {
         val alpha = 0.05f
-
         for (i in input.indices) {
             output[i] = output[i] + alpha * (input[i] - output[i])
         }
     }
-
 }

@@ -12,6 +12,9 @@ import nl.thairosi.activityx.R
 import nl.thairosi.activityx.models.Place
 import nl.thairosi.activityx.utils.Utils
 
+/**
+ * VisitedPlacesAdapter fills the recycler views for the visited places UI
+ */
 class VisitedPlacesAdapter : RecyclerView.Adapter<VisitedPlacesAdapter.PlaceViewHolder>() {
 
     // ViewHolder for RecyclerView
@@ -28,12 +31,15 @@ class VisitedPlacesAdapter : RecyclerView.Adapter<VisitedPlacesAdapter.PlaceView
         }
     }
 
+    // Helper for computing the difference between two lists via DiffUtil on a background thread.
     val differ = AsyncListDiffer(this, differCallback)
 
+    // Get the current list item count
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
 
+    // Inflates the fragment_visited_place layout
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceViewHolder {
         return PlaceViewHolder(
             LayoutInflater.from(parent.context).inflate(
@@ -48,6 +54,7 @@ class VisitedPlacesAdapter : RecyclerView.Adapter<VisitedPlacesAdapter.PlaceView
 
     private var onToggleClickListener: ((Place) -> Unit)? = null
 
+    // Binds the view holders to the current list
     override fun onBindViewHolder(holder: PlaceViewHolder, position: Int) {
         val place = differ.currentList[position]
         holder.itemView.apply {

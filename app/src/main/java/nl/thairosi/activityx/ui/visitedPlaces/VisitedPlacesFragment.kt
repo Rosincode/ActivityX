@@ -16,11 +16,14 @@ import kotlinx.coroutines.launch
 import nl.thairosi.activityx.PlaceApplication
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.adapters.VisitedPlacesAdapter
-import nl.thairosi.activityx.database.PlaceDatabase
 import nl.thairosi.activityx.databinding.FragmentVisitedPlacesBinding
 import nl.thairosi.activityx.repository.PlaceRepository
 
-
+/**
+ * Provides a list of visited places to the user in the UI using a recycler view
+ * The user can use a switch to block and unblock visited places
+ * Also the user can view more details when he opens a visited place
+ */
 class VisitedPlacesFragment : Fragment() {
 
     lateinit var viewModel: VisitedPlacesViewModel
@@ -41,7 +44,7 @@ class VisitedPlacesFragment : Fragment() {
 
         // Create an instance of the PlaceViewModel
         val placeRepository = (requireContext().applicationContext as PlaceApplication).taskRepository
-        val viewModelProviderFactory = VisitedPlacesViewModelFactory(placeRepository)
+        val viewModelProviderFactory = VisitedPlacesViewModelProviderFactory(placeRepository as PlaceRepository)
         viewModel = ViewModelProvider(this,
             viewModelProviderFactory).get(VisitedPlacesViewModel::class.java)
 
