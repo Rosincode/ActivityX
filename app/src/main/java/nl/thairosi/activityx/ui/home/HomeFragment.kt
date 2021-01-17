@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
         }
 
         GlobalScope.launch {
-            if (viewModel.getUnfinishedPlace() != null) {
+            if (viewModel.getUnfinishedPlaceFromDB() != null) {
                 binding.homeGoButton.visibility = View.INVISIBLE
                 binding.homeContinueText.visibility = View.VISIBLE
                 binding.homeContinueYesButton.visibility = View.VISIBLE
@@ -67,7 +67,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.homeContinueNoButton.setOnClickListener { v: View ->
-            GlobalScope.launch { viewModel.deleteUnfinishedPlace() }
+            GlobalScope.launch { viewModel.deleteUnfinishedPlaceFromDB() }
             binding.homeGoButton.visibility = View.VISIBLE
             binding.homeContinueText.visibility = View.INVISIBLE
             binding.homeContinueYesButton.visibility = View.INVISIBLE
@@ -129,7 +129,7 @@ class HomeFragment : Fragment() {
 
     // Will only be used for demo purposes, it will import five places into the database.
     private suspend fun importDemoTestData(place: Place) {
-        viewModel.importDemoTestData(place)
+        viewModel.importDemoTestDataIntoDB(place)
     }
 
     // Will only be used for demo purposes, it will import five places into the database.

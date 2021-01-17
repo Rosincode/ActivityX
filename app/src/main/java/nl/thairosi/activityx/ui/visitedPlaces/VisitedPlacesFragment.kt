@@ -15,7 +15,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import nl.thairosi.activityx.PlaceApplication
 import nl.thairosi.activityx.R
-import nl.thairosi.activityx.adapters.VisitedPlacesAdapter
 import nl.thairosi.activityx.databinding.FragmentVisitedPlacesBinding
 import nl.thairosi.activityx.repository.PlaceRepository
 
@@ -83,7 +82,7 @@ class VisitedPlacesFragment : Fragment() {
         visitedPlacesAdapter.setOnToggleClickListener {
             println(it.blocked)
             lifecycleScope.launch(Dispatchers.IO) {
-                viewModel.updateOrInsert(it)
+                viewModel.updateOrInsertPlaceIntoDB(it)
             }
         }
     }

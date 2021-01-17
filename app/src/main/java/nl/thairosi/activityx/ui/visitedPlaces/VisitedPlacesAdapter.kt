@@ -1,4 +1,4 @@
-package nl.thairosi.activityx.adapters
+package nl.thairosi.activityx.ui.visitedPlaces
 
 import android.view.LayoutInflater
 import android.view.View

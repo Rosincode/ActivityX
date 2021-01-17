@@ -2,7 +2,6 @@ package nl.thairosi.activityx.ui.navigation
 
 import android.app.Application
 import android.location.Location
-import android.location.LocationManager
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -29,7 +28,7 @@ import retrofit2.Response
  */
 class NavigationViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository: PlaceRepository = PlaceRepository(PlaceDatabase(application))
+    private val placeRepository: PlaceRepository = PlaceRepository(PlaceDatabase(application))
 
     private var blockedList: List<String> = emptyList()
 
@@ -48,8 +47,12 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
     val orientation: LiveData<Float>
         get() = _orientation
 
+    init {
+        getBlockedPlacesFromDB()
+    }
+
     //Gets a random place using the criteria settings and blocked places
-    fun getRandomPlace(location: String, radius: String, type: String) {
+    fun getRandomPlaceFromAPI(location: String, radius: String, type: String) {
         val call = PlaceApi.RETROFIT_SERVICE.getPlaces(location = location,
             radius = radius,
             type = type)
@@ -59,13 +62,9 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
                 response: Response<TextSearchResponse>,
             ) {
                 if (response.body()?.status.equals("OK")) {
-
                     val resultList = response.body()?.results?.toMutableList()
 
                     if (!resultList.isNullOrEmpty()) {
-
-                        getBlockedPlaces()
-
                         if (!resultList.isNullOrEmpty()) {
                             resultList.removeIf {
                                 Utils.latLongToAndroidLocation(location).distanceTo(Utils.
@@ -80,7 +79,7 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
                             val result = resultList.random()
                             _place.value = Place(
                                 placeId = result.place_id,
-                                location = locationConverter(
+                                location = Utils.latAndLongToAndroidLocation(
                                     result.geometry.location.lat,
                                     result.geometry.location.lng),
                                 name = result.name
@@ -96,20 +95,20 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
         })
     }
 
-    private fun getBlockedPlaces() {
+    private fun getBlockedPlacesFromDB() {
         GlobalScope.launch {
-            blockedList = repository.getBlockedPlaces()!!
+            blockedList = placeRepository.getBlockedPlaces()!!
         }
     }
 
-    fun addToDatabase(place: Place) {
+    fun updateOrInsertPlaceIntoDB(place: Place) {
         viewModelScope.launch {
-            repository.updateOrInsertPlace(place)
+            placeRepository.updateOrInsertPlace(place)
         }
     }
 
-    fun notFinishedActivity(): Place? {
-        val notFinishedActivity = repository.getUnfinishedPlace()
+    fun getUnfinishedActivityFromDB(): Place? {
+        val notFinishedActivity = placeRepository.getUnfinishedPlace()
         viewModelScope.launch {
             if (notFinishedActivity != null) {
                 _place.value = notFinishedActivity
@@ -118,10 +117,4 @@ class NavigationViewModel(application: Application) : AndroidViewModel(applicati
         return notFinishedActivity
     }
 
-    private fun locationConverter(lat: Double, lng: Double): Location {
-        val androidLocation = Location(LocationManager.GPS_PROVIDER)
-        androidLocation.latitude = lat
-        androidLocation.longitude = lng
-        return androidLocation
-    }
 }

@@ -9,16 +9,16 @@ import nl.thairosi.activityx.repository.PlaceRepository
  */
 class HomeViewModel(private val placeRepository: PlaceRepository) : ViewModel() {
 
-    fun getUnfinishedPlace(): Place? {
+    fun getUnfinishedPlaceFromDB(): Place? {
         return placeRepository.getUnfinishedPlace()
     }
 
-    suspend fun deleteUnfinishedPlace() {
+    suspend fun deleteUnfinishedPlaceFromDB() {
         placeRepository.deleteUnfinishedPlace()
     }
 
-    // Will only be used for demo purposes, it will import five places into the database.
-    suspend fun importDemoTestData(place: Place) {
+    // Will only be used for demo purposes, it will import existing places into the database.
+    suspend fun importDemoTestDataIntoDB(place: Place) {
         placeRepository.updateOrInsertPlace(place)
     }
 

@@ -10,7 +10,6 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import kotlinx.coroutines.test.runBlockingTest
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.ServiceLocator
-import nl.thairosi.activityx.adapters.VisitedPlacesAdapter
 import nl.thairosi.activityx.models.Place
 import nl.thairosi.activityx.models.PlaceApiModel.Location
 import nl.thairosi.activityx.repository.FakeTestPlaceRepository

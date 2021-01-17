@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -12,9 +15,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import nl.thairosi.activityx.PlaceApplication
 import nl.thairosi.activityx.R
-import nl.thairosi.activityx.database.PlaceDatabase
 import nl.thairosi.activityx.databinding.FragmentPlaceBinding
-import nl.thairosi.activityx.repository.PlaceRepository
 import nl.thairosi.activityx.utils.Utils
 
 /**
@@ -50,15 +51,17 @@ class PlaceFragment : Fragment() {
 
         // Safeargs
         val place = args.place
-        viewModel.getPlace(place)
+
+        // Load the place data into the fragment using an API call
+        viewModel.getPlaceFromAPI(place)
 
         // Load the place photo into the fragment with Glide
-        viewModel.place.observe(viewLifecycleOwner, { place ->
-            if (place.photoReference.contains("null")) {
+        viewModel.place.observe(viewLifecycleOwner, {
+            if (it.photoReference.contains("null")) {
                 binding.placeImage.visibility = View.VISIBLE
             } else {
                 Glide.with(this)
-                    .load(Utils.getImageUrl(place.photoReference))
+                    .load(Utils.getImageUrl(it.photoReference))
                     .into(binding.placeImage)
                 binding.placeImage.visibility = View.VISIBLE
             }
@@ -67,7 +70,7 @@ class PlaceFragment : Fragment() {
         // Update place in room database when checkbox is clicked
         binding.placeBlockActivityCheckbox.setOnClickListener {
             place.blocked = binding.placeBlockActivityCheckbox.isChecked
-            viewModel.updateOrInsert(place)
+            viewModel.updateOrInsertPlaceIntoDB(place)
         }
 
         // Return button navigates up

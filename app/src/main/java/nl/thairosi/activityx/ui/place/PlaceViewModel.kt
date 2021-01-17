@@ -5,9 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import nl.thairosi.activityx.Keys
 import nl.thairosi.activityx.models.Place
 import nl.thairosi.activityx.models.PlaceApiModel.PlaceResponse
-import nl.thairosi.activityx.repository.PlaceRepository
+import nl.thairosi.activityx.network.PlaceAPIService
 import nl.thairosi.activityx.repository.Repository
 import nl.thairosi.activityx.utils.Utils
 import retrofit2.Call
@@ -26,7 +27,7 @@ class PlaceViewModel(
         get() = _place
 
     // Get Place from Maps API
-    fun getPlace(place: Place) {
+    fun getPlaceFromAPI(place: Place) {
         viewModelScope.launch {
             val call = placeRepository.getPlace(place.placeId)
             call.enqueue(object : Callback<PlaceResponse> {
@@ -47,7 +48,7 @@ class PlaceViewModel(
                         // Update live data
                         _place.value = place
                         // Insert into database
-                        updateOrInsert(place)
+                        updateOrInsertPlaceIntoDB(place)
                     } else {
                         _place.value = Place(name = "Place not found")
                     }
@@ -62,7 +63,7 @@ class PlaceViewModel(
     }
 
     // Update Place in database
-    fun updateOrInsert(place: Place) {
+    fun updateOrInsertPlaceIntoDB(place: Place) {
         viewModelScope.launch {
             placeRepository.updateOrInsertPlace(place)
         }

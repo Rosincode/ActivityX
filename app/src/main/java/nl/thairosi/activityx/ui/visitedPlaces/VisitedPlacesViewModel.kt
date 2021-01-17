@@ -16,7 +16,7 @@ class VisitedPlacesViewModel(
     val visitedPlaces: LiveData<List<Place>>
         get() = _visitedPlaces
 
-    suspend fun updateOrInsert(place: Place) = viewModelScope.launch {
+    suspend fun updateOrInsertPlaceIntoDB(place: Place) = viewModelScope.launch {
         placeRepository.updateOrInsertPlace(place)
     }
 

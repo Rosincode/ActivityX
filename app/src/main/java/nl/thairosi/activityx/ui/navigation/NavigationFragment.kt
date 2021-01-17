@@ -108,7 +108,7 @@ class NavigationFragment : Fragment() {
         if (this::location.isInitialized && radius.isNotBlank() &&
             types.isNotEmpty() && location.hasAccuracy()) {
             GlobalScope.launch {
-                placeFound = if (viewModel.notFinishedActivity() != null) true else {
+                placeFound = if (viewModel.getUnfinishedActivityFromDB() != null) true else {
                     searchRandomPlace()
                     insertPlaceIntoDatabase()
                     true
@@ -123,7 +123,7 @@ class NavigationFragment : Fragment() {
         types.forEach { i ->
             if (place.location == null) {
                 Log.i("navigation", "searching for a $i")
-                viewModel.getRandomPlace(latLng, radius, types.elementAt(types.indexOf(i)))
+                viewModel.getRandomPlaceFromAPI(latLng, radius, types.elementAt(types.indexOf(i)))
                 delay(2000)
             }
         }
@@ -142,7 +142,7 @@ class NavigationFragment : Fragment() {
     private fun insertPlaceIntoDatabase() {
         if (!placeAddedToDatabase) {
             if (place.location != null) {
-                viewModel.addToDatabase(place)
+                viewModel.updateOrInsertPlaceIntoDB(place)
                 Log.i("navigation", "Place added to database: ${place.name}")
                 placeAddedToDatabase = true
             }
@@ -200,7 +200,7 @@ class NavigationFragment : Fragment() {
             binding.navigationRevealButton.setOnClickListener { v: View ->
                 place.date = Utils.getDateTime()
                 place.revealed = true
-                viewModel.addToDatabase(place)
+                viewModel.updateOrInsertPlaceIntoDB(place)
                 placeFound = false
                 v.findNavController().navigate(NavigationFragmentDirections
                     .actionNavigationFragmentToPlaceFragment(place))
