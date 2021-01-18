@@ -29,8 +29,10 @@ import nl.thairosi.activityx.utils.Utils
  */
 class HomeFragment : Fragment() {
 
+    // Properties
     private lateinit var viewModel: HomeViewModel
 
+    // Creates and returns the view hierarchy associated with the fragment
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,7 +50,7 @@ class HomeFragment : Fragment() {
         val viewModelProviderFactory = HomeViewModelProviderFactory(placeRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(HomeViewModel::class.java)
 
-        // Giving the binding access to the ViewModel
+        // Gives the binding access to the ViewModel
         binding.homeViewModel = viewModel
 
         GlobalScope.launch {

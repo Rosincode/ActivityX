@@ -21,9 +21,11 @@ import nl.thairosi.activityx.utils.Utils
  */
 class PlaceFragment : Fragment() {
 
+    // Properties
     private lateinit var viewModel: PlaceViewModel
     private val args: PlaceFragmentArgs by navArgs()
 
+    // Creates and returns the view hierarchy associated with the fragment
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -38,12 +40,13 @@ class PlaceFragment : Fragment() {
         binding.lifecycleOwner = this
 
         // Create an instance of the PlaceViewModel
-        val placeRepository = (requireContext().applicationContext as PlaceApplication).placeRepository
+        val placeRepository =
+            (requireContext().applicationContext as PlaceApplication).placeRepository
         val viewModelProviderFactory = PlaceViewModelProviderFactory(placeRepository)
         viewModel =
             ViewModelProvider(this, viewModelProviderFactory).get(PlaceViewModel::class.java)
 
-        // Giving the binding access to the ViewModel
+        // Gives the binding access to the ViewModel
         binding.placeViewModel = viewModel
 
         // Safeargs

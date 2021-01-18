@@ -7,21 +7,25 @@ import nl.thairosi.activityx.models.PlaceApiModel.TextSearchResponse
 import nl.thairosi.activityx.network.PlaceApi
 import retrofit2.Call
 
-class PlaceRepository(
-    private val db: PlaceDatabase,
-) : Repository {
-    // API
+class PlaceRepository(private val db: PlaceDatabase) : Repository {
+
+    // API override methods
     override fun getPlace(placeId: String): Call<PlaceResponse> {
         return PlaceApi.RETROFIT_SERVICE.getPlace(place_id = placeId)
     }
 
-    override fun getPlaces(location: String, radius: String, type: String): Call<TextSearchResponse> {
-        return PlaceApi.RETROFIT_SERVICE.getPlaces(location = location, radius = radius, type = type)
+    override fun getPlaces(
+        location: String, radius: String, type: String,
+    ): Call<TextSearchResponse> {
+        return PlaceApi.RETROFIT_SERVICE.getPlaces(location = location,
+            radius = radius,
+            type = type)
     }
 
+    // Database override methods
+    override suspend fun updateOrInsertPlace(place: Place) =
+        db.getPlaceDao().updateOrInsertPlace(place)
 
-    // Database
-    override suspend fun updateOrInsertPlace(place: Place) = db.getPlaceDao().updateOrInsertPlace(place)
     override fun getVisitedPlaces() = db.getPlaceDao().getVisitedPlaces()
     override fun getUnfinishedPlace() = db.getPlaceDao().getUnfinishedPlace()
     override fun getBlockedPlaces() = db.getPlaceDao().getBlockedPlaces()

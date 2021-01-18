@@ -28,8 +28,8 @@ import retrofit2.Response
  */
 class NavigationViewModel(application: Application) : AndroidViewModel(application) {
 
+    // Properties
     private val placeRepository: PlaceRepository = PlaceRepository(PlaceDatabase(application))
-
     private var blockedList: List<String> = emptyList()
 
     //LocationLiveData provides a live current GPS location of the phone for this location value

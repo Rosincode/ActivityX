@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import nl.thairosi.activityx.models.Place
 import nl.thairosi.activityx.models.PlaceApiModel.PlaceResponse
+import nl.thairosi.activityx.repository.PlaceRepository
 import nl.thairosi.activityx.repository.Repository
 import nl.thairosi.activityx.utils.Utils
 import retrofit2.Call
@@ -16,10 +17,9 @@ import retrofit2.Response
 /**
  * The PlaceViewModel provides the PlaceFragment with place data using the Google API service
  */
-class PlaceViewModel(
-    private val placeRepository: Repository,
-) : ViewModel() {
+class PlaceViewModel(private val placeRepository: Repository) : ViewModel() {
 
+    // Properties
     private var _place = MutableLiveData<Place>()
     val place: LiveData<Place>
         get() = _place

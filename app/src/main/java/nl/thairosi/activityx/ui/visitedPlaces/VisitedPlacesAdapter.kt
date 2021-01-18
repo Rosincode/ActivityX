@@ -13,7 +13,7 @@ import nl.thairosi.activityx.models.Place
 import nl.thairosi.activityx.utils.Utils
 
 /**
- * VisitedPlacesAdapter fills the recycler views for the visited places UI
+ * This class fills the recycler views for the VisitedPlaces Fragment
  */
 class VisitedPlacesAdapter : RecyclerView.Adapter<VisitedPlacesAdapter.PlaceViewHolder>() {
 
@@ -51,7 +51,6 @@ class VisitedPlacesAdapter : RecyclerView.Adapter<VisitedPlacesAdapter.PlaceView
     }
 
     private var onItemClickListener: ((Place) -> Unit)? = null
-
     private var onToggleClickListener: ((Place) -> Unit)? = null
 
     // Binds the view holders to the current list

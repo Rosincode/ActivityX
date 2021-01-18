@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import nl.thairosi.activityx.PlaceApplication
 import nl.thairosi.activityx.R
 import nl.thairosi.activityx.databinding.FragmentVisitedPlacesBinding
+import nl.thairosi.activityx.repository.Repository
 
 /**
  * Provides a list of visited places to the user in the UI using a recycler view
@@ -24,10 +25,12 @@ import nl.thairosi.activityx.databinding.FragmentVisitedPlacesBinding
  */
 class VisitedPlacesFragment : Fragment() {
 
-    private lateinit var viewModel: VisitedPlacesViewModel
-    private lateinit var visitedPlacesAdapter: VisitedPlacesAdapter
+    // Properties
+    lateinit var viewModel: VisitedPlacesViewModel
+    lateinit var visitedPlacesAdapter: VisitedPlacesAdapter
     lateinit var binding: FragmentVisitedPlacesBinding
 
+    // Creates and returns the view hierarchy associated with the fragment
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -41,8 +44,10 @@ class VisitedPlacesFragment : Fragment() {
         binding.lifecycleOwner = this
 
         // Create an instance of the PlaceViewModel
-        val placeRepository = (requireContext().applicationContext as PlaceApplication).placeRepository
-        val viewModelProviderFactory = VisitedPlacesViewModelProviderFactory(placeRepository)
+        val placeRepository =
+            (requireContext().applicationContext as PlaceApplication).placeRepository
+        val viewModelProviderFactory =
+            VisitedPlacesViewModelProviderFactory(placeRepository as Repository)
         viewModel = ViewModelProvider(this,
             viewModelProviderFactory).get(VisitedPlacesViewModel::class.java)
 

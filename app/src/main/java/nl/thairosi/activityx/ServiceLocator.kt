@@ -6,10 +6,13 @@ import nl.thairosi.activityx.database.PlaceDatabase
 import nl.thairosi.activityx.repository.PlaceRepository
 import nl.thairosi.activityx.repository.Repository
 
-// Shared Singleton
+/**
+ * This object is a service to create the repository
+ */
 object ServiceLocator {
 
     private var database: PlaceDatabase? = null
+
     @Volatile
     var Repository: Repository? = null
         @VisibleForTesting set
@@ -37,9 +40,6 @@ object ServiceLocator {
     @VisibleForTesting
     fun resetRepository() {
         synchronized(lock) {
-//            runBlocking {
-//                TasksRemoteDataSource.deleteAllTasks()
-//            }
             // Clear all data to avoid test pollution.
             database?.apply {
                 clearAllTables()

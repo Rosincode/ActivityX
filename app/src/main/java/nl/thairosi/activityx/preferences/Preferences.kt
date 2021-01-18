@@ -4,12 +4,13 @@ import android.content.SharedPreferences
 import android.util.Log
 
 /**
- * This Preferences class contains methods to get SharedPreferences data
+ * This global class contains methods to get the SharedPreferences data
  */
-class Preferences {
+class Preferences { // IC? Annalist? / washup / checkup / intenties / misverstanden
 
     companion object {
 
+        // Gets the preferred radius from the search criteria and returns a String in meters
         fun getRadius(preferenceManager: SharedPreferences): String {
             val radius = preferenceManager.getInt(
                 "criteriaDistanceSeekBar", 2).toString() + "000"
@@ -17,6 +18,7 @@ class Preferences {
             return radius
         }
 
+        // Gets the preferred types from he search criteria and returns them as a List of Strings
         fun getTypes(preferenceManager: SharedPreferences): List<String> {
             val typesDefault = setOf("night_club", "bar", "bowling_alley", "cafe", "movie_theater",
                 "museum", "restaurant", "casino", "park")

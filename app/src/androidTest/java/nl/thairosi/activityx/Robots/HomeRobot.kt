@@ -6,6 +6,9 @@ import nl.thairosi.activityx.ui.MainActivity
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * This test class is a small demo for future Robot tests in the application
+ */
 class HomeRobot : RobotTemplate() {
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)

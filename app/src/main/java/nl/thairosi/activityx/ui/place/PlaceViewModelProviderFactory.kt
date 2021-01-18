@@ -5,12 +5,12 @@ import androidx.lifecycle.ViewModelProvider
 import nl.thairosi.activityx.repository.Repository
 
 /**
- * The PlaceViewModelProviderFactory provides the viewModel with the placeRepository
+ * This class provides the viewModel with the placeRepository
  */
 @Suppress("UNCHECKED_CAST")
 class PlaceViewModelProviderFactory(
-    val placeRepository: Repository,
-) : ViewModelProvider.Factory {
+    private val placeRepository: Repository) :
+    ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return PlaceViewModel(placeRepository) as T
     }

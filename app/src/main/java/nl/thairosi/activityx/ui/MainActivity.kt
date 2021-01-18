@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var appBarConfiguration: AppBarConfiguration
 
+    // This method is called on creation of the fragment and is finished before layout inflation
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding =
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.navView, navController)
     }
 
+    // This method is called whenever the user chooses to navigate up in the action bar.
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.mainNavHostFragment)
         return NavigationUI.navigateUp(navController, appBarConfiguration)

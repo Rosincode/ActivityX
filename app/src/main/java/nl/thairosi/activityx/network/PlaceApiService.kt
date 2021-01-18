@@ -10,7 +10,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 /**
- * The PlaceAPIService contains the BASE_URL and the necessary Queries for our application
+ * This interface contains the BASE_URL and the necessary API calls for our application
  * The service is used to query the Google API services
  */
 interface PlaceAPIService {
@@ -19,14 +19,14 @@ interface PlaceAPIService {
         const val BASE_URL = "https://maps.googleapis.com/maps/api/place/"
     }
 
-    //Google API call to get one place by its place_id
+    // This is a Google API call to get one place by its place_id
     @GET("details/json?")
     fun getPlace(
         @Query("key") key: String = Keys.apiKey(),
         @Query("place_id") place_id: String?
     ): Call<PlaceResponse>
 
-    //Google API call to get multiple places of a chosen type within a chosen radius
+    // This is a Google API call to get multiple places of a chosen type within a chosen radius
     @GET("textsearch/json?")
     fun getPlaces(
         @Query("key") key: String = Keys.apiKey(),

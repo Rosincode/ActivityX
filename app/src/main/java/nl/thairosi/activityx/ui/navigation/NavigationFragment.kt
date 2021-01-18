@@ -56,27 +56,30 @@ class NavigationFragment : Fragment() {
         ViewModelProvider(this).get(NavigationViewModel::class.java)
     }
 
+    // Creates and returns the view hierarchy associated with the fragment
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         val binding: FragmentNavigationBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_navigation, container, false)
 
         binding.lifecycleOwner = this
 
-        binding.navigationViewModel = viewModel // Giving the binding access to the ViewModel
+        // Gives the binding access to the ViewModel
+        binding.navigationViewModel = viewModel
 
         val preferenceManager = PreferenceManager.getDefaultSharedPreferences(context)
 
         loading()
 
+        // Sets the search criteria to the properties
         radius = Preferences.getRadius(preferenceManager)
         types = Preferences.getTypes(preferenceManager)
 
+        // Three observers providing the necessary LiveData and executing the necessary methods
         viewModel.place.observe(viewLifecycleOwner, {
             place = it
         })
-
         viewModel.location.observe(viewLifecycleOwner, {
             location = it
             if (!placeFound && !searching && location.hasAccuracy()) {
@@ -86,12 +89,10 @@ class NavigationFragment : Fragment() {
             if (placeFound) calculateAndSetDistance(binding)
             if (placeNotFound) noActivityFound()
         })
-
         viewModel.orientation.observe(viewLifecycleOwner, {
             orientation = it
             if (placeFound) rotateCompassAndArrow(binding)
         })
-
         return binding.root
     }
 
@@ -106,7 +107,8 @@ class NavigationFragment : Fragment() {
         val searchingActivityToastText = getString(R.string.navigation_searching_activity_toast)
         Toast.makeText(context, searchingActivityToastText, Toast.LENGTH_SHORT).show()
         if (this::location.isInitialized && radius.isNotBlank() &&
-            types.isNotEmpty() && location.hasAccuracy()) {
+            types.isNotEmpty() && location.hasAccuracy()
+        ) {
             GlobalScope.launch {
                 placeFound = if (viewModel.getUnfinishedActivityFromDB() != null) true else {
                     searchRandomPlace()

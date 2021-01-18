@@ -10,6 +10,9 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.anything
 
+/**
+ * This test class template can be used to test a variety of functionality for Robot tests
+ */
 open class RobotTemplate {
 
     fun fillEditText(resId: Int, text: String): ViewInteraction =
