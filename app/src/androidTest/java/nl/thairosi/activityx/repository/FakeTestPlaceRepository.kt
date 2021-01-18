@@ -11,7 +11,7 @@ import retrofit2.Call
 
 class FakeTestPlaceRepository : Repository {
 
-    var tasksServiceData: LinkedHashMap<String, Place> = LinkedHashMap()
+    private var tasksServiceData: LinkedHashMap<String, Place> = LinkedHashMap()
 
     private val observableTasks = MutableLiveData<List<Place>>()
 

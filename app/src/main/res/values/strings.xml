@@ -77,4 +77,6 @@
         In this window the user can click on a activity to see more information.
     </string>
     <string name="home_ask_location_permission_toast_text">In order to get an activity, the app needs your permission to use your location.</string>
+    <string name="image_of_the_visited_activity">Image of the visited activity</string>
+    <string name="block">Block</string>
 </resources>

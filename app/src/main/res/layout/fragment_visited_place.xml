@@ -23,7 +23,7 @@
                 android:id="@+id/switch_block_visited_place"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Block"
+                android:text="@string/block"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/image_view_visited_place"
@@ -70,7 +70,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_no_image_available"
-                android:visibility="invisible"/>
+                android:visibility="invisible"
+                android:contentDescription="@string/image_of_the_visited_activity" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

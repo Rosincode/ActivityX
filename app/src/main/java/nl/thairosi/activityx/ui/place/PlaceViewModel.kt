@@ -5,10 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import nl.thairosi.activityx.Keys
 import nl.thairosi.activityx.models.Place
 import nl.thairosi.activityx.models.PlaceApiModel.PlaceResponse
-import nl.thairosi.activityx.network.PlaceAPIService
 import nl.thairosi.activityx.repository.Repository
 import nl.thairosi.activityx.utils.Utils
 import retrofit2.Call

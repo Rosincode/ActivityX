@@ -12,7 +12,7 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 class ConvertersAndroidUnitTest {
-    lateinit var converter: Converters
+    private lateinit var converter: Converters
 
     @Before
     fun setUp() {

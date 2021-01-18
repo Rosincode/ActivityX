@@ -68,4 +68,7 @@
     <string name="criteria_types_title">Selecteer activiteit types</string>
     <string name="navigation_loading_toast">Aan het laden</string>
     <string name="navigation_activity_found_toast">Acitiveit gevonden</string>
+    <string name="image_of_the_visited_activity">Foto van de bezochte activiteit</string>
+    <string name="home_ask_location_permission_toast_text">Om een activiteit te kunnen krijgen, heeft de app toestemming nodig om je locatie te kunnen zien.</string>
+    <string name="block">Blokkeren</string>
 </resources>
